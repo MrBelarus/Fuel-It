@@ -1,4 +1,4 @@
-import FuelIt.Utils.ImageScaller;
+import Utils.ImageScaller;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -87,7 +87,7 @@ public class MainWindow extends JFrame {
         btnAboutApplication.setPreferredSize(new Dimension(50, parentPanel.getHeight()));
 
         ImageIcon questionIcon = new ImageIcon(ImageScaller.scaleImage(
-                Application.getAppPath() + "\\src\\FuelIt\\Resources\\Images\\question-button-v2.png",
+                Application.getAppPath() + "\\src\\Resources\\Images\\question-button-v2.png",
                 new Dimension(50, 50),
                 Image.SCALE_SMOOTH));
         btnAboutApplication.setIcon(questionIcon);

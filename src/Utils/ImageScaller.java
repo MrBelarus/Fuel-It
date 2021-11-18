@@ -1,6 +1,4 @@
-package FuelIt.Utils;
-
-import FuelIt.Application;
+package Utils;
 
 import javax.imageio.ImageIO;
 import java.awt.Image;

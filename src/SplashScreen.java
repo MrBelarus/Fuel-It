@@ -1,4 +1,4 @@
-import FuelIt.Utils.ImageScaller;
+import Utils.ImageScaller;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -176,7 +176,7 @@ public class SplashScreen extends JFrame {
 
         //add app icon
         Image imgScaledAppIcon = ImageScaller.scaleImage(Application.getAppPath() +
-                        "\\src\\FuelIt\\Resources\\Images\\AppIcon_v2.png",
+                        "\\src\\Resources\\Images\\AppIcon_v2.png",
                 new Dimension(250, 250), Image.SCALE_SMOOTH);
         ImageIcon imgAppIcon = new ImageIcon(imgScaledAppIcon);
 
