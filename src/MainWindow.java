@@ -1,5 +1,3 @@
-package FuelIt;
-
 import FuelIt.Utils.ImageScaller;
 
 import javax.swing.*;

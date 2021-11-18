@@ -1,7 +1,4 @@
-package FuelIt;
-
 import FuelIt.Utils.ImageScaller;
-import FuelIt.Utils.UICreator;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;

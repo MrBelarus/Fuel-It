@@ -1,8 +1,3 @@
-package FuelIt;
-
-import FuelIt.Entities.Car;
-
-import javax.imageio.IIOException;
 import java.awt.*;
 import java.io.IOException;
 

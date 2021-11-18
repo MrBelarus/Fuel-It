@@ -1,3 +1,5 @@
+import Entities.Car;
+
 /**
  * Cars manager
  * Can be used to calculate fuel and distance operations

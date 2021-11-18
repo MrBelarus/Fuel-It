@@ -1,3 +1,5 @@
+package Entities;
+
 /**
  * Car class
  */

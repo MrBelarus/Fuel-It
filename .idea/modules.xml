@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Fuelit.iml" filepath="$PROJECT_DIR$/Fuelit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FuelIt.iml" filepath="$PROJECT_DIR$/FuelIt.iml" />
     </modules>
   </component>
 </project>

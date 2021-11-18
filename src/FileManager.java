@@ -1,3 +1,5 @@
+import Entities.Car;
+
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.*;
