@@ -2,6 +2,10 @@ package Entities;
 
 /**
  * Car class
+ * Contains information about car
+ *
+ * @author V.U.Kurhei
+ * @version 1.0
  */
 public class Car {
     private String model;

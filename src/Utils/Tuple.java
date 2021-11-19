@@ -1,4 +1,4 @@
-package FuelIt.Utils;
+package Utils;
 
 public class Tuple<K, V> {
     private K first;

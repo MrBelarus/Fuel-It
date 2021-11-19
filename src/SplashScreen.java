@@ -16,10 +16,10 @@ import java.awt.event.WindowEvent;
  */
 public class SplashScreen extends JFrame {
     //panel that contains sub panels
-    private JPanel pnlMain;
+    private final JPanel pnlMain;
 
-    private JPanel pnlInfo;
-    private JPanel pnlButtons;
+    private final JPanel pnlInfo;
+    private final JPanel pnlButtons;
     private JButton btnContinue;
     private JButton btnExit;
 
@@ -63,51 +63,6 @@ public class SplashScreen extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
-    }
-
-    /*
-    Splash screen self close timer listener class
-     */
-    class SplashScreenTimerEndListener implements ActionListener {
-        private Window splashScreen;
-
-        public SplashScreenTimerEndListener(Window splashScreen) {
-            this.splashScreen = splashScreen;
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            dispatchEvent(new WindowEvent(splashScreen, WindowEvent.WINDOW_CLOSING));
-        }
-    }
-
-    /*
-    Continue button click listener class
-     */
-    class ContinueButtonListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            //stop auto close timer
-            if (autoSelfCloseTimer.isRunning()) {
-                autoSelfCloseTimer.stop();
-            }
-            //run main window
-            new MainWindow();
-            //close splashScreen by disposing memory
-            dispose();
-        }
-    }
-
-    /*
-    Exit button click listener class
-     */
-    class ExitButtonListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            //stop auto close timer
-            if (autoSelfCloseTimer.isRunning()) {
-                autoSelfCloseTimer.stop();
-            }
-            //exit application
-            System.exit(0);
-        }
     }
 
     private void addUniversityInfo(JPanel holder) {
@@ -212,5 +167,50 @@ public class SplashScreen extends JFrame {
         btn.setBackground(new Color(201, 202, 255));
         btn.setBorder(new BevelBorder(BevelBorder.RAISED));
         return btn;
+    }
+
+    /*
+    Splash screen self close timer listener class
+     */
+    class SplashScreenTimerEndListener implements ActionListener {
+        private final Window splashScreen;
+
+        public SplashScreenTimerEndListener(Window splashScreen) {
+            this.splashScreen = splashScreen;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            dispatchEvent(new WindowEvent(splashScreen, WindowEvent.WINDOW_CLOSING));
+        }
+    }
+
+    /*
+    Continue button click listener class
+     */
+    class ContinueButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            //stop auto close timer
+            if (autoSelfCloseTimer.isRunning()) {
+                autoSelfCloseTimer.stop();
+            }
+            //run main window
+            new MainWindow();
+            //close splashScreen by disposing memory
+            dispose();
+        }
+    }
+
+    /*
+    Exit button click listener class
+     */
+    class ExitButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            //stop auto close timer
+            if (autoSelfCloseTimer.isRunning()) {
+                autoSelfCloseTimer.stop();
+            }
+            //exit application
+            System.exit(0);
+        }
     }
 }

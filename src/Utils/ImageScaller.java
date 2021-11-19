@@ -16,9 +16,9 @@ import java.io.IOException;
 public class ImageScaller {
     public static Image scaleImage(String imagePath,
                                    Dimension newDimension,
-                                   int hints){
+                                   int hints) {
         BufferedImage bufferedImage = null;
-        try{
+        try {
             bufferedImage = ImageIO.read(new File(imagePath));
         } catch (IOException e) {
             e.printStackTrace();
