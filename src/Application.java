@@ -1,9 +1,17 @@
 import java.awt.*;
 import java.io.IOException;
 
+/**
+ * Application class
+ * Start point of application
+ *
+ * @author V.U.Kurhei
+ * @version 1.0
+ */
 public class Application {
     public final static Dimension WINDOW_SIZE = new Dimension(900, 750);
     public final static String NAME = "FuelIt";
+    public final static Color MAIN_COLOR = new Color(201, 202, 255);
 
     private static String appPath;
 

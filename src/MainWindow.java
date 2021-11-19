@@ -1,4 +1,3 @@
-import Utils.ImageScaller;
 import Utils.UIUtility;
 
 import javax.swing.*;
@@ -21,9 +20,14 @@ public class MainWindow extends JFrame {
     private JPanel pnlCenter;
     private JPanel pnlBottom;
 
-    private JMenuBar menuBar;
+    private JPanel pnlAverageConsumptionOperation;
+    private JPanel pnlFuelFromDistanceOperation;
+    private JPanel pnlDistanceFromFuelOperation;
 
-    private CarSelectDialog carSelectDialog;
+    private JComboBox comboBoxCars;
+    private JComboBox comboBoxOperationTypes;
+
+    private JMenuBar menuBar;
 
     public MainWindow() {
         super(Application.NAME);
@@ -31,32 +35,13 @@ public class MainWindow extends JFrame {
 
         pnlCenter.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         pnlBottom.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        pnlBottom.setBackground(Application.MAIN_COLOR);
 
-        //add components
-
-        //add left down buttons
-        JPanel leftDownPanel = new JPanel(new BorderLayout());
-        JPanel btnHolderPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-
-        JButton btnAboutApplication = createAboutApplicationButton();
-
-        JButton btnAboutAuthor = createAboutAuthorButton();
-
-        btnHolderPanel.add(btnAboutApplication);
-        btnHolderPanel.add(btnAboutAuthor);
-
-        leftDownPanel.add(btnHolderPanel);
-
-        //add right down exit button
-        JPanel rightDownPanel = new JPanel(new BorderLayout());
-        JPanel pnlExitHolder = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JButton btnExit = new JButton("Exit");
-        btnExit.setPreferredSize(new Dimension(60, 50));
-        pnlExitHolder.add(btnExit);
-        rightDownPanel.add(pnlExitHolder, BorderLayout.EAST);
-
-        pnlBottom.add(leftDownPanel, BorderLayout.WEST);
-        pnlBottom.add(rightDownPanel, BorderLayout.EAST);
+        //create components
+        createCenterUpComponents();
+        createCenterLeftComponents();
+        createCenterRightComponents();
+        createBottomComponents();
 
         //add panels to main panel
         pnlMain.add(pnlCenter, BorderLayout.CENTER);
@@ -83,33 +68,7 @@ public class MainWindow extends JFrame {
         pnlBottom = new JPanel(new BorderLayout(10, 10));
     }
 
-    private JButton createAboutAuthorButton() {
-        JButton btn = new JButton("About author");
-        btn.setFont(new Font("Arial", Font.BOLD, 12));
-        btn.setPreferredSize(new Dimension(120, 50));
-        return btn;
-    }
-
-    private JButton createAboutApplicationButton() {
-        JButton btn = new JButton();
-        btn.setPreferredSize(new Dimension(50, 50));
-
-        String iconPath = Application.getAppPath() +
-                "\\src\\Resources\\Images\\question-button-v2.png";
-        UIUtility.addLabelIcon(btn, iconPath);
-
-        return btn;
-    }
-
-
-
-    private void addMenuBar(){
-        menuBar = new JMenuBar();
-        menuBar.add(createFileMenu());
-        setJMenuBar(menuBar);
-    }
-
-    private JMenu createFileMenu(){
+    private JMenu createFileMenu() {
         JMenu fileMenu = new JMenu("File");
 
         //add information item to menu
@@ -125,6 +84,187 @@ public class MainWindow extends JFrame {
         return fileMenu;
     }
 
+    private void createCenterUpComponents(){
+        //add center components
+        JPanel pnlUpCenter = new JPanel(new BorderLayout());
+        pnlUpCenter.setBackground(Application.MAIN_COLOR);
+
+        JPanel pnlCarsAddRemove = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        pnlCarsAddRemove.setBackground(Application.MAIN_COLOR);
+
+        //add left middle cars info and buttons
+        comboBoxCars = new JComboBox(new String[]{"mskvich", "mers", "volk", "bmw"});
+        comboBoxCars.setPreferredSize(new Dimension(150, 50));
+        pnlCarsAddRemove.add(comboBoxCars);
+
+        JButton btnAddCar = new JButton("+");
+        btnAddCar.setPreferredSize(new Dimension(50, 50));
+        //add action listener here
+
+        JButton btnAddRemove = new JButton("-");
+        btnAddRemove.setPreferredSize(new Dimension(50, 50));
+        //add action listener here
+        pnlCarsAddRemove.add(btnAddCar);
+        pnlCarsAddRemove.add(btnAddRemove);
+
+        pnlUpCenter.add(pnlCarsAddRemove, BorderLayout.WEST);
+
+        //add operations combo box
+        JPanel pnlOperationTypes = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        pnlOperationTypes.setBackground(Application.MAIN_COLOR);
+        comboBoxOperationTypes = new JComboBox(new String[]{"Fuel", "Distance", "Consumption"});
+        comboBoxOperationTypes.setPreferredSize(new Dimension(150, 50));
+        pnlOperationTypes.add(comboBoxOperationTypes);
+
+        pnlUpCenter.add(pnlOperationTypes, BorderLayout.EAST);
+        pnlCenter.add(pnlUpCenter, BorderLayout.NORTH);
+    }
+
+    private void createCenterLeftComponents(){
+        JPanel pnlMiddleCenter = new JPanel(new BorderLayout());
+
+        //report and car info
+        JPanel pnlCarReportAndInfo = new JPanel(new BorderLayout());
+
+        JPanel pnlSeeReport = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        pnlSeeReport.setPreferredSize(new Dimension(270, 70));
+        JButton btnSeeCarReport = new JButton("report");
+        btnSeeCarReport.setPreferredSize(new Dimension(150, 50));
+        pnlSeeReport.add(btnSeeCarReport);
+        pnlCarReportAndInfo.add(pnlSeeReport, BorderLayout.NORTH);
+
+        JTextArea txtAreaCarInfo = new JTextArea(20, 1);
+        txtAreaCarInfo.setPreferredSize(new Dimension(150, 300));
+        txtAreaCarInfo.setEditable(true);
+        txtAreaCarInfo.setLineWrap(true);
+        txtAreaCarInfo.setFont(new Font("Arial", Font.BOLD, 14));
+        txtAreaCarInfo.setForeground(Color.black);
+        txtAreaCarInfo.setText("Информация об автомобиле: \n" +
+                "\nМодель: \n-Москвич 2140\n" +
+                "\nГод выпуска: \n-1986г.\n" +
+                "\nСредний расход топлива: \n-44 л/100км\n" +
+                "\nКилометраж:\n-89000км");
+        txtAreaCarInfo.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+        JScrollPane txtAreaScroll = new JScrollPane(txtAreaCarInfo);
+        txtAreaScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        pnlCarReportAndInfo.add(txtAreaScroll, BorderLayout.CENTER);
+        pnlMiddleCenter.add(pnlCarReportAndInfo, BorderLayout.WEST);
+        pnlCenter.add(pnlMiddleCenter, BorderLayout.WEST);
+    }
+
+    private void createBottomComponents(){
+        //add left down buttons
+        JPanel leftDownPanel = new JPanel(new BorderLayout());
+        JPanel btnHolderPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        leftDownPanel.setBackground(Application.MAIN_COLOR);
+        btnHolderPanel.setBackground(Application.MAIN_COLOR);
+
+        JButton btnAboutApplication = createAboutApplicationButton();
+        JButton btnAboutAuthor = createAboutAuthorButton();
+
+        btnHolderPanel.add(btnAboutApplication);
+        btnHolderPanel.add(btnAboutAuthor);
+
+        leftDownPanel.add(btnHolderPanel);
+
+        //add right down exit button
+        JPanel rightDownPanel = new JPanel(new BorderLayout());
+        JPanel pnlExitHolder = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JButton btnExit = createExitButton();
+        pnlExitHolder.add(btnExit);
+        rightDownPanel.add(pnlExitHolder, BorderLayout.EAST);
+
+        rightDownPanel.setBackground(Application.MAIN_COLOR);
+        pnlExitHolder.setBackground(Application.MAIN_COLOR);
+
+        pnlBottom.add(leftDownPanel, BorderLayout.WEST);
+        pnlBottom.add(rightDownPanel, BorderLayout.EAST);
+    }
+
+    private void createCenterRightComponents() {
+        JPanel pnlOperation = new JPanel(new GridBagLayout());
+
+        pnlFuelFromDistanceOperation = createFuelFromDistancePanel();
+        //distanceToFuel
+        //averageFuelConsumption
+
+        //set constraints of GridBagLayout
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.CENTER;
+
+        pnlOperation.add(pnlFuelFromDistanceOperation, gbc);
+
+        pnlCenter.add(pnlOperation, BorderLayout.CENTER);
+    }
+
+    private JPanel createFuelFromDistancePanel(){
+        JPanel basePanel = new JPanel(new FlowLayout());
+        JPanel formPanel = new JPanel(new BorderLayout());
+        JPanel pnlButton = new JPanel();
+
+        //create calculate button
+        JButton btnCalculate = new JButton("Рассчитать");
+        //TODO: button action event here
+        btnCalculate.setPreferredSize(new Dimension(300, 50));
+        pnlButton.add(btnCalculate);
+
+        //create labels with input fields
+        JPanel fieldsPanel = new JPanel();
+        fieldsPanel.setLayout(new GridLayout(6, 1));
+        fieldsPanel.add(new JLabel("Fuel"), Component.LEFT_ALIGNMENT);
+        fieldsPanel.add(new TextField(""));
+        fieldsPanel.add(new JLabel("Fuel"), Component.LEFT_ALIGNMENT);
+        fieldsPanel.add(new TextField(""));
+        fieldsPanel.add(new JLabel("Fuel"), Component.LEFT_ALIGNMENT);
+        fieldsPanel.add(new TextField(""));
+
+        formPanel.add(pnlButton, BorderLayout.SOUTH);
+        formPanel.add(fieldsPanel, BorderLayout.CENTER);
+        formPanel.setPreferredSize(new Dimension(300, 300));
+
+        basePanel.add(formPanel);
+        basePanel.setBorder(BorderFactory.createEtchedBorder());
+        return basePanel;
+    }
+
+    private JButton createAboutAuthorButton() {
+        JButton btn = new JButton("Об Авторе");
+        btn.setFont(new Font("Arial", Font.BOLD, 12));
+        btn.setPreferredSize(new Dimension(120, 50));
+        return btn;
+    }
+
+    private JButton createExitButton() {
+        JButton btn = new JButton("Выход");
+        btn.addActionListener(new ExitButtonListener());
+        btn.setFont(new Font("Arial", Font.BOLD, 12));
+        btn.setPreferredSize(new Dimension(120, 50));
+        return btn;
+    }
+
+    private JButton createAboutApplicationButton() {
+        JButton btn = new JButton();
+        btn.setPreferredSize(new Dimension(50, 50));
+
+        //remove background color, we have an Icon instead
+        btn.setContentAreaFilled(false);
+
+        String iconPath = Application.getAppPath() +
+                "\\src\\Resources\\Images\\question-button-v2.png";
+        UIUtility.addIconToButton(btn, iconPath);
+
+        return btn;
+    }
+
+    private void addMenuBar() {
+        menuBar = new JMenuBar();
+        menuBar.add(createFileMenu());
+        setJMenuBar(menuBar);
+    }
+
     class AboutApplicationButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             //TODO: Implement about application open dialog
@@ -137,7 +277,7 @@ public class MainWindow extends JFrame {
         }
     }
 
-    class ExitButtonListener implements ActionListener{
+    class ExitButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             System.exit(0);
         }

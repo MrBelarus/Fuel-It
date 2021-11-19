@@ -1,5 +1,11 @@
 package Utils;
 
+/**
+ * Basic implementation of Tuple
+ *
+ * @author V.U.Kurhei
+ * @version 1.0
+ */
 public class Tuple<K, V> {
     private K first;
     private V second;

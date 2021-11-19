@@ -90,7 +90,7 @@ public class SplashScreen extends JFrame {
     }
 
     private void addProjectInfo(JPanel holder) {
-        JPanel pnlProjectInfo = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel pnlProjectInfo = new JPanel(new GridBagLayout());
 
         JPanel pnlText = new JPanel(new GridLayout(3, 1, 5, 5));
 
@@ -107,7 +107,12 @@ public class SplashScreen extends JFrame {
         lblProjectName.setFont(new Font("Arial", Font.BOLD, 22));
         pnlText.add(lblProjectName);
 
-        pnlProjectInfo.add(pnlText);
+        //set constraints of GridBagLayout
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.CENTER;
+
+        pnlProjectInfo.add(pnlText, gbc);
         holder.add(pnlProjectInfo, BorderLayout.CENTER);
     }
 
@@ -164,7 +169,7 @@ public class SplashScreen extends JFrame {
         btn.setForeground(Color.black);
         btn.setPreferredSize(new Dimension(180, 70));
         btn.addActionListener(listener);
-        btn.setBackground(new Color(201, 202, 255));
+        btn.setBackground(Application.MAIN_COLOR);
         btn.setBorder(new BevelBorder(BevelBorder.RAISED));
         return btn;
     }

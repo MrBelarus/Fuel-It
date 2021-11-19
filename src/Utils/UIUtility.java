@@ -36,7 +36,7 @@ public class UIUtility {
      * @param iconPath path to Icon
      * @return
      */
-    public static JButton addLabelIcon(JButton toBtn, String iconPath) {
+    public static JButton addIconToButton(JButton toBtn, String iconPath) {
         ImageIcon questionIcon = new ImageIcon(ImageScaller.scaleImage(
                 iconPath,
                 toBtn.getPreferredSize(),
