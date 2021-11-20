@@ -43,6 +43,7 @@ public class CarSelectDialog extends JDialog {
 
         pnlMain.add(scrollPane, BorderLayout.CENTER);
         pnlMain.add(pnlButtons, BorderLayout.SOUTH);
+        pnlMain.add(new JLabel("ASDSAD"), BorderLayout.NORTH);
 
         setupDialog(pnlMain);
 
@@ -54,6 +55,7 @@ public class CarSelectDialog extends JDialog {
 
     private void setupDialog(JPanel mainPanel) {
         setLayout(new BorderLayout());
+        setSize(new Dimension(300, 200));
         setModalityType(ModalityType.APPLICATION_MODAL);
         setDefaultLookAndFeelDecorated(true);
         add(mainPanel);
@@ -68,6 +70,10 @@ public class CarSelectDialog extends JDialog {
         });
     }
 
+    /**
+     * enables or disable JDialog instance
+     * @param active
+     */
     public void enableDialog(boolean active) {
         if (active) {
             setSize(new Dimension(Application.WINDOW_SIZE));

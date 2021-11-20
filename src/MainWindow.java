@@ -34,6 +34,7 @@ public class MainWindow extends JFrame {
     private Car selectedCar = null;
 
     private AboutAuthorDialog aboutAuthorDialog;
+    private AboutApplicationDialog aboutApplicationDialog;
 
     private JMenuBar menuBar;
 
@@ -84,7 +85,7 @@ public class MainWindow extends JFrame {
 
         //add information item to menu
         JMenuItem itemInfo = new JMenuItem("О программе");
-        itemInfo.addActionListener(new AboutApplicationButtonListener());
+        itemInfo.addActionListener(new AboutApplicationButtonListener(this));
         fileMenu.add(itemInfo);
 
         //add exit item to menu
@@ -341,6 +342,7 @@ public class MainWindow extends JFrame {
 
     private JButton createAboutApplicationButton() {
         JButton btn = new JButton();
+        btn.addActionListener(new AboutApplicationButtonListener(this));
         btn.setPreferredSize(new Dimension(50, 50));
 
         //remove background color, we have an Icon instead
@@ -394,24 +396,32 @@ public class MainWindow extends JFrame {
 
     //region listeners logic
     class AboutApplicationButtonListener implements ActionListener {
+        private MainWindow owner;
+
+        public AboutApplicationButtonListener(MainWindow owner) {
+            this.owner = owner;
+        }
+
         public void actionPerformed(ActionEvent e) {
-            //TODO: Implement about application open dialog
+            if (aboutApplicationDialog == null) {
+                aboutApplicationDialog = new AboutApplicationDialog(owner);
+            }
+            aboutApplicationDialog.enableFrame(true);
         }
     }
 
     class AboutAuthorButtonListener implements ActionListener {
-        private MainWindow mainWindow;
+        private MainWindow owner;
 
-        public AboutAuthorButtonListener(MainWindow mainWindow) {
-            this.mainWindow = mainWindow;
+        public AboutAuthorButtonListener(MainWindow owner) {
+            this.owner = owner;
         }
 
         public void actionPerformed(ActionEvent e) {
-            if (aboutAuthorDialog == null){
-                aboutAuthorDialog = new AboutAuthorDialog(mainWindow);
+            if (aboutAuthorDialog == null) {
+                aboutAuthorDialog = new AboutAuthorDialog(owner);
             }
-            aboutAuthorDialog.setLocationRelativeTo(mainWindow);
-            aboutAuthorDialog.setVisible(true);
+            aboutAuthorDialog.enableFrame(true);
         }
     }
 
