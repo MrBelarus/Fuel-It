@@ -17,15 +17,26 @@ public class UIUtility {
      * @param text            info on button
      * @param prefSize        preferred size
      * @param listener        ActionListener
-     * @param backgroundColor
      * @return instance of created button
      */
     public static JButton createButton(String text, Dimension prefSize,
-                                       ActionListener listener, Color backgroundColor) {
+                                       ActionListener listener) {
         JButton btn = new JButton(text);
         btn.setPreferredSize(prefSize);
         btn.addActionListener(listener);
-        btn.setBackground(backgroundColor);
+        return btn;
+    }
+
+    /**
+     * Creates an instance of JButton
+     *
+     * @param text            info on button
+     * @param prefSize        preferred size
+     * @return instance of created button
+     */
+    public static JButton createButton(String text, Dimension prefSize) {
+        JButton btn = new JButton(text);
+        btn.setPreferredSize(prefSize);
         return btn;
     }
 

@@ -44,7 +44,7 @@ public class CarSelectDialog extends JDialog {
         pnlMain.add(scrollPane, BorderLayout.CENTER);
         pnlMain.add(pnlButtons, BorderLayout.SOUTH);
 
-        setupFrame(pnlMain);
+        setupDialog(pnlMain);
 
         //TODO: add new item
 //        carsPanel.setLayout(new GridLayout(6, 1, 10, 10));
@@ -52,7 +52,7 @@ public class CarSelectDialog extends JDialog {
 //        carsPanel.add(btn);
     }
 
-    private void setupFrame(JPanel mainPanel) {
+    private void setupDialog(JPanel mainPanel) {
         setLayout(new BorderLayout());
         setModalityType(ModalityType.APPLICATION_MODAL);
         setDefaultLookAndFeelDecorated(true);
