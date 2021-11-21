@@ -1,0 +1,77 @@
+import Entities.Car;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Objects;
+
+public class FuelFromDistancePanel extends JPanel {
+    private MainWindow mainWindow;
+    private JTextField txtFldDistance;
+
+    public FuelFromDistancePanel(MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
+
+        setLayout(new FlowLayout());
+        JPanel formPanel = new JPanel(new BorderLayout());
+        JPanel pnlButton = new JPanel();
+
+        //create calculate button
+        JButton btnCalculate = new JButton("Расчитать");
+        btnCalculate.setFont(new Font("Arial", Font.BOLD, 16));
+        btnCalculate.setPreferredSize(new Dimension(300, 50));
+        btnCalculate.addActionListener(new CalculateFuelFromDistanceClickListener());
+        pnlButton.add(btnCalculate);
+
+        //create labels with input fields
+        JPanel fieldsPanel = new JPanel(new GridLayout(2, 1));
+        JLabel inputLabel = new JLabel("Введите расстояние (км):");
+        inputLabel.setFont(new Font("Arial", Font.ITALIC, 16));
+        txtFldDistance = new JTextField("");
+        fieldsPanel.add(inputLabel, Component.LEFT_ALIGNMENT);
+        fieldsPanel.add(txtFldDistance);
+
+        formPanel.add(pnlButton, BorderLayout.SOUTH);
+        formPanel.add(fieldsPanel, BorderLayout.CENTER);
+        formPanel.setPreferredSize(new Dimension(300, 100));
+
+        add(formPanel);
+        setBorder(BorderFactory.createEtchedBorder());
+    }
+
+    class CalculateFuelFromDistanceClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Car selectedCar = mainWindow.getSelectedCar();
+
+            if (Objects.equals(txtFldDistance.getText(), "")) {
+                JOptionPane.showMessageDialog(null,
+                        "Заполните данные!",
+                        "Ошибка операции", JOptionPane.ERROR_MESSAGE);
+                return;
+            } else if (selectedCar == null) {
+                JOptionPane.showMessageDialog(null, "Выберите автомобиль.",
+                        "Ошибка операции", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            float distanceAmount;
+            try {
+                distanceAmount = Float.parseFloat(txtFldDistance.getText());
+            } catch (Exception exception) {
+                JOptionPane.showMessageDialog(null,
+                        "Проверьте правильность ввода данных.",
+                        "Ошибка операции", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            float result = CarManager.CalculateFuelAmount(distanceAmount, selectedCar);
+
+            String info = String.format("Результат: " + "%.2f" + "л." +
+                    "\nЕсли использовать автомобиль " + selectedCar.getModel() + ".", result);
+            JOptionPane.showMessageDialog(null, info,
+                    "Результат операции", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+}

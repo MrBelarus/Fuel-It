@@ -29,12 +29,17 @@ public class MainWindow extends JFrame {
 
     private JComboBox comboBoxCars;
     private JComboBox comboBoxOperations;
+
     private JTextArea txtAreaCarInfo;
 
     private Car selectedCar = null;
+    public Car getSelectedCar() {
+        return selectedCar;
+    }
 
     private AboutAuthorDialog aboutAuthorDialog;
     private AboutApplicationDialog aboutApplicationDialog;
+    private AddCarDialog addCarDialog;
 
     private JMenuBar menuBar;
 
@@ -42,8 +47,6 @@ public class MainWindow extends JFrame {
     public MainWindow() {
         super(Application.NAME);
         createMainPanels();
-
-//        selectedCar = new Car("Moskvich 2140", 89000, 10, 1986);
 
         pnlCenter.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         pnlBottom.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
@@ -105,23 +108,27 @@ public class MainWindow extends JFrame {
         pnlCarsAddRemove.setBackground(Application.MAIN_COLOR);
 
         //add left middle cars info and buttons
+        JLabel lblSelectCar = new JLabel("Автомобиль:");
+        lblSelectCar.setFont(new Font("Arial", Font.PLAIN, 14));
+        lblSelectCar.setForeground(Color.black);
+
         comboBoxCars = new JComboBox(new String[]{"Ничего"});
         comboBoxCars.addActionListener(new ComboBoxSelectCarListener());
         comboBoxCars.setPreferredSize(new Dimension(150, 50));
         comboBoxCars.setToolTipText("Выбрать автомобиль.");
-        pnlCarsAddRemove.add(comboBoxCars);
 
-        JButton btnAddCar = new JButton("+");
+        JButton btnAddCar = new JButton("Добавить");
         btnAddCar.setToolTipText("Открыть окно добавления автомобиля.");
-        btnAddCar.setPreferredSize(new Dimension(50, 50));
-        //TODO: add action listener here
-//        btnAddCar.addActionListener();
+        btnAddCar.setPreferredSize(new Dimension(90, 50));
+        btnAddCar.addActionListener(new ButtonAddCarListener(this));
 
-        JButton btnAddRemove = new JButton("-");
+        JButton btnAddRemove = new JButton("Удалить");
         btnAddRemove.setToolTipText("Удалить выбранный автомобиль.");
-        btnAddRemove.setPreferredSize(new Dimension(50, 50));
-        //TODO: add action listener here
+        btnAddRemove.setPreferredSize(new Dimension(90, 50));
+        btnAddRemove.addActionListener(new ButtonRemoveCarListener());
 
+        pnlCarsAddRemove.add(lblSelectCar);
+        pnlCarsAddRemove.add(comboBoxCars);
         pnlCarsAddRemove.add(btnAddCar);
         pnlCarsAddRemove.add(btnAddRemove);
 
@@ -130,9 +137,16 @@ public class MainWindow extends JFrame {
         //add operations combo box
         JPanel pnlOperationTypes = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         pnlOperationTypes.setBackground(Application.MAIN_COLOR);
+
+        JLabel lblSelectOperation = new JLabel("Выберите тип операции:", SwingConstants.RIGHT);
+        lblSelectOperation.setFont(new Font("Arial", Font.PLAIN, 14));
+        lblSelectOperation.setForeground(Color.black);
+
         comboBoxOperations = new JComboBox(new String[]{"Ничего"});
         comboBoxOperations.setToolTipText("Выбрать операцию над автомобилем.");
         comboBoxOperations.setPreferredSize(new Dimension(225, 50));
+
+        pnlOperationTypes.add(lblSelectOperation);
         pnlOperationTypes.add(comboBoxOperations);
 
         pnlUpCenter.add(pnlOperationTypes, BorderLayout.EAST);
@@ -147,21 +161,25 @@ public class MainWindow extends JFrame {
 
         JPanel pnlSeeReport = new JPanel(new FlowLayout(FlowLayout.LEFT));
         pnlSeeReport.setPreferredSize(new Dimension(270, 70));
-        JButton btnSeeCarReport = new JButton("report");
+        JButton btnSeeCarReport = new JButton("<html>Показать отчет<br>по автомобилю<html>");
         btnSeeCarReport.setPreferredSize(new Dimension(150, 50));
         pnlSeeReport.add(btnSeeCarReport);
         pnlCarReportAndInfo.add(pnlSeeReport, BorderLayout.NORTH);
 
-        txtAreaCarInfo = new JTextArea(20, 1);
+        txtAreaCarInfo = new JTextArea(0, 1);
         txtAreaCarInfo.setPreferredSize(new Dimension(150, 300));
-        txtAreaCarInfo.setEditable(true);
+        txtAreaCarInfo.setEditable(false);
         txtAreaCarInfo.setLineWrap(true);
         txtAreaCarInfo.setFont(new Font("Arial", Font.BOLD, 14));
         txtAreaCarInfo.setForeground(Color.black);
-        updateCarInfoText(selectedCar);
         txtAreaCarInfo.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+        updateCarInfoText(selectedCar);
+
         JScrollPane txtAreaScroll = new JScrollPane(txtAreaCarInfo);
+//        txtAreaScroll.setPreferredSize(new Dimension(270, 70));
         txtAreaScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        txtAreaScroll.getViewport().setOpaque(false);
+        txtAreaScroll.setOpaque(false);
 
         pnlCarReportAndInfo.add(txtAreaScroll, BorderLayout.CENTER);
         pnlMiddleCenter.add(pnlCarReportAndInfo, BorderLayout.WEST);
@@ -173,13 +191,13 @@ public class MainWindow extends JFrame {
 
         operationPanelsList = new ArrayList<JPanel>();
 
-        pnlFuelFromDistanceOperation = createFuelFromDistancePanel();
+        pnlFuelFromDistanceOperation = new FuelFromDistancePanel(this);
         comboBoxOperations.insertItemAt("Расчет топлива от пробега", comboBoxOperations.getItemCount());
 
-        pnlDistanceFromFuelOperation = createDistanceFromFuelPanel();
+        pnlDistanceFromFuelOperation = new DistanceFromFuelPanel(this);
         comboBoxOperations.insertItemAt("Расчет пробега от топлива", comboBoxOperations.getItemCount());
 
-        pnlAverageConsumptionOperation = createCalculateAverageConsumptionPanel();
+        pnlAverageConsumptionOperation = new AverageFuelConsumptionPanel(this);
         comboBoxOperations.insertItemAt("Расчет среднего расхода топлива", comboBoxOperations.getItemCount());
 
         comboBoxOperations.addActionListener(new ComboBoxSelectOperationListener());
@@ -229,99 +247,6 @@ public class MainWindow extends JFrame {
 
         pnlBottom.add(leftDownPanel, BorderLayout.WEST);
         pnlBottom.add(rightDownPanel, BorderLayout.EAST);
-    }
-
-    private JPanel createFuelFromDistancePanel() {
-        JPanel basePanel = new JPanel(new FlowLayout());
-        JPanel formPanel = new JPanel(new BorderLayout());
-        JPanel pnlButton = new JPanel();
-
-        //create calculate button
-        JButton btnCalculate = new JButton("Расчитать");
-        btnCalculate.setFont(new Font("Arial", Font.BOLD, 16));
-        btnCalculate.setPreferredSize(new Dimension(300, 50));
-        //TODO: button action event here
-        pnlButton.add(btnCalculate);
-
-        //create labels with input fields
-        JPanel fieldsPanel = new JPanel(new GridLayout(2, 1));
-        JLabel inputLabel = new JLabel("Введите расстояние (км):");
-        inputLabel.setFont(new Font("Arial", Font.ITALIC, 16));
-        JTextField inputField = new JTextField("");
-        fieldsPanel.add(inputLabel, Component.LEFT_ALIGNMENT);
-        fieldsPanel.add(inputField);
-
-        formPanel.add(pnlButton, BorderLayout.SOUTH);
-        formPanel.add(fieldsPanel, BorderLayout.CENTER);
-        formPanel.setPreferredSize(new Dimension(300, 100));
-
-        basePanel.add(formPanel);
-        basePanel.setBorder(BorderFactory.createEtchedBorder());
-        return basePanel;
-    }
-
-    private JPanel createDistanceFromFuelPanel() {
-        JPanel basePanel = new JPanel(new FlowLayout());
-        JPanel formPanel = new JPanel(new BorderLayout());
-        JPanel pnlButton = new JPanel();
-
-        //create labels with input fields
-        JPanel fieldsPanel = new JPanel(new GridLayout(2, 1));
-        JLabel inputLabel = new JLabel("Введите кол-во топлива (л):");
-        inputLabel.setFont(new Font("Arial", Font.ITALIC, 16));
-        JTextField inputField = new JTextField("");
-        fieldsPanel.add(inputLabel, Component.LEFT_ALIGNMENT);
-        fieldsPanel.add(inputField);
-
-        //create calculate button
-        JButton btnCalculate = new JButton("Расчитать");
-        btnCalculate.setFont(new Font("Arial", Font.BOLD, 16));
-        btnCalculate.setPreferredSize(new Dimension(300, 50));
-        //TODO: button action event here
-        pnlButton.add(btnCalculate);
-
-        formPanel.add(pnlButton, BorderLayout.SOUTH);
-        formPanel.add(fieldsPanel, BorderLayout.CENTER);
-        formPanel.setPreferredSize(new Dimension(300, 100));
-
-        basePanel.add(formPanel);
-        basePanel.setBorder(BorderFactory.createEtchedBorder());
-        return basePanel;
-    }
-
-    private JPanel createCalculateAverageConsumptionPanel() {
-        JPanel basePanel = new JPanel(new FlowLayout());
-        JPanel formPanel = new JPanel(new BorderLayout());
-        JPanel pnlButton = new JPanel();
-
-        //create labels with input fields
-        String[] labelsText = new String[]{"Введите кол-во потраченного топлива (л):",
-                "Введите пройденное расстояние (км):"};
-        JTextField[] inputFields = new JTextField[labelsText.length];
-        JPanel fieldsPanel = new JPanel(new GridLayout(inputFields.length * 2, 1));
-
-        for (int i = 0; i < inputFields.length; i++) {
-            JLabel inputLabel = new JLabel(labelsText[i]);
-            inputLabel.setFont(new Font("Arial", Font.ITALIC, 16));
-            inputFields[i] = new JTextField("");
-            fieldsPanel.add(inputLabel, Component.LEFT_ALIGNMENT);
-            fieldsPanel.add(inputFields[i]);
-        }
-
-        //create calculate button
-        JButton btnCalculate = new JButton("Расчитать");
-        btnCalculate.setFont(new Font("Arial", Font.BOLD, 16));
-        btnCalculate.setPreferredSize(new Dimension(300, 50));
-        //TODO: button action event here
-        pnlButton.add(btnCalculate);
-
-        formPanel.add(pnlButton, BorderLayout.SOUTH);
-        formPanel.add(fieldsPanel, BorderLayout.CENTER);
-        formPanel.setPreferredSize(new Dimension(350, 150));
-
-        basePanel.add(formPanel);
-        basePanel.setBorder(BorderFactory.createEtchedBorder());
-        return basePanel;
     }
 
     private JButton createAboutAuthorButton() {
@@ -378,8 +303,13 @@ public class MainWindow extends JFrame {
     }
     //endregion
 
-    //region car display logic
-    private void updateCarInfoText(Car selectedCar) {
+    //region cars display logic
+
+    /**
+     * Updates car's info text
+     * @param selectedCar
+     */
+    public void updateCarInfoText(Car selectedCar) {
         if (selectedCar == null) {
             txtAreaCarInfo.setText("Выберите машину, чтобы \n" +
                     "увидеть информацию о ней.");
@@ -388,9 +318,17 @@ public class MainWindow extends JFrame {
         txtAreaCarInfo.setText("Информация об автомобиле:\n" +
                 "\nМодель:\n-" + selectedCar.getModel() + "\n" +
                 "\nГод выпуска:\n-" + selectedCar.getFactoryReleaseYear() + "г.\n" +
+                "\nПробег:\n-" + selectedCar.getTotalPassedDistance() + "км\n" +
                 "\nСредний расход топлива (на 100км):\n-" +
-                selectedCar.getAverageFuelConsumption() + "л.\n" +
-                "\nПробег:\n-" + selectedCar.getTotalPassedDistance() + "км");
+                selectedCar.getAverageFuelConsumption() + "л.");
+    }
+
+    /**
+     * Adds car to combo box (bottom)
+     * @param car instance
+     */
+    public void addCarToComboBox(Car car){
+        comboBoxCars.insertItemAt(car.getModel(), comboBoxCars.getItemCount());
     }
     //endregion
 
@@ -444,12 +382,47 @@ public class MainWindow extends JFrame {
 
     class ComboBoxSelectCarListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            int selectedIndex = comboBoxCars.getSelectedIndex();
-            if (selectedIndex == 0) {
-                hideAllOperationPanels();
+            //-1 because "Ничего" is 0 index always
+            int selectedCarIndex = comboBoxCars.getSelectedIndex() - 1;
+
+            selectedCar = selectedCarIndex == -1 ? null : CarManager.cars.get(selectedCarIndex);
+            updateCarInfoText(selectedCar);
+        }
+    }
+
+    class ButtonAddCarListener implements ActionListener{
+        private MainWindow owner;
+
+        public ButtonAddCarListener(MainWindow owner) {
+            this.owner = owner;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            if (addCarDialog == null) {
+                addCarDialog = new AddCarDialog(owner);
+            }
+            addCarDialog.enableFrame(true);
+        }
+    }
+
+    class ButtonRemoveCarListener implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            if (selectedCar == null) {
+                JOptionPane.showMessageDialog(null, "Сначала выберите машину," +
+                        "\nкоторую хотите удалить", "Ошибка операции", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            setActiveOperationPanel(selectedIndex - 1, true);
+
+            CarManager.cars.remove(selectedCar);
+            comboBoxCars.removeItemAt(comboBoxCars.getSelectedIndex());
+//
+//            //-2 because we don't include default item
+//            int carIndex = comboBoxCars.getItemCount() - 2;
+//
+//            selectedCar = carIndex == -1 ? null : CarManager.cars.get(carIndex);
+//            comboBoxCars.setSelectedIndex(comboBoxCars.getItemCount() - 1);
+            selectedCar = null;
+            comboBoxCars.setSelectedIndex(0);
         }
     }
     //endregion

@@ -1,19 +1,29 @@
+import Utils.ImageScaller;
+
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class AboutApplicationDialog extends JDialog {
     private JPanel pnlMain;
-    private Dimension dialogSize = new Dimension(300, 200);
+
+    private JPanel pnlTop;
+    private JPanel pnlMiddle;
+    private JPanel pnlBottom;
+
+    private Dimension dialogSize = new Dimension(780, 420);
 
     public AboutApplicationDialog(MainWindow mainWindow){
         super(mainWindow, "Об приложении");
 
         pnlMain = new JPanel(new BorderLayout(10, 10));
-        pnlMain.add(new JLabel("ASDASD"), BorderLayout.CENTER);
 
-        System.out.println(SwingUtilities.isEventDispatchThread());
+        pnlMain.add(createTopPanel(), BorderLayout.NORTH);
+        pnlMain.add(createMiddlePanel(), BorderLayout.CENTER);
+        pnlMain.add(createBottomPanel(), BorderLayout.SOUTH);
+
         setupDialog();
     }
 
@@ -43,5 +53,74 @@ public class AboutApplicationDialog extends JDialog {
             setLocationRelativeTo(getOwner());
         }
         setVisible(active);
+    }
+
+    private JPanel createTopPanel(){
+        pnlTop = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JLabel lblProjectName = new JLabel("Приложение для учета расхода топлива");
+        lblProjectName.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        pnlTop.add(lblProjectName);
+        return pnlTop;
+    }
+
+    private JPanel createMiddlePanel(){
+        pnlMiddle = new JPanel(new BorderLayout(20, 10));
+
+        JPanel pnlPreview = new JPanel(new FlowLayout());
+
+        Image imgPhoto = ImageScaller.scaleImage(
+                Application.getAppPath() + "\\src\\Resources\\Images\\AppIcon_v2.png",
+                new Dimension(350, 300),
+                Image.SCALE_SMOOTH);
+        JLabel lblProgramPreview = new JLabel(new ImageIcon(imgPhoto));
+        pnlPreview.add(lblProgramPreview);
+
+        JPanel pnlProgramInfo = new JPanel(new BorderLayout());
+
+        JTextArea txtAreaProgramInfo = new JTextArea(15, 1);
+        txtAreaProgramInfo.setEditable(false);
+        txtAreaProgramInfo.setLineWrap(true);
+        txtAreaProgramInfo.setFont(new Font("Arial", Font.BOLD, 14));
+        txtAreaProgramInfo.setForeground(Color.black);
+        txtAreaProgramInfo.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+        txtAreaProgramInfo.setBackground(new Color(238, 238, 238));
+        JScrollPane txtAreaScroll = new JScrollPane(txtAreaProgramInfo);
+        txtAreaScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        txtAreaScroll.getViewport().setOpaque(false);
+        txtAreaScroll.setOpaque(false);
+
+        txtAreaProgramInfo.setText("Программа позволяет:\n" +
+                "   -Вести учет об автомобилях\n" +
+                "   -Добавлять/удалять информацию об автомобиле\n" +
+                "   -Рассчитывать кол-во топлива от пробега\nсоответствующего автомобиля\n" +
+                "   -Рассчитывать пробег от кол-ва топлива\nсоответствующего автомобиля\n" +
+                "   -Рассчитывать средний расход топлива\nсоответствующего автомобиля");
+
+        pnlProgramInfo.add(txtAreaScroll, BorderLayout.CENTER);
+
+        pnlMiddle.add(pnlPreview, BorderLayout.WEST);
+        pnlMiddle.add(pnlProgramInfo, BorderLayout.CENTER);
+
+        return pnlMiddle;
+    }
+
+    private JPanel createBottomPanel(){
+        pnlBottom = new JPanel(new BorderLayout());
+
+        JPanel pnlAppVersion = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        JLabel lblAppVersion = new JLabel("Версия " + Application.VERSION, SwingConstants.CENTER);
+        lblAppVersion.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+        pnlAppVersion.add(lblAppVersion);
+
+        JPanel pnlExit = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JButton btnExit = new JButton("Выход");
+        btnExit.setFont(new Font("Arial", Font.BOLD, 12));
+        btnExit.setBackground(new Color(255, 68, 68));
+        pnlExit.add(btnExit);
+
+        pnlBottom.add(pnlExit, BorderLayout.EAST);
+        pnlBottom.add(pnlAppVersion, BorderLayout.WEST);
+        return pnlBottom;
     }
 }

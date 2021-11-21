@@ -12,6 +12,7 @@ public class Application {
     public final static Dimension WINDOW_SIZE = new Dimension(900, 750);
     public final static String NAME = "FuelIt";
     public final static Color MAIN_COLOR = new Color(201, 202, 255);
+    public final static String VERSION = "0.1.0";
 
     private static String appPath;
 

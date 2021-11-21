@@ -1,5 +1,7 @@
 import Entities.Car;
 
+import java.util.ArrayList;
+
 /**
  * Cars manager
  * Can be used to calculate fuel and distance operations
@@ -8,6 +10,7 @@ import Entities.Car;
  * @version 1.0
  */
 public class CarManager {
+    public static ArrayList<Car> cars = new ArrayList<>();
 
     /**
      * Calculates distance that Car can pass with given liters
@@ -58,6 +61,6 @@ public class CarManager {
      */
     public static float CalculateSessionAverageFuelConsumption(float passedDistance,
                                                                float wastedLiters){
-        return passedDistance / 100f * wastedLiters;
+        return wastedLiters / passedDistance / 100f;
     }
 }
