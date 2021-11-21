@@ -7,6 +7,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * JDialog class
+ * Displays essential information about author
+ *
+ * @author V.U.Kurhei
+ * @version 1.0
+ */
 public class AboutAuthorDialog extends JDialog {
     private JPanel pnlMain;
     private JPanel pnlAuthorInfo;

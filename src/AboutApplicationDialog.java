@@ -3,6 +3,8 @@ import Utils.ImageScaller;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -69,7 +71,7 @@ public class AboutApplicationDialog extends JDialog {
         JPanel pnlPreview = new JPanel(new FlowLayout());
 
         Image imgPhoto = ImageScaller.scaleImage(
-                Application.getAppPath() + "\\src\\Resources\\Images\\AppIcon_v2.png",
+                Application.getAppPath() + "\\src\\Resources\\Images\\app-preview.png",
                 new Dimension(350, 300),
                 Image.SCALE_SMOOTH);
         JLabel lblProgramPreview = new JLabel(new ImageIcon(imgPhoto));
@@ -117,10 +119,23 @@ public class AboutApplicationDialog extends JDialog {
         JButton btnExit = new JButton("Выход");
         btnExit.setFont(new Font("Arial", Font.BOLD, 12));
         btnExit.setBackground(new Color(255, 68, 68));
+        btnExit.addActionListener(new ExitDialogListener(this));
         pnlExit.add(btnExit);
 
         pnlBottom.add(pnlExit, BorderLayout.EAST);
         pnlBottom.add(pnlAppVersion, BorderLayout.WEST);
         return pnlBottom;
+    }
+
+    class ExitDialogListener implements ActionListener {
+        private JDialog dialog;
+
+        public ExitDialogListener(JDialog dialog){
+            this.dialog = dialog;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            dialog.setVisible(false);
+        }
     }
 }

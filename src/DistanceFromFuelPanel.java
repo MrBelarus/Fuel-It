@@ -6,6 +6,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
 
+/**
+ * Input data panel
+ * To calculate distance from fuel
+ *
+ * @author V.U.Kurhei
+ * @version 1.0
+ */
 public class DistanceFromFuelPanel extends JPanel {
     private MainWindow mainWindow;
     private JTextField txtFldFuel;

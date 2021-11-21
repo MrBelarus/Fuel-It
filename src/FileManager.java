@@ -5,7 +5,8 @@ import java.beans.XMLEncoder;
 import java.io.*;
 
 /**
- * Main window of FuelIt Application
+ * File Manager class
+ * Is responsible for file operations
  *
  * @author V.U.Kurhei
  * @version 1.0

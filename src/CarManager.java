@@ -49,7 +49,10 @@ public class CarManager {
                 drivenCar.getAverageFuelConsumption();
         float newAverageFuelConsumption = (totalCarWastedFuel + wastedLiters) /
                 (drivenCar.getTotalPassedDistance() + passedDistance) * 100f;
+
         drivenCar.setAverageFuelConsumption(newAverageFuelConsumption);
+        drivenCar.setTotalPassedDistance(drivenCar.getTotalPassedDistance() + passedDistance);
+
         return newAverageFuelConsumption;
     }
 
@@ -61,6 +64,6 @@ public class CarManager {
      */
     public static float CalculateSessionAverageFuelConsumption(float passedDistance,
                                                                float wastedLiters){
-        return wastedLiters / passedDistance / 100f;
+        return wastedLiters / passedDistance * 100f;
     }
 }

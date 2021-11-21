@@ -6,6 +6,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
 
+/**
+ * Input data panel
+ * To calculate average fuel consumption
+ *
+ * @author V.U.Kurhei
+ * @version 1.0
+ */
 public class AverageFuelConsumptionPanel extends JPanel {
     private MainWindow mainWindow;
 
@@ -62,7 +69,6 @@ public class AverageFuelConsumptionPanel extends JPanel {
                         "Ошибка операции", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
             else if (selectedCar == null) {
                 JOptionPane.showMessageDialog(null, "Выберите автомобиль.",
                         "Ошибка операции", JOptionPane.ERROR_MESSAGE);
@@ -91,9 +97,9 @@ public class AverageFuelConsumptionPanel extends JPanel {
 
             String info = String.format("Новый средний расход " +
                     "топлива автомобиля " + selectedCar.getModel() +
-                    ":\n" + "%.3f" + " л. на 100 км." +
-                    "\nСредний расход топлива на " + passedDistanceAmount + " км = "
-                    + "%.3f" + " л.", newCarAverageFuelConsumption, sessionAverageFuelConsumption);
+                    ":\n%.1f л. на 100 км.\nСредний расход топлива сессии на " +
+                    "%.1f км = %.1f л.",
+                    newCarAverageFuelConsumption, passedDistanceAmount, sessionAverageFuelConsumption);
             JOptionPane.showMessageDialog(null, info,
                     "Результат операции", JOptionPane.INFORMATION_MESSAGE);
 

@@ -2,15 +2,20 @@ import Entities.Car;
 import Utils.ImageScaller;
 
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * JDialog class
+ * Used to input and add car information
+ *
+ * @author V.U.Kurhei
+ * @version 1.0
+ */
 public class AddCarDialog extends JDialog {
     private JPanel pnlMain;
 

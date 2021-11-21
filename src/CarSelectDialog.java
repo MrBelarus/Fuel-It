@@ -4,6 +4,12 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * Deprecated class
+ *
+ * @author V.U.Kurhei
+ * @version 1.0
+ */
 public class CarSelectDialog extends JDialog {
     private MainWindow mainWindow;
 
