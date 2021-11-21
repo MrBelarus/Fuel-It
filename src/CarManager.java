@@ -1,6 +1,7 @@
 import Entities.Car;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Cars manager
@@ -12,13 +13,15 @@ import java.util.ArrayList;
 public class CarManager {
     public static ArrayList<Car> cars = new ArrayList<>();
 
+    private final static String CARS_INFO_FILE_PATH = "cars_info.xml";
+
     /**
      * Calculates distance that Car can pass with given liters
      * @param litersAmount total fuel in liters
      * @param car car that will be driven
      * @return amount of distance in km
      */
-    public static float CalculateDistance(float litersAmount, Car car){
+    public static float calculateDistance(float litersAmount, Car car){
         if (car.getAverageFuelConsumption() == 0f){
             return Float.MAX_VALUE;
         }
@@ -31,7 +34,7 @@ public class CarManager {
      * @param car car that will be driven
      * @return amount of fuel in liters to pass target distance
      */
-    public static float CalculateFuelAmount(float distance, Car car){
+    public static float calculateFuelAmount(float distance, Car car){
         return car.getAverageFuelConsumption() * distance / 100f;
     }
 
@@ -42,7 +45,7 @@ public class CarManager {
      * @param drivenCar used car
      * @return new average fuel consumption of used car
      */
-    public static float CalculateAverageFuelConsumption(float passedDistance,
+    public static float calculateAverageFuelConsumption(float passedDistance,
                                                         float wastedLiters,
                                                         Car drivenCar){
         float totalCarWastedFuel = drivenCar.getTotalPassedDistance() / 100f *
@@ -62,8 +65,31 @@ public class CarManager {
      * @param wastedLiters fuel amount
      * @return session fuel consumption of used car
      */
-    public static float CalculateSessionAverageFuelConsumption(float passedDistance,
+    public static float calculateSessionAverageFuelConsumption(float passedDistance,
                                                                float wastedLiters){
         return wastedLiters / passedDistance * 100f;
+    }
+
+    /**
+     * Calls FileManager and saves all vehicles to file
+     */
+    public static void saveCarsToFile(){
+        FileManager.SaveCarsToXML(CARS_INFO_FILE_PATH, cars.toArray(new Car[cars.size()]));
+    }
+
+    /**
+     * Calls FileManager and adds all vehicles from file
+     */
+    public static void loadCarsFromFile(){
+        if (!FileManager.isFileExists(CARS_INFO_FILE_PATH)){
+            return;
+        }
+
+        Car[] carsFromFile = FileManager.LoadCarsFromXML(CARS_INFO_FILE_PATH);
+
+        if (carsFromFile == null)
+            return;
+
+        Collections.addAll(cars, carsFromFile);
     }
 }

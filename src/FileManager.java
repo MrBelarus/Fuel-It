@@ -61,4 +61,14 @@ public class FileManager {
         }
         return cars;
     }
+
+    /**
+     * Is file exists?
+     *
+     * @param path where file is located
+     * @return true - yes, false - no
+     */
+    public static boolean isFileExists(String path){
+        return new File(path).isFile();
+    }
 }

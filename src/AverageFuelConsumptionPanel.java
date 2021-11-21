@@ -89,10 +89,10 @@ public class AverageFuelConsumptionPanel extends JPanel {
             }
 
             float newCarAverageFuelConsumption =
-                    CarManager.CalculateAverageFuelConsumption(passedDistanceAmount,
+                    CarManager.calculateAverageFuelConsumption(passedDistanceAmount,
                     wastedFuelAmount, selectedCar);
             float sessionAverageFuelConsumption =
-                    CarManager.CalculateSessionAverageFuelConsumption(passedDistanceAmount,
+                    CarManager.calculateSessionAverageFuelConsumption(passedDistanceAmount,
                             wastedFuelAmount);
 
             String info = String.format("Новый средний расход " +

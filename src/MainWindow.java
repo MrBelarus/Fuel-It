@@ -6,6 +6,8 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.*;
 
 /**
@@ -58,6 +60,9 @@ public class MainWindow extends JFrame {
         createCenterRightComponents();
         createBottomComponents();
 
+        //load data
+        loadCarsData();
+
         //add panels to main panel
         pnlMain.add(pnlCenter, BorderLayout.CENTER);
         pnlMain.add(pnlBottom, BorderLayout.SOUTH);
@@ -70,7 +75,14 @@ public class MainWindow extends JFrame {
         add(mainPanel);
         addMenuBar();
         setSize(new Dimension(Application.WINDOW_SIZE));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        //override on closing operation for more control
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                doActionsAndCloseWindow();
+            }
+        });
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -288,6 +300,11 @@ public class MainWindow extends JFrame {
 
     //endregion
 
+    private void doActionsAndCloseWindow(){
+        CarManager.saveCarsToFile();
+        dispose();
+    }
+
     //region operations show/hide logic
     private void setActiveOperationPanel(int operationIndex, boolean single) {
         if (single) {
@@ -321,6 +338,13 @@ public class MainWindow extends JFrame {
                 "\nПробег:\n-" + selectedCar.getTotalPassedDistance() + "км\n" +
                 "\nСредний расход топлива (на 100км):\n-" +
                 selectedCar.getAverageFuelConsumption() + "л.");
+    }
+
+    private void loadCarsData(){
+        CarManager.loadCarsFromFile();
+        for (Car car : CarManager.cars){
+            addCarToComboBox(car);
+        }
     }
 
     /**
@@ -365,7 +389,7 @@ public class MainWindow extends JFrame {
 
     class ExitButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            System.exit(0);
+            doActionsAndCloseWindow();
         }
     }
 

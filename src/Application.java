@@ -24,6 +24,7 @@ public class Application {
 
     public static void main(String[] args) throws IOException {
         appPath = System.getProperty("user.dir");
+
         new SplashScreen();
     }
 }

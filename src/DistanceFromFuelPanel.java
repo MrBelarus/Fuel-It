@@ -76,7 +76,7 @@ public class DistanceFromFuelPanel extends JPanel {
                 return;
             }
 
-            float result = CarManager.CalculateDistance(fuelAmount, selectedCar);
+            float result = CarManager.calculateDistance(fuelAmount, selectedCar);
             String info = String.format("Результат: "
                     + "%.2f" + "км.\nЕсли использовать автомобиль " +
                     selectedCar.getModel() + ".", result);
