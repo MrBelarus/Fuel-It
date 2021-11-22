@@ -3,7 +3,6 @@ import Utils.UIUtility;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
-import javax.swing.text.html.Option;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -185,32 +184,49 @@ public class MainWindow extends JFrame {
     private void createCenterLeftComponents() {
         JPanel pnlMiddleCenter = new JPanel(new BorderLayout());
 
-        //report and car info
+        //report and car info panel
         JPanel pnlCarReportAndInfo = new JPanel(new BorderLayout());
 
+        //create car report button
         JPanel pnlSeeReport = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        pnlSeeReport.setPreferredSize(new Dimension(270, 70));
+        pnlSeeReport.setPreferredSize(new Dimension(200, 70));
         JButton btnSeeCarReport = new JButton("<html>Показать отчет<br>по автомобилю<html>");
-        btnSeeCarReport.setPreferredSize(new Dimension(150, 50));
+        btnSeeCarReport.setPreferredSize(new Dimension(150, 55));
         pnlSeeReport.add(btnSeeCarReport);
+
+        //add report button to cars report and info panel
         pnlCarReportAndInfo.add(pnlSeeReport, BorderLayout.NORTH);
 
+        //add panel for cars info
+        JPanel pnlCarInfo = new JPanel(new BorderLayout(5, 5));
         txtAreaCarInfo = new JTextArea(0, 1);
-        txtAreaCarInfo.setPreferredSize(new Dimension(150, 300));
         txtAreaCarInfo.setEditable(false);
         txtAreaCarInfo.setLineWrap(true);
         txtAreaCarInfo.setFont(new Font("Arial", Font.BOLD, 14));
         txtAreaCarInfo.setForeground(Color.black);
-        txtAreaCarInfo.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+        txtAreaCarInfo.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         updateCarInfoText(selectedCar);
 
+        //create scroll for car txtArea
         JScrollPane txtAreaScroll = new JScrollPane(txtAreaCarInfo);
-//        txtAreaScroll.setPreferredSize(new Dimension(270, 70));
+        txtAreaScroll.setPreferredSize(new Dimension(400, 0));
         txtAreaScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         txtAreaScroll.getViewport().setOpaque(false);
         txtAreaScroll.setOpaque(false);
 
-        pnlCarReportAndInfo.add(txtAreaScroll, BorderLayout.CENTER);
+        //add created txtArea with scroll to car info panel
+        pnlCarInfo.add(txtAreaScroll, BorderLayout.CENTER);
+
+        //add empty space to use hgap & vgap on pnlCarInfo BorderLayout
+        JPanel emptySpace = new JPanel();
+        emptySpace.setPreferredSize(new Dimension(0, 0));
+        pnlCarInfo.add(emptySpace, BorderLayout.WEST);
+        emptySpace = new JPanel();
+        emptySpace.setPreferredSize(new Dimension(0, 0));
+        pnlCarInfo.add(new JPanel(), BorderLayout.SOUTH);
+
+        //add car info panel to cars report and info panel
+        pnlCarReportAndInfo.add(pnlCarInfo, BorderLayout.CENTER);
         pnlMiddleCenter.add(pnlCarReportAndInfo, BorderLayout.WEST);
         pnlCenter.add(pnlMiddleCenter, BorderLayout.WEST);
     }
@@ -404,12 +420,7 @@ public class MainWindow extends JFrame {
                     "увидеть информацию о ней.");
             return;
         }
-        txtAreaCarInfo.setText("Информация об автомобиле:\n" +
-                "\nМодель:\n-" + selectedCar.getModel() + "\n" +
-                "\nГод выпуска:\n-" + selectedCar.getFactoryReleaseYear() + "г.\n" +
-                "\nПробег:\n-" + selectedCar.getTotalPassedDistance() + "км\n" +
-                "\nСредний расход топлива (на 100км):\n-" +
-                selectedCar.getAverageFuelConsumption() + "л.");
+        txtAreaCarInfo.setText(selectedCar.toString());
     }
 
     /**

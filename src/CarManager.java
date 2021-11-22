@@ -22,10 +22,10 @@ public class CarManager {
      * @return amount of distance in km
      */
     public static float calculateDistance(float litersAmount, Car car){
-        if (car.getAverageFuelConsumption() == 0f){
+        if (car.getFactoryAverageFuelConsumption() == 0f){
             return Float.MAX_VALUE;
         }
-        return litersAmount / car.getAverageFuelConsumption() * 100f;
+        return litersAmount / car.getFactoryAverageFuelConsumption() * 100f;
     }
 
     /**
@@ -35,7 +35,7 @@ public class CarManager {
      * @return amount of fuel in liters to pass target distance
      */
     public static float calculateFuelAmount(float distance, Car car){
-        return car.getAverageFuelConsumption() * distance / 100f;
+        return car.getFactoryAverageFuelConsumption() * distance / 100f;
     }
 
     /**
@@ -49,11 +49,11 @@ public class CarManager {
                                                         float wastedLiters,
                                                         Car drivenCar){
         float totalCarWastedFuel = drivenCar.getTotalPassedDistance() / 100f *
-                drivenCar.getAverageFuelConsumption();
+                drivenCar.getFactoryAverageFuelConsumption();
         float newAverageFuelConsumption = (totalCarWastedFuel + wastedLiters) /
                 (drivenCar.getTotalPassedDistance() + passedDistance) * 100f;
 
-        drivenCar.setAverageFuelConsumption(newAverageFuelConsumption);
+        drivenCar.setFactoryAverageFuelConsumption(newAverageFuelConsumption);
         drivenCar.setTotalPassedDistance(drivenCar.getTotalPassedDistance() + passedDistance);
 
         return newAverageFuelConsumption;
