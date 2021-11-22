@@ -29,6 +29,9 @@ public class AboutApplicationDialog extends JDialog {
         setupDialog();
     }
 
+    /**
+     * Sets main settings to dialog about application
+     */
     private void setupDialog() {
         setLayout(new BorderLayout());
         setSize(dialogSize);
@@ -57,6 +60,10 @@ public class AboutApplicationDialog extends JDialog {
         setVisible(active);
     }
 
+    /**
+     * creates necessary UI elements for top panel
+     * @return created JPanel instance
+     */
     private JPanel createTopPanel(){
         pnlTop = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JLabel lblProjectName = new JLabel("Приложение для учета расхода топлива");
@@ -65,6 +72,10 @@ public class AboutApplicationDialog extends JDialog {
         return pnlTop;
     }
 
+    /**
+     * creates necessary UI elements for middle panel
+     * @return created JPanel instance
+     */
     private JPanel createMiddlePanel(){
         pnlMiddle = new JPanel(new BorderLayout(20, 10));
 
@@ -106,6 +117,10 @@ public class AboutApplicationDialog extends JDialog {
         return pnlMiddle;
     }
 
+    /**
+     * creates necessary UI elements for bottom panel
+     * @return created JPanel instance
+     */
     private JPanel createBottomPanel(){
         pnlBottom = new JPanel(new BorderLayout());
 
@@ -127,6 +142,9 @@ public class AboutApplicationDialog extends JDialog {
         return pnlBottom;
     }
 
+    /**
+     * Add exit dialog button listener
+     */
     class ExitDialogListener implements ActionListener {
         private JDialog dialog;
 

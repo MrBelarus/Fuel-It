@@ -57,6 +57,9 @@ public class AverageFuelConsumptionPanel extends JPanel {
         setBorder(BorderFactory.createEtchedBorder());
     }
 
+    /**
+     * Calculate button listener
+     */
     class CalculateAverageConsumptionClickListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {

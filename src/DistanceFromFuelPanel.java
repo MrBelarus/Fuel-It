@@ -47,6 +47,9 @@ public class DistanceFromFuelPanel extends JPanel {
         setBorder(BorderFactory.createEtchedBorder());
     }
 
+    /**
+     * Calculate button listener
+     */
     class CalculateDistanceFromFuelClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {

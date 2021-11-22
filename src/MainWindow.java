@@ -70,6 +70,9 @@ public class MainWindow extends JFrame {
         setupFrame(pnlMain);
     }
 
+    /**
+     * sets up necessary settings for mainWindow frame
+     */
     private void setupFrame(JPanel mainPanel) {
         setLayout(new BorderLayout());
         add(mainPanel);
@@ -87,6 +90,9 @@ public class MainWindow extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * creates necessary panels
+     */
     private void createMainPanels() {
         //create necessary panels
         pnlMain = new JPanel(new BorderLayout(0, 10));
@@ -95,6 +101,10 @@ public class MainWindow extends JFrame {
         pnlBottom = new JPanel(new BorderLayout(10, 10));
     }
 
+    /**
+     * creates JMenu for the frame with necessary items
+     * @return created JMenu instance
+     */
     private JMenu createFileMenu() {
         JMenu fileMenu = new JMenu("File");
 
@@ -111,6 +121,9 @@ public class MainWindow extends JFrame {
         return fileMenu;
     }
 
+    /**
+     * creates necessary UI components in pnlCenter on top
+     */
     private void createCenterUpComponents() {
         //add center components
         JPanel pnlUpCenter = new JPanel(new BorderLayout());
@@ -165,6 +178,9 @@ public class MainWindow extends JFrame {
         pnlCenter.add(pnlUpCenter, BorderLayout.NORTH);
     }
 
+    /**
+     * creates necessary UI components in pnlCenter on left
+     */
     private void createCenterLeftComponents() {
         JPanel pnlMiddleCenter = new JPanel(new BorderLayout());
 
@@ -198,6 +214,9 @@ public class MainWindow extends JFrame {
         pnlCenter.add(pnlMiddleCenter, BorderLayout.WEST);
     }
 
+    /**
+     * creates necessary UI components in pnlCenter on right
+     */
     private void createCenterRightComponents() {
         JPanel pnlOperation = new JPanel(new GridBagLayout());
 
@@ -231,6 +250,9 @@ public class MainWindow extends JFrame {
         pnlCenter.add(pnlOperation, BorderLayout.CENTER);
     }
 
+    /**
+     * creates necessary UI components in pnlBottom
+     */
     private void createBottomComponents() {
         //add left down buttons
         JPanel leftDownPanel = new JPanel(new BorderLayout());
@@ -261,6 +283,10 @@ public class MainWindow extends JFrame {
         pnlBottom.add(rightDownPanel, BorderLayout.EAST);
     }
 
+    /**
+     * creates button to get info about author
+     * @return created JButton instance
+     */
     private JButton createAboutAuthorButton() {
         JButton btn = new JButton("Об Авторе");
         btn.addActionListener(new AboutAuthorButtonListener(this));
@@ -269,6 +295,10 @@ public class MainWindow extends JFrame {
         return btn;
     }
 
+    /**
+     * creates button to exit program
+     * @return created JButton instance
+     */
     private JButton createExitButton() {
         JButton btn = new JButton("Выход");
         btn.addActionListener(new ExitButtonListener());
@@ -277,6 +307,10 @@ public class MainWindow extends JFrame {
         return btn;
     }
 
+    /**
+     * creates button to get info about application
+     * @return created JButton instance
+     */
     private JButton createAboutApplicationButton() {
         JButton btn = new JButton();
         btn.addActionListener(new AboutApplicationButtonListener(this));
@@ -292,6 +326,9 @@ public class MainWindow extends JFrame {
         return btn;
     }
 
+    /**
+     * adds menuBar to frame
+     */
     private void addMenuBar() {
         menuBar = new JMenuBar();
         menuBar.add(createFileMenu());
@@ -300,12 +337,21 @@ public class MainWindow extends JFrame {
 
     //endregion
 
+    /**
+     * performs necessary actions and closes window
+     */
     private void doActionsAndCloseWindow(){
         CarManager.saveCarsToFile();
         dispose();
     }
 
     //region operations show/hide logic
+
+    /**
+     * Sets active operation panel by index
+     * @param operationIndex panel to set active
+     * @param single should it be displayed single
+     */
     private void setActiveOperationPanel(int operationIndex, boolean single) {
         if (single) {
             hideAllOperationPanels();
@@ -313,6 +359,9 @@ public class MainWindow extends JFrame {
         operationPanelsList.get(operationIndex).setVisible(true);
     }
 
+    /**
+     * hides all operation panels
+     */
     private void hideAllOperationPanels() {
         for (JPanel panel : operationPanelsList) {
             panel.setVisible(false);
@@ -340,6 +389,9 @@ public class MainWindow extends JFrame {
                 selectedCar.getAverageFuelConsumption() + "л.");
     }
 
+    /**
+     * Calls manager to load save data
+     */
     private void loadCarsData(){
         CarManager.loadCarsFromFile();
         for (Car car : CarManager.cars){
@@ -357,6 +409,9 @@ public class MainWindow extends JFrame {
     //endregion
 
     //region listeners logic
+    /**
+     * About application button click listener
+     */
     class AboutApplicationButtonListener implements ActionListener {
         private MainWindow owner;
 
@@ -372,6 +427,9 @@ public class MainWindow extends JFrame {
         }
     }
 
+    /**
+     * About author button click listener
+     */
     class AboutAuthorButtonListener implements ActionListener {
         private MainWindow owner;
 
@@ -387,6 +445,9 @@ public class MainWindow extends JFrame {
         }
     }
 
+    /**
+     * Main window exit button click listener
+     */
     class ExitButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             doActionsAndCloseWindow();
@@ -404,6 +465,10 @@ public class MainWindow extends JFrame {
         }
     }
 
+    /**
+     * ComboBox select car click listener
+     * changes selected car by comboBox current selected index
+     */
     class ComboBoxSelectCarListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             //-1 because "Ничего" is 0 index always
@@ -414,6 +479,9 @@ public class MainWindow extends JFrame {
         }
     }
 
+    /**
+     * Add car button click listener
+     */
     class ButtonAddCarListener implements ActionListener{
         private MainWindow owner;
 
@@ -429,6 +497,9 @@ public class MainWindow extends JFrame {
         }
     }
 
+    /**
+     * Remove car button click listener
+     */
     class ButtonRemoveCarListener implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             if (selectedCar == null) {
@@ -439,12 +510,6 @@ public class MainWindow extends JFrame {
 
             CarManager.cars.remove(selectedCar);
             comboBoxCars.removeItemAt(comboBoxCars.getSelectedIndex());
-//
-//            //-2 because we don't include default item
-//            int carIndex = comboBoxCars.getItemCount() - 2;
-//
-//            selectedCar = carIndex == -1 ? null : CarManager.cars.get(carIndex);
-//            comboBoxCars.setSelectedIndex(comboBoxCars.getItemCount() - 1);
             selectedCar = null;
             comboBoxCars.setSelectedIndex(0);
         }

@@ -34,6 +34,9 @@ public class AboutAuthorDialog extends JDialog {
         setupFrame(pnlMain);
     }
 
+    /**
+     * creates necessary UI objects for author info
+     */
     private void createAuthorInfoSpace(){
         pnlAuthorInfo = new JPanel(new BorderLayout());
 
@@ -60,11 +63,18 @@ public class AboutAuthorDialog extends JDialog {
         pnlAuthorInfo.add(pnlAuthorInfoPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * creates necessary UI objects for close
+     */
     private void createCloseSpace(){
         pnlClose = new JPanel(new FlowLayout());
         pnlClose.add(createCloseButton());
     }
 
+    /**
+     * creates close button
+     * @return created JPanel instance
+     */
     private JButton createCloseButton(){
         JButton btn = new JButton("Назад");
         btn.addActionListener(new ActionListener() {
@@ -79,7 +89,7 @@ public class AboutAuthorDialog extends JDialog {
     }
 
     /**
-     * Sets up core setting of JDialog window
+     * Sets up core setting to dialog about author
      */
     public void setupFrame(JPanel pnlMain) {
         setLayout(new BorderLayout());

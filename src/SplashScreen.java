@@ -44,8 +44,8 @@ public class SplashScreen extends JFrame {
         RunSelfCloseTimer();
     }
 
-    /*
-    Runs self close application timer
+    /**
+     * Runs self close application timer
      */
     private void RunSelfCloseTimer() {
         int delay = (int) Application.SPLASH_SCREEN_AUTO_CLOSE_TIME * 1000;
@@ -53,8 +53,8 @@ public class SplashScreen extends JFrame {
         autoSelfCloseTimer.start();
     }
 
-    /*
-    Sets main settings to Splash screen window
+    /**
+     * Sets main settings to Splash screen window
      */
     private void setupFrame(JPanel pnlMain) {
         setLayout(new BorderLayout());
@@ -65,6 +65,9 @@ public class SplashScreen extends JFrame {
         setVisible(true);
     }
 
+    /*
+     * Adds necessary UI elements for university information
+     */
     private void addUniversityInfo(JPanel holder) {
         JPanel pnlUniversityInfo = new JPanel(new GridLayout(5, 1));
         JPanel emptySpace = new JPanel();
@@ -89,6 +92,9 @@ public class SplashScreen extends JFrame {
         holder.add(pnlUniversityInfo, BorderLayout.NORTH);
     }
 
+    /*
+     * Adds necessary UI elements for project information
+     */
     private void addProjectInfo(JPanel holder) {
         JPanel pnlProjectInfo = new JPanel(new GridBagLayout());
 
@@ -116,6 +122,9 @@ public class SplashScreen extends JFrame {
         holder.add(pnlProjectInfo, BorderLayout.CENTER);
     }
 
+    /*
+     * Adds necessary UI elements for creators information
+     */
     private void addCreatorsInfo(JPanel holder) {
         JPanel pnlAll = new JPanel(new BorderLayout(10, 30));
 
@@ -155,6 +164,10 @@ public class SplashScreen extends JFrame {
         holder.add(pnlAll, BorderLayout.SOUTH);
     }
 
+    /*
+     * Adds necessary user buttons
+     * Continue and close buttons
+     */
     private void addUserButtons(JPanel holder) {
         btnContinue = createUserButton("Далее", new ContinueButtonListener());
         holder.add(btnContinue);
@@ -163,6 +176,12 @@ public class SplashScreen extends JFrame {
         holder.add(btnExit);
     }
 
+    /**
+     * Creates JButton instance for SplashScreen
+     * @param text text on the button
+     * @param listener action listener
+     * @return created JButton instance
+     */
     private JButton createUserButton(String text, ActionListener listener) {
         JButton btn = new JButton(text);
         btn.setFont(new Font("Arial", Font.BOLD, 18));
@@ -174,8 +193,8 @@ public class SplashScreen extends JFrame {
         return btn;
     }
 
-    /*
-    Splash screen self close timer listener class
+    /**
+     * Splash screen self close timer listener class
      */
     class SplashScreenTimerEndListener implements ActionListener {
         private final Window splashScreen;
@@ -189,8 +208,8 @@ public class SplashScreen extends JFrame {
         }
     }
 
-    /*
-    Continue button click listener class
+    /**
+     * Continue button click listener class
      */
     class ContinueButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -205,8 +224,8 @@ public class SplashScreen extends JFrame {
         }
     }
 
-    /*
-    Exit button click listener class
+    /**
+     * Exit button click listener class
      */
     class ExitButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {

@@ -46,6 +46,9 @@ public class AddCarDialog extends JDialog {
         setupDialog();
     }
 
+    /**
+     * sets up necessary settings for car add dialog
+     */
     private void setupDialog() {
         setLayout(new BorderLayout());
         setSize(dialogSize);
@@ -78,6 +81,10 @@ public class AddCarDialog extends JDialog {
         setVisible(active);
     }
 
+    /**
+     * creates necessary UI objects for top panel
+     * @return created JPanel instance
+     */
     private JPanel createTopPanel(){
         pnlTop = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JLabel lblProjectName = new JLabel("Введите информацию об автомобиле");
@@ -86,6 +93,10 @@ public class AddCarDialog extends JDialog {
         return pnlTop;
     }
 
+    /**
+     * creates necessary UI objects for middle panel
+     * @return created JPanel instance
+     */
     private JPanel createMiddlePanel() {
         pnlMiddle = new JPanel(new BorderLayout(20, 10));
 
@@ -93,7 +104,7 @@ public class AddCarDialog extends JDialog {
         String[] labelsText = new String[]{
                 "Название модели:",
                 "Год выпуска:",
-                "Пробег:",
+                "Пробег(км):",
                 "Средний расход топлива (литров/100км):"};
 
         inputFields = new JTextField[] {
@@ -120,6 +131,10 @@ public class AddCarDialog extends JDialog {
         return pnlMiddle;
     }
 
+    /**
+     * creates necessary UI objects for bottom panel
+     * @return created JPanel instance
+     */
     private JPanel createBottomPanel(){
         pnlBottom = new JPanel(new BorderLayout());
 
@@ -146,12 +161,18 @@ public class AddCarDialog extends JDialog {
         return pnlBottom;
     }
 
+    /**
+     * sets input fields empty
+     */
     private void setFieldsEmpty(){
         for (JTextField field : inputFields) {
             field.setText("");
         }
     }
 
+    /**
+     * Add car button listener
+     */
     class AddCarClickListener implements ActionListener{
         private JDialog dialog;
 
@@ -200,6 +221,9 @@ public class AddCarDialog extends JDialog {
         }
     }
 
+    /**
+     * Exit AddCarDialog listener
+     */
     class ExitDialogListener implements ActionListener{
         private JDialog dialog;
 
