@@ -3,6 +3,7 @@ import Utils.UIUtility;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
+import javax.swing.text.html.Option;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -341,8 +342,30 @@ public class MainWindow extends JFrame {
      * performs necessary actions and closes window
      */
     private void doActionsAndCloseWindow(){
-        CarManager.saveCarsToFile();
-        dispose();
+        //options order should be checked in switch statement below
+        Object[] options = {"Сохранить и выйти", "Выйти без сохранения", "Отмена"};
+
+        int userInput = JOptionPane.showOptionDialog((Component) null,
+                "Вы хотите сохранить изменения перед выходом?",
+                "Выход из приложения",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                null);
+
+        //cases are ordered by options
+        switch (userInput){
+            case 0:
+                CarManager.saveCarsToFile();
+                dispose();
+                break;
+            case 1:
+                dispose();
+                break;
+            case 2:
+                break;
+        }
     }
 
     //region operations show/hide logic
