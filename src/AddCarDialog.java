@@ -27,11 +27,12 @@ public class AddCarDialog extends JDialog {
     private JTextField txtFieldCarReleaseYear = new JTextField("");
     private JTextField txtFieldCarAverageFuelConsumption = new JTextField("");
     private JTextField txtFieldCarMileage = new JTextField("");
+    private JTextField txtFieldCarFuelTankCapacity = new JTextField("");
     private JTextField[] inputFields;
 
     private MainWindow mainWindow;
 
-    private Dimension dialogSize = new Dimension(360, 340);
+    private Dimension dialogSize = new Dimension(360, 390);
 
     public AddCarDialog(MainWindow mainWindow){
         super(mainWindow, "Добавить автомобиль");
@@ -105,13 +106,15 @@ public class AddCarDialog extends JDialog {
                 "Название модели:",
                 "Год выпуска:",
                 "Пробег(км):",
-                "Средний расход топлива (литров/100км):"};
+                "Средний расход топлива (л./100км):",
+                "Объем бензобака (л.):"};
 
         inputFields = new JTextField[] {
                 txtFieldCarModel,
                 txtFieldCarReleaseYear,
                 txtFieldCarMileage,
-                txtFieldCarAverageFuelConsumption
+                txtFieldCarAverageFuelConsumption,
+                txtFieldCarFuelTankCapacity
         };
 
         JPanel pnlFieldsHolder = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -195,11 +198,13 @@ public class AddCarDialog extends JDialog {
             float averageFuelConsumption;
             float mileage;
             int releaseYear;
+            float fuelTankCapacity;
             try {
                 averageFuelConsumption = Float.parseFloat(txtFieldCarAverageFuelConsumption.getText());
                 mileage = Float.parseFloat(txtFieldCarMileage.getText());
                 releaseYear = Integer.parseInt(txtFieldCarReleaseYear.getText());
                 model = txtFieldCarModel.getText();
+                fuelTankCapacity = Float.parseFloat(txtFieldCarFuelTankCapacity.getText());
             }
             catch (Exception exception){
                 JOptionPane.showMessageDialog(null,
@@ -208,7 +213,7 @@ public class AddCarDialog extends JDialog {
                 return;
             }
 
-            Car newCar = new Car(model, mileage, averageFuelConsumption, releaseYear);
+            Car newCar = new Car(model, mileage, averageFuelConsumption, releaseYear, fuelTankCapacity);
             CarManager.cars.add(newCar);
 
             mainWindow.addCarToComboBox(newCar);

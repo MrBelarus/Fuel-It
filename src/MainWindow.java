@@ -137,7 +137,7 @@ public class MainWindow extends JFrame {
         lblSelectCar.setFont(new Font("Arial", Font.PLAIN, 14));
         lblSelectCar.setForeground(Color.black);
 
-        comboBoxCars = new JComboBox(new String[]{"Ничего"});
+        comboBoxCars = new JComboBox(new String[]{"Не выбран"});
         comboBoxCars.addActionListener(new ComboBoxSelectCarListener());
         comboBoxCars.setPreferredSize(new Dimension(150, 50));
         comboBoxCars.setToolTipText("Выбрать автомобиль.");
@@ -167,7 +167,7 @@ public class MainWindow extends JFrame {
         lblSelectOperation.setFont(new Font("Arial", Font.PLAIN, 14));
         lblSelectOperation.setForeground(Color.black);
 
-        comboBoxOperations = new JComboBox(new String[]{"Ничего"});
+        comboBoxOperations = new JComboBox(new String[]{"Не выбрана"});
         comboBoxOperations.setToolTipText("Выбрать операцию над автомобилем.");
         comboBoxOperations.setPreferredSize(new Dimension(225, 50));
 

@@ -39,24 +39,21 @@ public class CarManager {
     }
 
     /**
-     * Calculates average fuel consumption of a car
+     * Calculates user's average fuel consumption of a car
      * @param passedDistance distance in km
      * @param wastedLiters fuel amount
      * @param drivenCar used car
-     * @return new average fuel consumption of used car
+     * @return new user average fuel consumption of used car
      */
-    public static float calculateAverageFuelConsumption(float passedDistance,
-                                                        float wastedLiters,
-                                                        Car drivenCar){
-        float totalCarWastedFuel = drivenCar.getTotalPassedDistance() / 100f *
-                drivenCar.getFactoryAverageFuelConsumption();
-        float newAverageFuelConsumption = (totalCarWastedFuel + wastedLiters) /
-                (drivenCar.getTotalPassedDistance() + passedDistance) * 100f;
+    public static float calculateUserAverageFuelConsumption(float passedDistance,
+                                                            float wastedLiters,
+                                                            Car drivenCar){
+        float userAverageFuelConsumption = (drivenCar.getUserTotalFuelWasted() + wastedLiters) /
+                (drivenCar.getUserTotalPassedDistance() + passedDistance) * 100f;
 
-        drivenCar.setFactoryAverageFuelConsumption(newAverageFuelConsumption);
-        drivenCar.setTotalPassedDistance(drivenCar.getTotalPassedDistance() + passedDistance);
+        drivenCar.setUserAverageFuelConsumption(userAverageFuelConsumption);
 
-        return newAverageFuelConsumption;
+        return userAverageFuelConsumption;
     }
 
     /**
