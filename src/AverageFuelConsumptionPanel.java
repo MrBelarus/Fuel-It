@@ -188,7 +188,7 @@ public class AverageFuelConsumptionPanel extends JPanel {
 
         String log = String.format(
                 """
-                        Время операции: %s
+                  Время операции: %s
                         Израсходовано топлива - %.2f л.
                         Текущий средний расход топлива - %.2f л./100км.
                         Пройденно расстояние - %d км.

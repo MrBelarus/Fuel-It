@@ -29,6 +29,7 @@ public class DistanceFromFuelPanel extends JPanel {
         JLabel inputLabel = new JLabel("Введите кол-во топлива (л):");
         inputLabel.setFont(new Font("Arial", Font.ITALIC, 16));
         txtFldFuel = new JTextField("");
+        txtFldFuel.setFont(new Font("Arial", Font.BOLD, 18));
         fieldsPanel.add(inputLabel, Component.LEFT_ALIGNMENT);
         fieldsPanel.add(txtFldFuel);
 
@@ -41,7 +42,7 @@ public class DistanceFromFuelPanel extends JPanel {
 
         formPanel.add(pnlButton, BorderLayout.SOUTH);
         formPanel.add(fieldsPanel, BorderLayout.CENTER);
-        formPanel.setPreferredSize(new Dimension(300, 100));
+        formPanel.setPreferredSize(new Dimension(300, 125));
 
         add(formPanel);
         setBorder(BorderFactory.createEtchedBorder());

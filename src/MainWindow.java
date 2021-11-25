@@ -42,6 +42,7 @@ public class MainWindow extends JFrame {
     private AboutAuthorDialog aboutAuthorDialog;
     private AboutApplicationDialog aboutApplicationDialog;
     private AddCarDialog addCarDialog;
+    private CarOperationsDialog carOperationsDialog;
 
     private JMenuBar menuBar;
 
@@ -192,6 +193,7 @@ public class MainWindow extends JFrame {
         pnlSeeReport.setPreferredSize(new Dimension(200, 70));
         JButton btnSeeCarReport = new JButton("<html>Показать отчет<br>по автомобилю<html>");
         btnSeeCarReport.setPreferredSize(new Dimension(150, 55));
+        btnSeeCarReport.addActionListener(new OpenCarReportListener(this));
         pnlSeeReport.add(btnSeeCarReport);
 
         //add report button to cars report and info panel
@@ -416,7 +418,7 @@ public class MainWindow extends JFrame {
      */
     public void updateCarInfoText(Car selectedCar) {
         if (selectedCar == null) {
-            txtAreaCarInfo.setText("Выберите машину, чтобы \n" +
+            txtAreaCarInfo.setText("Выберите автомобиль, чтобы \n" +
                     "увидеть информацию о ней.");
             return;
         }
@@ -537,7 +539,7 @@ public class MainWindow extends JFrame {
     class ButtonRemoveCarListener implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             if (selectedCar == null) {
-                JOptionPane.showMessageDialog(null, "Сначала выберите машину," +
+                JOptionPane.showMessageDialog(null, "Сначала выберите автомобиль," +
                         "\nкоторую хотите удалить", "Ошибка операции", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -546,6 +548,30 @@ public class MainWindow extends JFrame {
             comboBoxCars.removeItemAt(comboBoxCars.getSelectedIndex());
             selectedCar = null;
             comboBoxCars.setSelectedIndex(0);
+        }
+    }
+
+    /**
+     * See car operations log (report) button click listener
+     */
+    class OpenCarReportListener implements ActionListener{
+        private MainWindow mainWindow;
+
+        public OpenCarReportListener(MainWindow mainWindow){
+            this.mainWindow = mainWindow;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            if (selectedCar == null) {
+                JOptionPane.showMessageDialog(null, "Сначала выберите автомобиль," +
+                        "\nчтобы увидеть отчет", "Ошибка операции", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (carOperationsDialog == null){
+                carOperationsDialog = new CarOperationsDialog(mainWindow);
+            }
+            carOperationsDialog.enableFrame(true);
         }
     }
     //endregion

@@ -36,12 +36,13 @@ public class FuelFromDistancePanel extends JPanel {
         JLabel inputLabel = new JLabel("Введите расстояние (км):");
         inputLabel.setFont(new Font("Arial", Font.ITALIC, 16));
         txtFldDistance = new JTextField("");
+        txtFldDistance.setFont(new Font("Arial", Font.BOLD, 16));
         fieldsPanel.add(inputLabel, Component.LEFT_ALIGNMENT);
         fieldsPanel.add(txtFldDistance);
 
         formPanel.add(pnlButton, BorderLayout.SOUTH);
         formPanel.add(fieldsPanel, BorderLayout.CENTER);
-        formPanel.setPreferredSize(new Dimension(300, 100));
+        formPanel.setPreferredSize(new Dimension(300, 125));
 
         add(formPanel);
         setBorder(BorderFactory.createEtchedBorder());
