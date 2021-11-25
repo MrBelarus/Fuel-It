@@ -80,10 +80,14 @@ public class DistanceFromFuelPanel extends JPanel {
                 return;
             }
 
-            float result = CarManager.calculateDistance(fuelAmount, selectedCar);
-            String info = String.format("Результат: "
-                    + "%.2f" + "км.\nЕсли использовать автомобиль " +
-                    selectedCar.getModel() + ".", result);
+            float userResult = CarManager.calculateUserDistance(fuelAmount, selectedCar);
+            float factoryResult = CarManager.calculateFactoryDistance(fuelAmount, selectedCar);
+            String info = String.format("Автомобиль %s:" +
+                            "\nРезультат при текущем " +
+                            "среднем расходе топлива: %.1fкм" +
+                            "\nРезультат при заводском " +
+                            "среднем расходе топлива: %.1fкм",
+                    selectedCar.getModel(), userResult, factoryResult);
             JOptionPane.showMessageDialog(null, info,
                     "Результат операции", JOptionPane.INFORMATION_MESSAGE);
 
