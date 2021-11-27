@@ -419,7 +419,7 @@ public class MainWindow extends JFrame {
     public void updateCarInfoText(Car selectedCar) {
         if (selectedCar == null) {
             txtAreaCarInfo.setText("Выберите автомобиль, чтобы \n" +
-                    "увидеть информацию о ней.");
+                    "увидеть информацию о нем.");
             return;
         }
         txtAreaCarInfo.setText(selectedCar.toString());

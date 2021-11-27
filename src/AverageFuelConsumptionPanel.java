@@ -111,7 +111,7 @@ public class AverageFuelConsumptionPanel extends JPanel {
 
             if (fuelOnFinishPercents > fuelOnStartPercents){
                 JOptionPane.showMessageDialog(null,
-                        "Неверно указаны значения топлива в баке.",
+                        "Неверно указаны значения уровня топлива в баке.",
                         "Ошибка операции", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -155,14 +155,16 @@ public class AverageFuelConsumptionPanel extends JPanel {
             selectedCar.setTotalPassedDistance(mileageFinish);
             selectedCar.setUserTotalFuelWasted(selectedCar.getUserTotalFuelWasted() +
                     wastedFuelAmount);
-            selectedCar.setUserTotalPassedDistance(selectedCar.getUserTotalPassedDistance() +
-                    (int)passedDistance);
+            selectedCar.setUserTotalPassedDistance(
+                    selectedCar.getUserTotalPassedDistance() + (int)passedDistance);
 
-            String info = String.format("Текущий средний расход " +
-                            "топлива автомобиля " + selectedCar.getModel() +
-                            ":\n%.1f л. на 100 км.\nСредний расход топлива сессии на " +
-                            "%.1f км = %.1f л.",
-                    newCarAverageFuelConsumption, passedDistance, sessionAverageFuelConsumption);
+            String info = String.format("Автомобиль " +
+                            selectedCar.getModel() + ":" +
+                            "\nСредний расход топлива сессии на " +
+                            "%.1fкм: %.1fл. на 100км." +
+                            "\nТекущий средний расход топлива: %.1fл. на 100км.",
+                    passedDistance, sessionAverageFuelConsumption,
+                    newCarAverageFuelConsumption);
             JOptionPane.showMessageDialog(null, info,
                     "Результат операции", JOptionPane.INFORMATION_MESSAGE);
 

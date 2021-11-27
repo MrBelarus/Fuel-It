@@ -19,9 +19,22 @@ public class CarManager {
      * Calculates distance that Car can pass with given liters
      * @param litersAmount total fuel in liters
      * @param car car that will be driven
-     * @return amount of distance in km
+     * @return amount of distance in km with user average fuel consumption
      */
-    public static float calculateDistance(float litersAmount, Car car){
+    public static float calculateUserDistance(float litersAmount, Car car){
+        if (car.getFactoryAverageFuelConsumption() == 0f){
+            return Float.MAX_VALUE;
+        }
+        return litersAmount / car.getUserAverageFuelConsumption() * 100f;
+    }
+
+    /**
+     * Calculates distance that Car can pass with given liters
+     * @param litersAmount total fuel in liters
+     * @param car car that will be driven
+     * @return amount of distance in km with factory average fuel consumption
+     */
+    public static float calculateFactoryDistance(float litersAmount, Car car){
         if (car.getFactoryAverageFuelConsumption() == 0f){
             return Float.MAX_VALUE;
         }
@@ -33,9 +46,21 @@ public class CarManager {
      * @param distance target distance to pass in km
      * @param car car that will be driven
      * @return amount of fuel in liters to pass target distance
+     * with car's factory average fuel consumption
      */
-    public static float calculateFuelAmount(float distance, Car car){
+    public static float calculateFactoryFuelAmount(float distance, Car car){
         return car.getFactoryAverageFuelConsumption() * distance / 100f;
+    }
+
+    /**
+     * Calculates distance that Car can pass with given liters
+     * @param distance target distance to pass in km
+     * @param car car that will be driven
+     * @return amount of fuel in liters to pass target distance
+     * with car's user average fuel consumption
+     */
+    public static float calculateUserFuelAmount(float distance, Car car){
+        return car.getUserAverageFuelConsumption() * distance / 100f;
     }
 
     /**
