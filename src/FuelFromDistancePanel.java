@@ -17,6 +17,10 @@ public class FuelFromDistancePanel extends JPanel {
     private MainWindow mainWindow;
     private JTextField txtFldDistance;
 
+    /**
+     * Constructor for creating an object
+     * @param mainWindow parent window (class MainWindow)
+     */
     public FuelFromDistancePanel(MainWindow mainWindow) {
         this.mainWindow = mainWindow;
 

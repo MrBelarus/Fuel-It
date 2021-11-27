@@ -23,8 +23,14 @@ public class Car {
 
     private ArrayList<String> operationsLog = new ArrayList<>();
 
+    /**
+     * Default constructor for creating an object
+     */
     public Car() {}
 
+    /**
+     * Constructor for creating an object
+     */
     public Car(String model,
                float totalPassedDistance,
                float averageFuelConsumption,

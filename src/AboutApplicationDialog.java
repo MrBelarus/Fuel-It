@@ -17,6 +17,10 @@ public class AboutApplicationDialog extends JDialog {
 
     private Dimension dialogSize = new Dimension(780, 420);
 
+    /**
+     * Constructor for creating an object
+     * @param mainWindow parent window (class MainWindow)
+     */
     public AboutApplicationDialog(MainWindow mainWindow){
         super(mainWindow, "Об приложении");
 

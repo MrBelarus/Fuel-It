@@ -29,6 +29,10 @@ public class AverageFuelConsumptionPanel extends JPanel {
     private JSlider sliderFuelAmountOnFinish = new JSlider(
             JSlider.HORIZONTAL, 0, 100, 50);
 
+    /**
+     * Constructor for creating an object
+     * @param mainWindow parent window (class MainWindow)
+     */
     public AverageFuelConsumptionPanel(MainWindow mainWindow) {
         this.mainWindow = mainWindow;
 

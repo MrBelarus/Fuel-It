@@ -21,6 +21,10 @@ public class AboutAuthorDialog extends JDialog {
 
     private Dimension dialogSize = new Dimension(400, 500);
 
+    /**
+     * Constructor for creating an object
+     * @param mainWindow parent window (class MainWindow)
+     */
     public AboutAuthorDialog(MainWindow owner){
         super(owner, "Автор", true);
         pnlMain = new JPanel(new BorderLayout());

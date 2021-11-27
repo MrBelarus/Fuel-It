@@ -15,6 +15,10 @@ public class CarOperationsDialog extends JDialog{
 
     private Dimension dialogSize = new Dimension(450, 305);
 
+    /**
+     * Constructor for creating an object
+     * @param mainWindow parent window (class MainWindow)
+     */
     public CarOperationsDialog(MainWindow mainWindow){
         super(mainWindow, "Отчет по автомобилю");
         this.mainWindow = mainWindow;
