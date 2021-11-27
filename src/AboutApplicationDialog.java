@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * JDialog class used to display about application information
+ */
 public class AboutApplicationDialog extends JDialog {
     private JPanel pnlMain;
 
@@ -54,7 +57,7 @@ public class AboutApplicationDialog extends JDialog {
 
     /**
      * enables or disable JDialog instance
-     * @param active
+     * @param active true - show, false - hide
      */
     public void enableFrame(boolean active) {
         if (active) {

@@ -23,7 +23,7 @@ public class AboutAuthorDialog extends JDialog {
 
     /**
      * Constructor for creating an object
-     * @param mainWindow parent window (class MainWindow)
+     * @param owner parent window (class MainWindow)
      */
     public AboutAuthorDialog(MainWindow owner){
         super(owner, "Автор", true);

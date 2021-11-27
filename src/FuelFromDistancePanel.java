@@ -29,7 +29,7 @@ public class FuelFromDistancePanel extends JPanel {
         JPanel pnlButton = new JPanel();
 
         //create calculate button
-        JButton btnCalculate = new JButton("Расчитать");
+        JButton btnCalculate = new JButton("Рассчитать");
         btnCalculate.setFont(new Font("Arial", Font.BOLD, 16));
         btnCalculate.setPreferredSize(new Dimension(300, 50));
         btnCalculate.addActionListener(new CalculateFuelFromDistanceClickListener());

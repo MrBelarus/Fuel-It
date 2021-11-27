@@ -14,6 +14,13 @@ import java.io.IOException;
  * @version 1.0
  */
 public class ImageScaller {
+    /**
+     * Scale image
+     * @param imagePath path to image
+     * @param newDimension new image size
+     * @param hints Image scale algorithm
+     * @return scaled Image instance
+     */
     public static Image scaleImage(String imagePath,
                                    Dimension newDimension,
                                    int hints) {

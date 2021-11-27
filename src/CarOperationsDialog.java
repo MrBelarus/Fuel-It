@@ -7,6 +7,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
+/**
+ * JDialog class used to get car operations list
+ */
 public class CarOperationsDialog extends JDialog{
     private MainWindow mainWindow;
 
