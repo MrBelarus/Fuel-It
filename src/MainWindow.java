@@ -24,9 +24,9 @@ public class MainWindow extends JFrame {
     private JPanel pnlCenter;
     private JPanel pnlBottom;
 
-    private JPanel pnlAverageConsumptionOperation;
-    private JPanel pnlFuelFromDistanceOperation;
-    private JPanel pnlDistanceFromFuelOperation;
+    private AverageFuelConsumptionPanel pnlAverageConsumptionOperation;
+    private FuelFromDistancePanel pnlFuelFromDistanceOperation;
+    private DistanceFromFuelPanel pnlDistanceFromFuelOperation;
     private ArrayList<JPanel> operationPanelsList;
 
     private JComboBox comboBoxCars;
@@ -512,6 +512,7 @@ public class MainWindow extends JFrame {
 
             selectedCar = selectedCarIndex == -1 ? null : CarManager.cars.get(selectedCarIndex);
             updateCarInfoText(selectedCar);
+            pnlAverageConsumptionOperation.updateFields(selectedCar);
         }
     }
 

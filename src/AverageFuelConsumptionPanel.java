@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.Objects;
@@ -23,14 +23,18 @@ public class AverageFuelConsumptionPanel extends JPanel {
 
     private JTextField txtFldMileageStart = new JTextField("");
     private JTextField txtFldMileageFinish = new JTextField("");
+    private JTextField txtFldAdditionalFuel = new JTextField("");
 
     private JSlider sliderFuelAmountOnStart = new JSlider(
             JSlider.HORIZONTAL, 0, 100, 50);
     private JSlider sliderFuelAmountOnFinish = new JSlider(
             JSlider.HORIZONTAL, 0, 100, 50);
 
+    private JCheckBox checkBoxRefreshFields;
+
     /**
      * Constructor for creating an object
+     *
      * @param mainWindow parent window (class MainWindow)
      */
     public AverageFuelConsumptionPanel(MainWindow mainWindow) {
@@ -40,7 +44,7 @@ public class AverageFuelConsumptionPanel extends JPanel {
         JPanel formPanel = new JPanel(new BorderLayout());
         JPanel pnlButton = new JPanel();
 
-        JPanel fieldsPanel = new JPanel(new GridLayout(8, 1));
+        JPanel fieldsPanel = new JPanel(new GridLayout(11, 1));
 
         //create labels with input fields
         String[] labelsText = new String[]{
@@ -51,11 +55,17 @@ public class AverageFuelConsumptionPanel extends JPanel {
                 txtFldMileageFinish};
 
         for (int i = 0; i < inputFields.length; i++) {
-            JLabel inputLabel = createLabel(labelsText[i], Font.ITALIC, 16);
+            JLabel lblInput = createLabel(labelsText[i], Font.ITALIC, 16);
             inputFields[i].setFont(new Font("Arial", Font.BOLD, 18));
-            fieldsPanel.add(inputLabel, Component.LEFT_ALIGNMENT);
+            fieldsPanel.add(lblInput, Component.LEFT_ALIGNMENT);
             fieldsPanel.add(inputFields[i]);
         }
+
+        JLabel lblAdditionalFuel = createLabel(
+                "Кол-во заправленного топлива (л.):", Font.ITALIC, 16);
+        fieldsPanel.add(lblAdditionalFuel, Component.LEFT_ALIGNMENT);
+        txtFldAdditionalFuel.setFont(new Font("Arial", Font.BOLD, 18));
+        fieldsPanel.add(txtFldAdditionalFuel);
 
         labelsText = new String[]{
                 "Примерный уровень топлива до начала пути:",
@@ -65,11 +75,19 @@ public class AverageFuelConsumptionPanel extends JPanel {
                 sliderFuelAmountOnFinish};
 
         for (int i = 0; i < sliders.length; i++) {
-            JLabel inputLabel = createLabel(labelsText[i], Font.ITALIC, 16);
+            JLabel lblInput = createLabel(labelsText[i], Font.ITALIC, 16);
             initSlider(sliders[i]);
-            fieldsPanel.add(inputLabel, Component.LEFT_ALIGNMENT);
+            fieldsPanel.add(lblInput, Component.LEFT_ALIGNMENT);
             fieldsPanel.add(sliders[i], Component.CENTER_ALIGNMENT);
         }
+
+        //create refresh fields checkBox
+        JPanel pnlRefreshInputData = new JPanel(new FlowLayout());
+        checkBoxRefreshFields = new JCheckBox();
+        pnlRefreshInputData.add(checkBoxRefreshFields);
+        pnlRefreshInputData.add(createLabel(
+                "Обнулить поля ввода после расчета.", Font.PLAIN, 16));
+        fieldsPanel.add(pnlRefreshInputData);
 
         //create calculate button
         JButton btnCalculate = new JButton("Рассчитать");
@@ -80,128 +98,70 @@ public class AverageFuelConsumptionPanel extends JPanel {
 
         formPanel.add(pnlButton, BorderLayout.SOUTH);
         formPanel.add(fieldsPanel, BorderLayout.CENTER);
-        formPanel.setPreferredSize(new Dimension(370, 405));
+        formPanel.setPreferredSize(new Dimension(370, 450));
 
         add(formPanel);
         setBorder(BorderFactory.createEtchedBorder());
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                super.componentShown(e);
+                updateFields(mainWindow.getSelectedCar());
+            }
+        });
     }
 
     /**
-     * Calculate button listener
+     * Updates input field information <br>
+     * based on current selected car
+     * @param currentCar current selected car
      */
-    class CalculateAverageConsumptionClickListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Car selectedCar = mainWindow.getSelectedCar();
-
-            if (Objects.equals(txtFldMileageStart.getText(), "") ||
-                    Objects.equals(txtFldMileageFinish.getText(), "")) {
-                JOptionPane.showMessageDialog(null,
-                        "Заполните данные!",
-                        "Ошибка операции", JOptionPane.ERROR_MESSAGE);
-                return;
-            } else if (selectedCar == null) {
-                JOptionPane.showMessageDialog(null, "Выберите автомобиль.",
-                        "Ошибка операции", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            float fuelOnStartPercents = sliderFuelAmountOnStart.getValue();
-            float fuelOnFinishPercents = sliderFuelAmountOnFinish.getValue();
-
-            if (fuelOnFinishPercents > fuelOnStartPercents){
-                JOptionPane.showMessageDialog(null,
-                        "Неверно указаны значения уровня топлива в баке.",
-                        "Ошибка операции", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            float mileageStart;
-            float mileageFinish;
-            try {
-                mileageStart = Float.parseFloat(txtFldMileageStart.getText());
-                mileageFinish = Float.parseFloat(txtFldMileageFinish.getText());
-
-                if (mileageStart > mileageFinish){
-                    JOptionPane.showMessageDialog(null,
-                            "Неверно указаны значения пробега.",
-                            "Ошибка операции", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                else if (mileageStart < selectedCar.getTotalPassedDistance()){
-                    JOptionPane.showMessageDialog(null,
-                            "Пробег на начало движения\nне может быть меньше текущего!",
-                            "Ошибка операции", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-            } catch (Exception exception) {
-                JOptionPane.showMessageDialog(null,
-                        "Проверьте правильность ввода данных.",
-                        "Ошибка операции", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            float wastedFuelAmount = selectedCar.getFuelTankCapacity() *
-                    (fuelOnStartPercents - fuelOnFinishPercents) / 100f;
-            float passedDistance = mileageFinish - mileageStart;
-
-            float newCarAverageFuelConsumption =
-                    CarManager.calculateUserAverageFuelConsumption(passedDistance,
-                            wastedFuelAmount, selectedCar);
-            float sessionAverageFuelConsumption =
-                    CarManager.calculateSessionAverageFuelConsumption(passedDistance,
-                            wastedFuelAmount);
-
-            selectedCar.setTotalPassedDistance(mileageFinish);
-            selectedCar.setUserTotalFuelWasted(selectedCar.getUserTotalFuelWasted() +
-                    wastedFuelAmount);
-            selectedCar.setUserTotalPassedDistance(
-                    selectedCar.getUserTotalPassedDistance() + (int)passedDistance);
-
-            String info = String.format("Автомобиль " +
-                            selectedCar.getModel() + ":" +
-                            "\nСредний расход топлива сессии на " +
-                            "%.1fкм: %.1fл. на 100км." +
-                            "\nТекущий средний расход топлива: %.1fл. на 100км.",
-                    passedDistance, sessionAverageFuelConsumption,
-                    newCarAverageFuelConsumption);
-            JOptionPane.showMessageDialog(null, info,
-                    "Результат операции", JOptionPane.INFORMATION_MESSAGE);
-
-
-            addOperationCarLog(selectedCar, wastedFuelAmount, mileageFinish, passedDistance);
-
-            mainWindow.updateCarInfoText(selectedCar);
-
-            txtFldMileageStart.setText("");
-            txtFldMileageFinish.setText("");
-            sliderFuelAmountOnStart.setValue(50);
-            sliderFuelAmountOnFinish.setValue(50);
+    public void updateFields(Car currentCar) {
+        refreshFieldsToDefault();
+        if (currentCar == null) {
+            return;
         }
+
+        String totalPassedDistance = String.valueOf(
+                (int) currentCar.getTotalPassedDistance());
+        txtFldMileageStart.setText(totalPassedDistance);
+        txtFldMileageFinish.setText(totalPassedDistance);
+    }
+
+    /**
+     * Refreshes input fields to default values
+     */
+    private void refreshFieldsToDefault() {
+        txtFldMileageStart.setText("0");
+        txtFldMileageFinish.setText("0");
+        txtFldAdditionalFuel.setText("0");
+        sliderFuelAmountOnStart.setValue(50);
+        sliderFuelAmountOnFinish.setValue(50);
     }
 
     /**
      * Adds log line to car
-     * @param car driven car
-     * @param wastedLiters amount of wasted liters
-     * @param finishMileage finish mileage
+     *
+     * @param car            driven car
+     * @param wastedLiters   amount of wasted liters
+     * @param finishMileage  finish mileage
      * @param passedDistance passed distance
      */
     private void addOperationCarLog(Car car, float wastedLiters,
-                                    float finishMileage, float passedDistance){
+                                    float finishMileage, float passedDistance) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
 
         String log = String.format(
                 """
-                  Время операции: %s
-                        Израсходовано топлива - %.2f л.
-                        Текущий средний расход топлива - %.2f л./100км.
-                        Пройденно расстояние - %d км.
-                        Пробег автомобиля на конец движения - %d км.
-                """, formatter.format(date),
+                          Время операции: %s
+                                Израсходовано топлива - %.2f л.
+                                Текущий средний расход топлива - %.2f л./100км.
+                                Пройденно расстояние - %d км.
+                                Пробег автомобиля на конец движения - %d км.
+                        """, formatter.format(date),
                 wastedLiters, car.getUserAverageFuelConsumption(),
-                (int)passedDistance, (int)finishMileage
+                (int) passedDistance, (int) finishMileage
         );
 
         car.addOperationLog(log);
@@ -238,5 +198,115 @@ public class AverageFuelConsumptionPanel extends JPanel {
         inputLabel.setFont(new Font("Arial", fontStyle, size));
         inputLabel.setForeground(Color.black);
         return inputLabel;
+    }
+
+    /**
+     * Calculate button listener
+     */
+    class CalculateAverageConsumptionClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Car selectedCar = mainWindow.getSelectedCar();
+
+            if (Objects.equals(txtFldMileageStart.getText(), "") ||
+                    Objects.equals(txtFldMileageFinish.getText(), "")) {
+                showErrorMessageDialog("Ошибка операции", "Заполните данные!");
+                return;
+            } else if (selectedCar == null) {
+                showErrorMessageDialog("Ошибка операции", "Выберите автомобиль.");
+                return;
+            }
+
+            float fuelOnStartPercents = sliderFuelAmountOnStart.getValue();
+            float fuelOnFinishPercents = sliderFuelAmountOnFinish.getValue();
+
+            if (fuelOnFinishPercents > fuelOnStartPercents) {
+                showErrorMessageDialog("Ошибка операции",
+                        "Неверно указаны значения уровня топлива в баке.");
+                return;
+            }
+
+            if (Objects.equals(txtFldAdditionalFuel.getText(), "")){
+                txtFldAdditionalFuel.setText("0");
+            }
+
+            float mileageStart;
+            float mileageFinish;
+            float filledFuelAmount;
+            try {
+                mileageStart = Float.parseFloat(txtFldMileageStart.getText());
+                mileageFinish = Float.parseFloat(txtFldMileageFinish.getText());
+                filledFuelAmount = Float.parseFloat(txtFldAdditionalFuel.getText());
+
+                if (filledFuelAmount < 0){
+                    showErrorMessageDialog("Ошибка операции",
+                            "Неверно указаны значения заправленного топлива.");
+                    return;
+                }
+                if (mileageStart > mileageFinish) {
+                    showErrorMessageDialog("Ошибка операции",
+                            "Неверно указаны значения пробега.");
+                    return;
+                } else if (mileageStart < selectedCar.getTotalPassedDistance()) {
+                    showErrorMessageDialog("Ошибка операции", "Пробег" +
+                            " на начало движения\nне может быть меньше текущего!");
+                    return;
+                }
+            } catch (Exception exception) {
+                showErrorMessageDialog("Ошибка операции",
+                        "Проверьте правильность ввода данных.");
+                return;
+            }
+
+            float wastedFuelAmount = selectedCar.getFuelTankCapacity() *
+                    (fuelOnStartPercents - fuelOnFinishPercents) / 100f + filledFuelAmount;
+            float passedDistance = mileageFinish - mileageStart;
+
+            float newCarAverageFuelConsumption =
+                    CarManager.calculateUserAverageFuelConsumption(passedDistance,
+                            wastedFuelAmount, selectedCar);
+            float sessionAverageFuelConsumption =
+                    CarManager.calculateSessionAverageFuelConsumption(passedDistance,
+                            wastedFuelAmount);
+
+            selectedCar.setTotalPassedDistance(mileageFinish);
+            selectedCar.setUserTotalFuelWasted(selectedCar.getUserTotalFuelWasted() +
+                    wastedFuelAmount);
+            selectedCar.setUserTotalPassedDistance(
+                    selectedCar.getUserTotalPassedDistance() + (int) passedDistance);
+
+            String info = String.format("Автомобиль " +
+                            selectedCar.getModel() + ":" +
+                            "\nКол-во потраченного топлива: %.1fл." +
+                            "\nПройденное расстояние: %.1fкм." +
+                            "\nСредний расход топлива: %.1fл. на 100 км.\n" +
+                            "\nТекущий общий средний расход топлива: %.1fл. на 100км.",
+                    wastedFuelAmount, passedDistance, sessionAverageFuelConsumption,
+                    newCarAverageFuelConsumption);
+            JOptionPane.showMessageDialog(null, info,
+                    "Результат операции", JOptionPane.INFORMATION_MESSAGE);
+
+
+            addOperationCarLog(selectedCar, wastedFuelAmount, mileageFinish, passedDistance);
+
+            mainWindow.updateCarInfoText(selectedCar);
+
+            if (checkBoxRefreshFields.isSelected()) {
+                refreshFieldsToDefault();
+            }
+            else {
+                updateFields(selectedCar);
+            }
+        }
+    }
+
+    /**
+     * displays common JOptionPane with error message
+     * @param title title of option pane
+     * @param errorText error message (text)
+     */
+    private void showErrorMessageDialog(String title, String errorText){
+        JOptionPane.showMessageDialog(null, errorText,
+                title, JOptionPane.ERROR_MESSAGE);
     }
 }
