@@ -19,6 +19,7 @@ public class DistanceFromFuelPanel extends JPanel {
 
     /**
      * Constructor for creating an object
+     *
      * @param mainWindow parent window (class MainWindow)
      */
     public DistanceFromFuelPanel(MainWindow mainWindow) {
@@ -60,15 +61,14 @@ public class DistanceFromFuelPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             Car selectedCar = mainWindow.getSelectedCar();
 
-            if (Objects.equals(txtFldFuel.getText(), "")){
-                JOptionPane.showMessageDialog(null,
-                        "Заполните данные!",
+            if (selectedCar == null) {
+                JOptionPane.showMessageDialog(null, "Выберите автомобиль.",
                         "Ошибка операции", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
-            else if (selectedCar == null) {
-                JOptionPane.showMessageDialog(null, "Выберите автомобиль.",
+            else if (Objects.equals(txtFldFuel.getText(), "")) {
+                JOptionPane.showMessageDialog(null,
+                        "Заполните данные!",
                         "Ошибка операции", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -76,8 +76,7 @@ public class DistanceFromFuelPanel extends JPanel {
             float fuelAmount;
             try {
                 fuelAmount = Float.parseFloat(txtFldFuel.getText());
-            }
-            catch (Exception exception) {
+            } catch (Exception exception) {
                 JOptionPane.showMessageDialog(null,
                         "Проверьте правильность ввода данных.",
                         "Ошибка операции", JOptionPane.ERROR_MESSAGE);

@@ -1,6 +1,8 @@
 import Entities.Car;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,6 +32,11 @@ public class AverageFuelConsumptionPanel extends JPanel {
     private JSlider sliderFuelAmountOnFinish = new JSlider(
             JSlider.HORIZONTAL, 0, 100, 50);
 
+    private JLabel lblFuelLevelOnStart;
+    private JLabel lblFuelLevelOnFinish;
+
+    private Car selectedCar;
+
     private JCheckBox checkBoxRefreshFields;
 
     /**
@@ -44,7 +51,7 @@ public class AverageFuelConsumptionPanel extends JPanel {
         JPanel formPanel = new JPanel(new BorderLayout());
         JPanel pnlButton = new JPanel();
 
-        JPanel fieldsPanel = new JPanel(new GridLayout(11, 1));
+        JPanel fieldsPanel = new JPanel(new GridLayout(13, 1));
 
         //create labels with input fields
         String[] labelsText = new String[]{
@@ -74,10 +81,22 @@ public class AverageFuelConsumptionPanel extends JPanel {
                 sliderFuelAmountOnStart,
                 sliderFuelAmountOnFinish};
 
+        lblFuelLevelOnStart = createLabel("", Font.PLAIN, 18);
+        lblFuelLevelOnStart.setHorizontalAlignment(SwingConstants.CENTER);
+        lblFuelLevelOnFinish = createLabel("", Font.PLAIN, 18);
+        lblFuelLevelOnFinish.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JLabel[] lblFuelLevels = new JLabel[]{
+                lblFuelLevelOnStart,
+                lblFuelLevelOnFinish
+        };
+
         for (int i = 0; i < sliders.length; i++) {
             JLabel lblInput = createLabel(labelsText[i], Font.ITALIC, 16);
             initSlider(sliders[i]);
+            sliders[i].addChangeListener(new DisplayFuelSliderValue());
             fieldsPanel.add(lblInput, Component.LEFT_ALIGNMENT);
+            fieldsPanel.add(lblFuelLevels[i], Component.CENTER_ALIGNMENT);
             fieldsPanel.add(sliders[i], Component.CENTER_ALIGNMENT);
         }
 
@@ -98,7 +117,7 @@ public class AverageFuelConsumptionPanel extends JPanel {
 
         formPanel.add(pnlButton, BorderLayout.SOUTH);
         formPanel.add(fieldsPanel, BorderLayout.CENTER);
-        formPanel.setPreferredSize(new Dimension(370, 450));
+        formPanel.setPreferredSize(new Dimension(370, 510));
 
         add(formPanel);
         setBorder(BorderFactory.createEtchedBorder());
@@ -106,6 +125,7 @@ public class AverageFuelConsumptionPanel extends JPanel {
             @Override
             public void componentShown(ComponentEvent e) {
                 super.componentShown(e);
+                refreshFieldsToDefault();
                 updateFields(mainWindow.getSelectedCar());
             }
         });
@@ -114,11 +134,14 @@ public class AverageFuelConsumptionPanel extends JPanel {
     /**
      * Updates input field information <br>
      * based on current selected car
+     *
      * @param currentCar current selected car
      */
     public void updateFields(Car currentCar) {
-        refreshFieldsToDefault();
+        selectedCar = currentCar;
+
         if (currentCar == null) {
+            refreshFieldsToDefault();
             return;
         }
 
@@ -126,6 +149,10 @@ public class AverageFuelConsumptionPanel extends JPanel {
                 (int) currentCar.getTotalPassedDistance());
         txtFldMileageStart.setText(totalPassedDistance);
         txtFldMileageFinish.setText(totalPassedDistance);
+        lblFuelLevelOnStart.setText(
+                sliderFuelAmountOnStart.getValue() * currentCar.getFuelTankCapacity() / 100f + "л.");
+        lblFuelLevelOnFinish.setText(
+                sliderFuelAmountOnFinish.getValue() * currentCar.getFuelTankCapacity() / 100f + "л.");
     }
 
     /**
@@ -137,6 +164,8 @@ public class AverageFuelConsumptionPanel extends JPanel {
         txtFldAdditionalFuel.setText("0");
         sliderFuelAmountOnStart.setValue(50);
         sliderFuelAmountOnFinish.setValue(50);
+        lblFuelLevelOnStart.setText("");
+        lblFuelLevelOnFinish.setText("");
     }
 
     /**
@@ -190,7 +219,7 @@ public class AverageFuelConsumptionPanel extends JPanel {
     /**
      * creates label with input text and arial font
      *
-     * @param text what to diplay
+     * @param text what to display
      * @return created instance
      */
     private JLabel createLabel(String text, int fontStyle, int size) {
@@ -206,8 +235,6 @@ public class AverageFuelConsumptionPanel extends JPanel {
     class CalculateAverageConsumptionClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Car selectedCar = mainWindow.getSelectedCar();
-
             if (Objects.equals(txtFldMileageStart.getText(), "") ||
                     Objects.equals(txtFldMileageFinish.getText(), "")) {
                 showErrorMessageDialog("Ошибка операции", "Заполните данные!");
@@ -220,27 +247,29 @@ public class AverageFuelConsumptionPanel extends JPanel {
             float fuelOnStartPercents = sliderFuelAmountOnStart.getValue();
             float fuelOnFinishPercents = sliderFuelAmountOnFinish.getValue();
 
-            if (fuelOnFinishPercents > fuelOnStartPercents) {
-                showErrorMessageDialog("Ошибка операции",
-                        "Неверно указаны значения уровня топлива в баке.");
-                return;
-            }
-
-            if (Objects.equals(txtFldAdditionalFuel.getText(), "")){
+            if (Objects.equals(txtFldAdditionalFuel.getText(), "")) {
                 txtFldAdditionalFuel.setText("0");
             }
 
             float mileageStart;
             float mileageFinish;
             float filledFuelAmount;
+            float wastedFuelAmount;
             try {
                 mileageStart = Float.parseFloat(txtFldMileageStart.getText());
                 mileageFinish = Float.parseFloat(txtFldMileageFinish.getText());
                 filledFuelAmount = Float.parseFloat(txtFldAdditionalFuel.getText());
+                wastedFuelAmount = selectedCar.getFuelTankCapacity() *
+                        (fuelOnStartPercents - fuelOnFinishPercents) / 100f + filledFuelAmount;
 
-                if (filledFuelAmount < 0){
+                if (filledFuelAmount < 0f) {
                     showErrorMessageDialog("Ошибка операции",
                             "Неверно указаны значения заправленного топлива.");
+                    return;
+                }
+                if (wastedFuelAmount < 0f) {
+                    showErrorMessageDialog("Ошибка операции",
+                            "Неверно указаны значения уровня топлива в баке.");
                     return;
                 }
                 if (mileageStart > mileageFinish) {
@@ -258,8 +287,6 @@ public class AverageFuelConsumptionPanel extends JPanel {
                 return;
             }
 
-            float wastedFuelAmount = selectedCar.getFuelTankCapacity() *
-                    (fuelOnStartPercents - fuelOnFinishPercents) / 100f + filledFuelAmount;
             float passedDistance = mileageFinish - mileageStart;
 
             float newCarAverageFuelConsumption =
@@ -293,19 +320,43 @@ public class AverageFuelConsumptionPanel extends JPanel {
 
             if (checkBoxRefreshFields.isSelected()) {
                 refreshFieldsToDefault();
-            }
-            else {
+            } else {
                 updateFields(selectedCar);
             }
         }
     }
 
     /**
+     * Change value listener for fuel slider
+     */
+    class DisplayFuelSliderValue implements ChangeListener {
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            if (e.getSource().equals(sliderFuelAmountOnStart)) {
+                if (selectedCar == null) {
+                    lblFuelLevelOnStart.setText("");
+                } else {
+                    lblFuelLevelOnStart.setText(selectedCar.getFuelTankCapacity() *
+                            sliderFuelAmountOnStart.getValue() / 100f + "л.");
+                }
+            } else if (e.getSource().equals(sliderFuelAmountOnFinish)) {
+                if (selectedCar == null) {
+                    lblFuelLevelOnFinish.setText("");
+                } else {
+                    lblFuelLevelOnFinish.setText(selectedCar.getFuelTankCapacity() *
+                            sliderFuelAmountOnFinish.getValue() / 100f + "л.");
+                }
+            }
+        }
+    }
+
+    /**
      * displays common JOptionPane with error message
-     * @param title title of option pane
+     *
+     * @param title     title of option pane
      * @param errorText error message (text)
      */
-    private void showErrorMessageDialog(String title, String errorText){
+    private void showErrorMessageDialog(String title, String errorText) {
         JOptionPane.showMessageDialog(null, errorText,
                 title, JOptionPane.ERROR_MESSAGE);
     }
