@@ -18,7 +18,7 @@ public class AboutApplicationDialog extends JDialog {
     private JPanel pnlMiddle;
     private JPanel pnlBottom;
 
-    private Dimension dialogSize = new Dimension(780, 420);
+    private Dimension dialogSize = new Dimension(780, 435);
 
     /**
      * Constructor for creating an object
@@ -73,8 +73,10 @@ public class AboutApplicationDialog extends JDialog {
      */
     private JPanel createTopPanel(){
         pnlTop = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JLabel lblProjectName = new JLabel("Приложение для учета расхода топлива");
-        lblProjectName.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        JLabel lblProjectName = new JLabel(
+                "Приложение для учета расхода топлива");
+        lblProjectName.setBorder(
+                BorderFactory.createBevelBorder(BevelBorder.RAISED));
         pnlTop.add(lblProjectName);
         return pnlTop;
     }
@@ -89,7 +91,8 @@ public class AboutApplicationDialog extends JDialog {
         JPanel pnlPreview = new JPanel(new FlowLayout());
 
         Image imgPhoto = ImageScaller.scaleImage(
-                Application.getAppPath() + "\\src\\Resources\\Images\\app-preview.png",
+                Application.getAppPath() +
+                        "\\src\\Resources\\Images\\app-preview-v2.png",
                 new Dimension(350, 300),
                 Image.SCALE_SMOOTH);
         JLabel lblProgramPreview = new JLabel(new ImageIcon(imgPhoto));
@@ -102,19 +105,24 @@ public class AboutApplicationDialog extends JDialog {
         txtAreaProgramInfo.setLineWrap(true);
         txtAreaProgramInfo.setFont(new Font("Arial", Font.BOLD, 14));
         txtAreaProgramInfo.setForeground(Color.black);
-        txtAreaProgramInfo.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+        txtAreaProgramInfo.setBorder(
+                BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         txtAreaProgramInfo.setBackground(new Color(238, 238, 238));
         JScrollPane txtAreaScroll = new JScrollPane(txtAreaProgramInfo);
-        txtAreaScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        txtAreaScroll.setVerticalScrollBarPolicy(
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         txtAreaScroll.getViewport().setOpaque(false);
         txtAreaScroll.setOpaque(false);
 
         txtAreaProgramInfo.setText("Программа позволяет:\n" +
                 "   -Вести учет об автомобилях\n" +
                 "   -Добавлять/удалять информацию об автомобиле\n" +
-                "   -Рассчитывать кол-во топлива от пробега\nсоответствующего автомобиля\n" +
-                "   -Рассчитывать пробег от кол-ва топлива\nсоответствующего автомобиля\n" +
-                "   -Рассчитывать средний расход топлива\nсоответствующего автомобиля");
+                "   -Рассчитывать кол-во топлива от пробега\n" +
+                "соответствующего автомобиля\n" +
+                "   -Рассчитывать пробег от кол-ва топлива\n" +
+                "соответствующего автомобиля\n" +
+                "   -Рассчитывать средний расход топлива\n" +
+                "соответствующего автомобиля");
 
         pnlProgramInfo.add(txtAreaScroll, BorderLayout.CENTER);
 
@@ -133,7 +141,8 @@ public class AboutApplicationDialog extends JDialog {
 
         JPanel pnlAppVersion = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-        JLabel lblAppVersion = new JLabel("Версия " + Application.VERSION, SwingConstants.CENTER);
+        JLabel lblAppVersion = new JLabel("Версия " +
+                Application.VERSION, SwingConstants.CENTER);
         lblAppVersion.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         pnlAppVersion.add(lblAppVersion);
 

@@ -24,12 +24,18 @@ public class Car {
     private ArrayList<String> operationsLog = new ArrayList<>();
 
     /**
-     * Default constructor for creating an object
+     * Default constructor for creating a car instance
      */
     public Car() {}
 
     /**
-     * Constructor for creating an object
+     * Constructor with params for creating a car instance
+     * @param model car model name
+     * @param totalPassedDistance car mileage in km
+     * @param averageFuelConsumption car factory average fuel consumption<br>
+     *                               in liters per 100 kilometers
+     * @param factoryReleaseYear car factory release year
+     * @param fuelTankCapacity car fuel tank capacity in liters
      */
     public Car(String model,
                float totalPassedDistance,

@@ -316,7 +316,7 @@ public class AverageFuelConsumptionPanel extends JPanel {
 
             addOperationCarLog(selectedCar, wastedFuelAmount, mileageFinish, passedDistance);
 
-            mainWindow.updateCarInfoText(selectedCar);
+            mainWindow.updateCarInfoFields(selectedCar);
 
             if (checkBoxRefreshFields.isSelected()) {
                 refreshFieldsToDefault();

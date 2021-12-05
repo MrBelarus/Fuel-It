@@ -3,6 +3,7 @@ import Utils.UIUtility;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,26 +25,42 @@ public class MainWindow extends JFrame {
     private JPanel pnlCenter;
     private JPanel pnlBottom;
 
+    //car operation panels
     private AverageFuelConsumptionPanel pnlAverageConsumptionOperation;
     private FuelFromDistancePanel pnlFuelFromDistanceOperation;
     private DistanceFromFuelPanel pnlDistanceFromFuelOperation;
     private ArrayList<JPanel> operationPanelsList;
 
+    //necessary comboBoxes for cars & operations
     private JComboBox comboBoxCars;
     private JComboBox comboBoxOperations;
 
-    private JTextArea txtAreaCarInfo;
+    //txt fields to show car information
+    private JTextField txtFieldCarModel =  new JTextField("");
+    private JTextField txtFieldCarReleaseYear =  new JTextField("");
+    private JTextField txtFieldCarMileage =  new JTextField("");
+    private JTextField txtFieldCarFuelTankCapacity =  new JTextField("");
+    private JTextField txtFieldCarFactoryAverFuelConsump =  new JTextField("");
+    private JTextField txtFieldCarUserAverFuelConsump =  new JTextField("");
 
+    //keeps information about user's selected car
     private Car selectedCar = null;
+
+    /**
+     * Get users last selected car
+     * @return selected car instance
+     */
     public Car getSelectedCar() {
         return selectedCar;
     }
 
+    //necessary applications dialogs
     private AboutAuthorDialog aboutAuthorDialog;
     private AboutApplicationDialog aboutApplicationDialog;
     private AddCarDialog addCarDialog;
     private CarOperationsDialog carOperationsDialog;
 
+    //application menu bar
     private JMenuBar menuBar;
 
     //region UI components setup
@@ -200,24 +217,55 @@ public class MainWindow extends JFrame {
         pnlCarReportAndInfo.add(pnlSeeReport, BorderLayout.NORTH);
 
         //add panel for cars info
-        JPanel pnlCarInfo = new JPanel(new BorderLayout(5, 5));
-        txtAreaCarInfo = new JTextArea(0, 1);
-        txtAreaCarInfo.setEditable(false);
-        txtAreaCarInfo.setLineWrap(true);
-        txtAreaCarInfo.setFont(new Font("Arial", Font.BOLD, 14));
-        txtAreaCarInfo.setForeground(Color.black);
-        txtAreaCarInfo.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        updateCarInfoText(selectedCar);
+        JPanel pnlCarInfo = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 15));
+        JPanel pnlCarInfoFieldHolder = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        JPanel pnlCarInfoFields = new JPanel(new GridLayout(13, 1));
 
-        //create scroll for car txtArea
-        JScrollPane txtAreaScroll = new JScrollPane(txtAreaCarInfo);
-        txtAreaScroll.setPreferredSize(new Dimension(400, 0));
-        txtAreaScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        txtAreaScroll.getViewport().setOpaque(false);
-        txtAreaScroll.setOpaque(false);
+        //create necessary labels
+        JLabel lblCarInfo = createCarInfoLabel("Информация об автомобиле:", Font.BOLD);
+        JLabel lblCarModel = createCarInfoLabel("Модель:", Font.ITALIC);
+        JLabel lblCarReleaseYear = createCarInfoLabel("Год выпуска:", Font.ITALIC);
+        JLabel lblCarMileage = createCarInfoLabel("Пробег:", Font.ITALIC);
+        JLabel lblCarTankFuelCapacity = createCarInfoLabel(
+                "Объем бензобака:", Font.ITALIC);
+        JLabel lblCarFactoryAverFuelConsump = createCarInfoLabel(
+                "Заводской средний расход топлива:", Font.ITALIC);
+        JLabel lblCarUserAverFuelConsump = createCarInfoLabel(
+                "Текущий средний расход топлива:", Font.ITALIC);
 
-        //add created txtArea with scroll to car info panel
-        pnlCarInfo.add(txtAreaScroll, BorderLayout.CENTER);
+        /*
+        init all necessary car fields
+         */
+        initCarInfoField(txtFieldCarModel);
+        initCarInfoField(txtFieldCarReleaseYear);
+        initCarInfoField(txtFieldCarMileage);
+        initCarInfoField(txtFieldCarFuelTankCapacity);
+        initCarInfoField(txtFieldCarFactoryAverFuelConsump);
+        initCarInfoField(txtFieldCarUserAverFuelConsump);
+
+        pnlCarInfoFields.add(lblCarInfo);
+        pnlCarInfoFields.add(lblCarModel);
+        pnlCarInfoFields.add(txtFieldCarModel);
+        pnlCarInfoFields.add(lblCarReleaseYear);
+        pnlCarInfoFields.add(txtFieldCarReleaseYear);
+        pnlCarInfoFields.add(lblCarMileage);
+        pnlCarInfoFields.add(txtFieldCarMileage);
+        pnlCarInfoFields.add(lblCarTankFuelCapacity);
+        pnlCarInfoFields.add(txtFieldCarFuelTankCapacity);
+        pnlCarInfoFields.add(lblCarFactoryAverFuelConsump);
+        pnlCarInfoFields.add(txtFieldCarFactoryAverFuelConsump);
+        pnlCarInfoFields.add(lblCarUserAverFuelConsump);
+        pnlCarInfoFields.add(txtFieldCarUserAverFuelConsump);
+
+        pnlCarInfoFieldHolder.add(pnlCarInfoFields);
+        pnlCarInfoFieldHolder.setBorder(
+                BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+
+        //add created fields to car info panel
+        pnlCarInfo.add(pnlCarInfoFieldHolder, BorderLayout.CENTER);
+
+        //update info in fields
+        updateCarInfoFields(selectedCar);
 
         //add empty space to use hgap & vgap on pnlCarInfo BorderLayout
         JPanel emptySpace = new JPanel();
@@ -416,13 +464,32 @@ public class MainWindow extends JFrame {
      * Updates car's info text
      * @param selectedCar
      */
-    public void updateCarInfoText(Car selectedCar) {
+    public void updateCarInfoFields(Car selectedCar) {
         if (selectedCar == null) {
-            txtAreaCarInfo.setText("Выберите автомобиль, чтобы \n" +
-                    "увидеть информацию о нем.");
+            refreshCarInfoFieldsToDefault();
             return;
         }
-        txtAreaCarInfo.setText(selectedCar.toString());
+
+        txtFieldCarModel.setText(selectedCar.getModel() + ".");
+        txtFieldCarMileage.setText(
+                String.format("%.1f км.", selectedCar.getTotalPassedDistance()));
+        txtFieldCarReleaseYear.setText(selectedCar.getFactoryReleaseYear() + " г.");
+        txtFieldCarFactoryAverFuelConsump.setText(
+                String.format("%.1f л/100км.",
+                        selectedCar.getFactoryAverageFuelConsumption()));
+        txtFieldCarUserAverFuelConsump.setText(String.format("%.1f л/100км.",
+                selectedCar.getUserAverageFuelConsumption()));
+        txtFieldCarFuelTankCapacity.setText(
+                selectedCar.getFuelTankCapacity() + " л.");
+    }
+
+    private void refreshCarInfoFieldsToDefault(){
+        txtFieldCarModel.setText("");
+        txtFieldCarMileage.setText("");
+        txtFieldCarReleaseYear.setText("");
+        txtFieldCarFactoryAverFuelConsump.setText("");
+        txtFieldCarUserAverFuelConsump.setText("");
+        txtFieldCarFuelTankCapacity.setText("");
     }
 
     /**
@@ -490,6 +557,10 @@ public class MainWindow extends JFrame {
         }
     }
 
+    /**
+     * ComboBox select operation listener
+     * shows necessary operation panel
+     */
     class ComboBoxSelectOperationListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             int selectedIndex = comboBoxOperations.getSelectedIndex();
@@ -510,8 +581,9 @@ public class MainWindow extends JFrame {
             //-1 because "Ничего" is 0 index always
             int selectedCarIndex = comboBoxCars.getSelectedIndex() - 1;
 
-            selectedCar = selectedCarIndex == -1 ? null : CarManager.cars.get(selectedCarIndex);
-            updateCarInfoText(selectedCar);
+            selectedCar = selectedCarIndex == -1 ? null :
+                    CarManager.cars.get(selectedCarIndex);
+            updateCarInfoFields(selectedCar);
             pnlAverageConsumptionOperation.updateFields(selectedCar);
         }
     }
@@ -576,4 +648,30 @@ public class MainWindow extends JFrame {
         }
     }
     //endregion
+
+    /**
+     * Creates label for car information panel
+     * @param text label text
+     * @return created instance
+     */
+    private JLabel createCarInfoLabel(String text, int fontStyle){
+        JLabel lbl = new JLabel(text, SwingConstants.LEFT);
+        lbl.setFont(new Font("Arial", fontStyle, 16));
+        return lbl;
+    }
+
+    /**
+     * Inits car info field
+     * @param field target field
+     * @return ready to use field instance
+     */
+    private JTextField initCarInfoField(JTextField field){
+        field.setFont(new Font("Arial", Font.BOLD, 17));
+        field.setEditable(false);
+        field.setBackground(Color.white);
+        field.setBorder(BorderFactory.createSoftBevelBorder(BevelBorder.RAISED,
+                Application.MAIN_COLOR, Application.MAIN_COLOR));
+        field.setPreferredSize(new Dimension(280, 30));
+        return field;
+    }
 }

@@ -27,7 +27,7 @@ public class Application {
     /**
      * Application version
      */
-    public final static String VERSION = "0.1.0";
+    public final static String VERSION = "0.1.2";
 
     private static String appPath;
 
