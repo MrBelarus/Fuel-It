@@ -262,6 +262,14 @@ public class AverageFuelConsumptionPanel extends JPanel {
                 wastedFuelAmount = selectedCar.getFuelTankCapacity() *
                         (fuelOnStartPercents - fuelOnFinishPercents) / 100f + filledFuelAmount;
 
+                if (filledFuelAmount + fuelOnStartPercents / 100f * selectedCar.getFuelTankCapacity() >
+                        selectedCar.getFuelTankCapacity()){
+                    showErrorMessageDialog("Ошибка операции",
+                            "Кол-во заправленного топлива превышает" +
+                                    "\nобъем бака автомобиля!");
+                    return;
+                }
+
                 if (filledFuelAmount < 0f) {
                     showErrorMessageDialog("Ошибка операции",
                             "Неверно указаны значения заправленного топлива.");
@@ -276,12 +284,14 @@ public class AverageFuelConsumptionPanel extends JPanel {
                     showErrorMessageDialog("Ошибка операции",
                             "Неверно указаны значения пробега.");
                     return;
-                } else if (mileageStart < selectedCar.getTotalPassedDistance()) {
+                }
+                else if (mileageStart < selectedCar.getTotalPassedDistance()) {
                     showErrorMessageDialog("Ошибка операции", "Пробег" +
                             " на начало движения\nне может быть меньше текущего!");
                     return;
                 }
-            } catch (Exception exception) {
+            }
+            catch (Exception exception) {
                 showErrorMessageDialog("Ошибка операции",
                         "Проверьте правильность ввода данных.");
                 return;

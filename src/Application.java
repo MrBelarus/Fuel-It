@@ -12,7 +12,7 @@ public class Application {
     /**
      * Window size
      */
-    public final static Dimension WINDOW_SIZE = new Dimension(900, 750);
+    public final static Dimension WINDOW_SIZE = new Dimension(950, 830);
 
     /**
      * Application name

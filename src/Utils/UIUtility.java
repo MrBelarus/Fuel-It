@@ -45,7 +45,7 @@ public class UIUtility {
      *
      * @param toBtn    instance
      * @param iconPath path to Icon
-     * @return
+     * @return created instance
      */
     public static JButton addIconToButton(JButton toBtn, String iconPath) {
         ImageIcon questionIcon = new ImageIcon(ImageScaller.scaleImage(
@@ -54,5 +54,16 @@ public class UIUtility {
                 Image.SCALE_SMOOTH));
         toBtn.setIcon(questionIcon);
         return toBtn;
+    }
+
+    /**
+     * Creates empty panel with preferred size
+     * @param prefSize preferred size of panel
+     * @return created instance
+     */
+    public static JPanel createEmptyPanel(Dimension prefSize){
+        JPanel pnlEmpty = new JPanel();
+        pnlEmpty.setPreferredSize(prefSize);
+        return pnlEmpty;
     }
 }

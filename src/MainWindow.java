@@ -223,14 +223,14 @@ public class MainWindow extends JFrame {
 
         //create necessary labels
         JLabel lblCarInfo = createCarInfoLabel("Информация об автомобиле:", Font.BOLD);
-        JLabel lblCarModel = createCarInfoLabel("Модель:", Font.ITALIC);
-        JLabel lblCarReleaseYear = createCarInfoLabel("Год выпуска:", Font.ITALIC);
-        JLabel lblCarMileage = createCarInfoLabel("Пробег:", Font.ITALIC);
-        JLabel lblCarTankFuelCapacity = createCarInfoLabel(
+        JPanel pnlCarModel = createCarInfoPanel("Модель:", Font.ITALIC);
+        JPanel pnlCarReleaseYear = createCarInfoPanel("Год выпуска:", Font.ITALIC);
+        JPanel pnlCarMileage = createCarInfoPanel("Пробег:", Font.ITALIC);
+        JPanel pnlCarTankFuelCapacity = createCarInfoPanel(
                 "Объем бензобака:", Font.ITALIC);
-        JLabel lblCarFactoryAverFuelConsump = createCarInfoLabel(
+        JPanel pnlCarFactoryAverFuelConsump = createCarInfoPanel(
                 "Заводской средний расход топлива:", Font.ITALIC);
-        JLabel lblCarUserAverFuelConsump = createCarInfoLabel(
+        JPanel pnlCarUserAverFuelConsump = createCarInfoPanel(
                 "Текущий средний расход топлива:", Font.ITALIC);
 
         /*
@@ -244,17 +244,17 @@ public class MainWindow extends JFrame {
         initCarInfoField(txtFieldCarUserAverFuelConsump);
 
         pnlCarInfoFields.add(lblCarInfo);
-        pnlCarInfoFields.add(lblCarModel);
+        pnlCarInfoFields.add(pnlCarModel);
         pnlCarInfoFields.add(txtFieldCarModel);
-        pnlCarInfoFields.add(lblCarReleaseYear);
+        pnlCarInfoFields.add(pnlCarReleaseYear);
         pnlCarInfoFields.add(txtFieldCarReleaseYear);
-        pnlCarInfoFields.add(lblCarMileage);
+        pnlCarInfoFields.add(pnlCarMileage);
         pnlCarInfoFields.add(txtFieldCarMileage);
-        pnlCarInfoFields.add(lblCarTankFuelCapacity);
+        pnlCarInfoFields.add(pnlCarTankFuelCapacity);
         pnlCarInfoFields.add(txtFieldCarFuelTankCapacity);
-        pnlCarInfoFields.add(lblCarFactoryAverFuelConsump);
+        pnlCarInfoFields.add(pnlCarFactoryAverFuelConsump);
         pnlCarInfoFields.add(txtFieldCarFactoryAverFuelConsump);
-        pnlCarInfoFields.add(lblCarUserAverFuelConsump);
+        pnlCarInfoFields.add(pnlCarUserAverFuelConsump);
         pnlCarInfoFields.add(txtFieldCarUserAverFuelConsump);
 
         pnlCarInfoFieldHolder.add(pnlCarInfoFields);
@@ -657,21 +657,42 @@ public class MainWindow extends JFrame {
     private JLabel createCarInfoLabel(String text, int fontStyle){
         JLabel lbl = new JLabel(text, SwingConstants.LEFT);
         lbl.setFont(new Font("Arial", fontStyle, 16));
+        lbl.setForeground(Color.black);
         return lbl;
+    }
+
+    /**
+     * Creates car information panel with label and field
+     * @param text label text
+     * @param fontStyle label fontStyle
+     * @return created instance
+     */
+    private JPanel createCarInfoPanel(String text, int fontStyle){
+        JPanel pnl = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        JPanel pnlLabelHolder = new JPanel(new GridLayout(2, 1, 0, 0));
+        JLabel emptyLbl = new JLabel("");
+        emptyLbl.setPreferredSize(new Dimension(0, 0));
+        JLabel lbl = new JLabel(text, SwingConstants.LEFT);
+
+        lbl.setFont(new Font("Arial", fontStyle, 16));
+        lbl.setForeground(Color.black);
+
+        pnlLabelHolder.add(emptyLbl);
+        pnlLabelHolder.add(lbl);
+        pnl.add(pnlLabelHolder);
+        return pnl;
     }
 
     /**
      * Inits car info field
      * @param field target field
-     * @return ready to use field instance
      */
-    private JTextField initCarInfoField(JTextField field){
+    private void initCarInfoField(JTextField field){
         field.setFont(new Font("Arial", Font.BOLD, 17));
         field.setEditable(false);
         field.setBackground(Color.white);
         field.setBorder(BorderFactory.createSoftBevelBorder(BevelBorder.RAISED,
                 Application.MAIN_COLOR, Application.MAIN_COLOR));
-        field.setPreferredSize(new Dimension(280, 30));
-        return field;
+        field.setPreferredSize(new Dimension(320, 30));
     }
 }
