@@ -26,7 +26,7 @@ public class ImageScaller {
                                    int hints) {
         BufferedImage bufferedImage = null;
         try {
-            bufferedImage = ImageIO.read(new File(imagePath));
+            bufferedImage = ImageIO.read(ImageScaller.class.getResource(imagePath));
         } catch (IOException e) {
             e.printStackTrace();
         }

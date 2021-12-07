@@ -386,8 +386,7 @@ public class MainWindow extends JFrame {
         //remove background color, we have an Icon instead
         btn.setContentAreaFilled(false);
 
-        String iconPath = Application.getAppPath() +
-                "\\src\\Resources\\Images\\question-button-v2.png";
+        String iconPath = "/resources/images/question-button-v2.png";
         UIUtility.addIconToButton(btn, iconPath);
 
         return btn;

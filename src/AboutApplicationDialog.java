@@ -91,8 +91,7 @@ public class AboutApplicationDialog extends JDialog {
         JPanel pnlPreview = new JPanel(new FlowLayout());
 
         Image imgPhoto = ImageScaller.scaleImage(
-                Application.getAppPath() +
-                        "\\src\\Resources\\Images\\app-preview-v2.png",
+                "/resources/images/app-preview-v2.png",
                 new Dimension(350, 300),
                 Image.SCALE_SMOOTH);
         JLabel lblProgramPreview = new JLabel(new ImageIcon(imgPhoto));

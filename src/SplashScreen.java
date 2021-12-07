@@ -144,8 +144,8 @@ public class SplashScreen extends JFrame {
         pnlCreators.add(lblTeacher, BorderLayout.SOUTH);
 
         //add app icon
-        Image imgScaledAppIcon = ImageScaller.scaleImage(Application.getAppPath() +
-                        "\\src\\Resources\\Images\\AppIcon_v2.png",
+        Image imgScaledAppIcon = ImageScaller.scaleImage(
+                "/resources/images/AppIcon_v2.png",
                 new Dimension(250, 250), Image.SCALE_SMOOTH);
         ImageIcon imgAppIcon = new ImageIcon(imgScaledAppIcon);
 

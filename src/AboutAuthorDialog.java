@@ -45,7 +45,7 @@ public class AboutAuthorDialog extends JDialog {
         pnlAuthorInfo = new JPanel(new BorderLayout());
 
         Image imgPhoto = ImageScaller.scaleImage(
-                Application.getAppPath() + "\\src\\Resources\\Images\\AppIcon_v2.png",
+                "/resources/images/AppIcon_v2.png",
                 new Dimension(240, 240),
                 Image.SCALE_SMOOTH);
         JLabel lblAuthorPhoto = new JLabel(new ImageIcon(imgPhoto));

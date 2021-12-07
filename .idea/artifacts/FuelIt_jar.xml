@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="FuelIt:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/FuelIt_jar</output-path>
+    <root id="archive" name="FuelIt.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/dist/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="FuelIt" />
+    </root>
+  </artifact>
+</component>

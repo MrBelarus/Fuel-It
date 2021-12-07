@@ -196,14 +196,14 @@ public class Car {
      */
     @Override
     public String toString() {
-        return  String.format("РРЅС„РѕСЂРјР°С†РёСЏ РѕР± Р°РІС‚РѕРјРѕР±РёР»Рµ:\n" +
-                "\nРњРѕРґРµР»СЊ:\n-" + getModel() + "\n" +
-                "\nР“РѕРґ РІС‹РїСѓСЃРєР°:\n-" + getFactoryReleaseYear() + " Рі.\n" +
-                "\nРџСЂРѕР±РµРі:\n-" + getTotalPassedDistance() + " РєРј.\n" +
-                "\nРћР±СЉРµРј Р±РµРЅР·РѕР±Р°РєР°:\n-" +
-                getFuelTankCapacity() + " Р».\n" +
-                "\nР—Р°РІРѕРґСЃРєРѕР№ СЃСЂРµРґРЅРёР№ СЂР°СЃС…РѕРґ С‚РѕРїР»РёРІР°:\n-%.2f Р»/100РєРј.\n" +
-                "\nРўРµРєСѓС‰РёР№ СЃСЂРµРґРЅРёР№ СЂР°СЃС…РѕРґ С‚РѕРїР»РёРІР°:\n-%.2f Р»/100РєРј.\n",
+        return  String.format("Информация об автомобиле:\n" +
+                "\nМодель:\n-" + getModel() + "\n" +
+                "\nГод выпуска:\n-" + getFactoryReleaseYear() + " г.\n" +
+                "\nПробег:\n-" + getTotalPassedDistance() + " км.\n" +
+                "\nОбъем бензобака:\n-" +
+                getFuelTankCapacity() + " л.\n" +
+                "\nЗаводской средний расход топлива:\n-%.2f л/100км.\n" +
+                "\nТекущий средний расход топлива:\n-%.2f л/100км.\n",
                 getFactoryAverageFuelConsumption(),
                 getUserAverageFuelConsumption());
     }

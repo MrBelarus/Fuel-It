@@ -29,12 +29,6 @@ public class Application {
      */
     public final static String VERSION = "0.1.2";
 
-    private static String appPath;
-
-    public static String getAppPath() {
-        return appPath;
-    }
-
     /**
      * Application splash screen timeout
      */
@@ -44,8 +38,6 @@ public class Application {
     Enter point to application
      */
     public static void main(String[] args) throws IOException {
-        appPath = System.getProperty("user.dir");
-
         new SplashScreen();
     }
 }
