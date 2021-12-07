@@ -25,6 +25,9 @@ public class SplashScreen extends JFrame {
 
     private Timer autoSelfCloseTimer;
 
+    /**
+     * Constructor to create splash screen window
+     */
     public SplashScreen() {
         super("Добро пожаловать в FuelIt!");
 
@@ -65,17 +68,17 @@ public class SplashScreen extends JFrame {
         setVisible(true);
     }
 
-    /*
+    /**
      * Adds necessary UI elements for university information
      */
     private void addUniversityInfo(JPanel holder) {
         JPanel pnlUniversityInfo = new JPanel(new GridLayout(5, 1));
         JPanel emptySpace = new JPanel();
 
-        JLabel lblUnivercity = new JLabel("Белорусский Национальный " +
+        JLabel lblUniversity = new JLabel("Белорусский Национальный " +
                 "Технический Университет", SwingConstants.CENTER);
-        lblUnivercity.setFont(new Font("Arial", Font.BOLD, 14));
-        pnlUniversityInfo.add(lblUnivercity);
+        lblUniversity.setFont(new Font("Arial", Font.BOLD, 14));
+        pnlUniversityInfo.add(lblUniversity);
         pnlUniversityInfo.add(emptySpace);
 
         JLabel lblFaculty = new JLabel("Факультет информационных " +
@@ -84,15 +87,15 @@ public class SplashScreen extends JFrame {
         pnlUniversityInfo.add(lblFaculty);
         pnlUniversityInfo.add(emptySpace);
 
-        JLabel lblcathedra = new JLabel("Кафедра программного обеспечения " +
+        JLabel lblCathedra = new JLabel("Кафедра программного обеспечения " +
                 "информационных систем и технологий ", SwingConstants.CENTER);
-        lblcathedra.setFont(new Font("Arial", Font.BOLD, 14));
-        pnlUniversityInfo.add(lblcathedra);
+        lblCathedra.setFont(new Font("Arial", Font.BOLD, 14));
+        pnlUniversityInfo.add(lblCathedra);
 
         holder.add(pnlUniversityInfo, BorderLayout.NORTH);
     }
 
-    /*
+    /**
      * Adds necessary UI elements for project information
      */
     private void addProjectInfo(JPanel holder) {
@@ -122,7 +125,7 @@ public class SplashScreen extends JFrame {
         holder.add(pnlProjectInfo, BorderLayout.CENTER);
     }
 
-    /*
+    /**
      * Adds necessary UI elements for creators information
      */
     private void addCreatorsInfo(JPanel holder) {
@@ -164,7 +167,7 @@ public class SplashScreen extends JFrame {
         holder.add(pnlAll, BorderLayout.SOUTH);
     }
 
-    /*
+    /**
      * Adds necessary user buttons
      * Continue and close buttons
      */

@@ -55,8 +55,8 @@ public class AverageFuelConsumptionPanel extends JPanel {
 
         //create labels with input fields
         String[] labelsText = new String[]{
-                "РџСЂРѕР±РµРі Р°РІС‚РѕРјРѕР±РёР»СЏ РЅР° РЅР°С‡Р°Р»Рѕ РїСѓС‚Рё (РєРј):",
-                "РџСЂРѕР±РµРі Р°РІС‚РѕРјРѕР±РёР»СЏ РЅР° РєРѕРЅРµС† РїСѓС‚Рё (РєРј):",};
+                "Пробег автомобиля на начало пути (км):",
+                "Пробег автомобиля на конец пути (км):",};
         JTextField[] inputFields = new JTextField[]{
                 txtFldMileageStart,
                 txtFldMileageFinish};
@@ -69,14 +69,14 @@ public class AverageFuelConsumptionPanel extends JPanel {
         }
 
         JLabel lblAdditionalFuel = createLabel(
-                "РљРѕР»-РІРѕ Р·Р°РїСЂР°РІР»РµРЅРЅРѕРіРѕ С‚РѕРїР»РёРІР° (Р».):", Font.ITALIC, 16);
+                "Кол-во заправленного топлива (л.):", Font.ITALIC, 16);
         fieldsPanel.add(lblAdditionalFuel, Component.LEFT_ALIGNMENT);
         txtFldAdditionalFuel.setFont(new Font("Arial", Font.BOLD, 18));
         fieldsPanel.add(txtFldAdditionalFuel);
 
         labelsText = new String[]{
-                "РџСЂРёРјРµСЂРЅС‹Р№ СѓСЂРѕРІРµРЅСЊ С‚РѕРїР»РёРІР° РґРѕ РЅР°С‡Р°Р»Р° РїСѓС‚Рё:",
-                "РџСЂРёРјРµСЂРЅС‹Р№ СѓСЂРѕРІРµРЅСЊ С‚РѕРїР»РёРІР° РЅР° РєРѕРЅРµС† РїСѓС‚Рё:"};
+                "Примерный уровень топлива до начала пути:",
+                "Примерный уровень топлива на конец пути:"};
         JSlider[] sliders = new JSlider[]{
                 sliderFuelAmountOnStart,
                 sliderFuelAmountOnFinish};
@@ -105,11 +105,11 @@ public class AverageFuelConsumptionPanel extends JPanel {
         checkBoxRefreshFields = new JCheckBox();
         pnlRefreshInputData.add(checkBoxRefreshFields);
         pnlRefreshInputData.add(createLabel(
-                "РћР±РЅСѓР»РёС‚СЊ РїРѕР»СЏ РІРІРѕРґР° РїРѕСЃР»Рµ СЂР°СЃС‡РµС‚Р°.", Font.PLAIN, 16));
+                "Обнулить поля ввода после расчета.", Font.PLAIN, 16));
         fieldsPanel.add(pnlRefreshInputData);
 
         //create calculate button
-        JButton btnCalculate = new JButton("Р Р°СЃСЃС‡РёС‚Р°С‚СЊ");
+        JButton btnCalculate = new JButton("Рассчитать");
         btnCalculate.setFont(new Font("Arial", Font.BOLD, 16));
         btnCalculate.setPreferredSize(new Dimension(300, 50));
         btnCalculate.addActionListener(new CalculateAverageConsumptionClickListener());
@@ -150,9 +150,9 @@ public class AverageFuelConsumptionPanel extends JPanel {
         txtFldMileageStart.setText(totalPassedDistance);
         txtFldMileageFinish.setText(totalPassedDistance);
         lblFuelLevelOnStart.setText(
-                sliderFuelAmountOnStart.getValue() * currentCar.getFuelTankCapacity() / 100f + "Р».");
+                sliderFuelAmountOnStart.getValue() * currentCar.getFuelTankCapacity() / 100f + "л.");
         lblFuelLevelOnFinish.setText(
-                sliderFuelAmountOnFinish.getValue() * currentCar.getFuelTankCapacity() / 100f + "Р».");
+                sliderFuelAmountOnFinish.getValue() * currentCar.getFuelTankCapacity() / 100f + "л.");
     }
 
     /**
@@ -183,11 +183,11 @@ public class AverageFuelConsumptionPanel extends JPanel {
 
         String log = String.format(
                 """
-                          Р’СЂРµРјСЏ РѕРїРµСЂР°С†РёРё: %s
-                                РР·СЂР°СЃС…РѕРґРѕРІР°РЅРѕ С‚РѕРїР»РёРІР° - %.2f Р».
-                                РўРµРєСѓС‰РёР№ СЃСЂРµРґРЅРёР№ СЂР°СЃС…РѕРґ С‚РѕРїР»РёРІР° - %.2f Р»./100РєРј.
-                                РџСЂРѕР№РґРµРЅРЅРѕ СЂР°СЃСЃС‚РѕСЏРЅРёРµ - %d РєРј.
-                                РџСЂРѕР±РµРі Р°РІС‚РѕРјРѕР±РёР»СЏ РЅР° РєРѕРЅРµС† РґРІРёР¶РµРЅРёСЏ - %d РєРј.
+                          Время операции: %s
+                                Израсходовано топлива - %.2f л.
+                                Текущий средний расход топлива - %.2f л./100км.
+                                Пройденно расстояние - %d км.
+                                Пробег автомобиля на конец движения - %d км.
                         """, formatter.format(date),
                 wastedLiters, car.getUserAverageFuelConsumption(),
                 (int) passedDistance, (int) finishMileage
@@ -237,10 +237,10 @@ public class AverageFuelConsumptionPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             if (Objects.equals(txtFldMileageStart.getText(), "") ||
                     Objects.equals(txtFldMileageFinish.getText(), "")) {
-                showErrorMessageDialog("РћС€РёР±РєР° РѕРїРµСЂР°С†РёРё", "Р—Р°РїРѕР»РЅРёС‚Рµ РґР°РЅРЅС‹Рµ!");
+                showErrorMessageDialog("Ошибка операции", "Заполните данные!");
                 return;
             } else if (selectedCar == null) {
-                showErrorMessageDialog("РћС€РёР±РєР° РѕРїРµСЂР°С†РёРё", "Р’С‹Р±РµСЂРёС‚Рµ Р°РІС‚РѕРјРѕР±РёР»СЊ.");
+                showErrorMessageDialog("Ошибка операции", "Выберите автомобиль.");
                 return;
             }
 
@@ -264,36 +264,36 @@ public class AverageFuelConsumptionPanel extends JPanel {
 
                 if (filledFuelAmount + fuelOnStartPercents / 100f * selectedCar.getFuelTankCapacity() >
                         selectedCar.getFuelTankCapacity()){
-                    showErrorMessageDialog("РћС€РёР±РєР° РѕРїРµСЂР°С†РёРё",
-                            "РљРѕР»-РІРѕ Р·Р°РїСЂР°РІР»РµРЅРЅРѕРіРѕ С‚РѕРїР»РёРІР° РїСЂРµРІС‹С€Р°РµС‚" +
-                                    "\nРѕР±СЉРµРј Р±Р°РєР° Р°РІС‚РѕРјРѕР±РёР»СЏ!");
+                    showErrorMessageDialog("Ошибка операции",
+                            "Кол-во заправленного топлива превышает" +
+                                    "\nобъем бака автомобиля!");
                     return;
                 }
 
                 if (filledFuelAmount < 0f) {
-                    showErrorMessageDialog("РћС€РёР±РєР° РѕРїРµСЂР°С†РёРё",
-                            "РќРµРІРµСЂРЅРѕ СѓРєР°Р·Р°РЅС‹ Р·РЅР°С‡РµРЅРёСЏ Р·Р°РїСЂР°РІР»РµРЅРЅРѕРіРѕ С‚РѕРїР»РёРІР°.");
+                    showErrorMessageDialog("Ошибка операции",
+                            "Неверно указаны значения заправленного топлива.");
                     return;
                 }
                 if (wastedFuelAmount < 0f) {
-                    showErrorMessageDialog("РћС€РёР±РєР° РѕРїРµСЂР°С†РёРё",
-                            "РќРµРІРµСЂРЅРѕ СѓРєР°Р·Р°РЅС‹ Р·РЅР°С‡РµРЅРёСЏ СѓСЂРѕРІРЅСЏ С‚РѕРїР»РёРІР° РІ Р±Р°РєРµ.");
+                    showErrorMessageDialog("Ошибка операции",
+                            "Неверно указаны значения уровня топлива в баке.");
                     return;
                 }
                 if (mileageStart > mileageFinish) {
-                    showErrorMessageDialog("РћС€РёР±РєР° РѕРїРµСЂР°С†РёРё",
-                            "РќРµРІРµСЂРЅРѕ СѓРєР°Р·Р°РЅС‹ Р·РЅР°С‡РµРЅРёСЏ РїСЂРѕР±РµРіР°.");
+                    showErrorMessageDialog("Ошибка операции",
+                            "Неверно указаны значения пробега.");
                     return;
                 }
                 else if (mileageStart < selectedCar.getTotalPassedDistance()) {
-                    showErrorMessageDialog("РћС€РёР±РєР° РѕРїРµСЂР°С†РёРё", "РџСЂРѕР±РµРі" +
-                            " РЅР° РЅР°С‡Р°Р»Рѕ РґРІРёР¶РµРЅРёСЏ\nРЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РјРµРЅСЊС€Рµ С‚РµРєСѓС‰РµРіРѕ!");
+                    showErrorMessageDialog("Ошибка операции", "Пробег" +
+                            " на начало движения\nне может быть меньше текущего!");
                     return;
                 }
             }
             catch (Exception exception) {
-                showErrorMessageDialog("РћС€РёР±РєР° РѕРїРµСЂР°С†РёРё",
-                        "РџСЂРѕРІРµСЂСЊС‚Рµ РїСЂР°РІРёР»СЊРЅРѕСЃС‚СЊ РІРІРѕРґР° РґР°РЅРЅС‹С….");
+                showErrorMessageDialog("Ошибка операции",
+                        "Проверьте правильность ввода данных.");
                 return;
             }
 
@@ -312,16 +312,16 @@ public class AverageFuelConsumptionPanel extends JPanel {
             selectedCar.setUserTotalPassedDistance(
                     selectedCar.getUserTotalPassedDistance() + (int) passedDistance);
 
-            String info = String.format("РђРІС‚РѕРјРѕР±РёР»СЊ " +
+            String info = String.format("Автомобиль " +
                             selectedCar.getModel() + ":" +
-                            "\nРљРѕР»-РІРѕ РїРѕС‚СЂР°С‡РµРЅРЅРѕРіРѕ С‚РѕРїР»РёРІР°: %.1fР»." +
-                            "\nРџСЂРѕР№РґРµРЅРЅРѕРµ СЂР°СЃСЃС‚РѕСЏРЅРёРµ: %.1fРєРј." +
-                            "\nРЎСЂРµРґРЅРёР№ СЂР°СЃС…РѕРґ С‚РѕРїР»РёРІР°: %.1fР». РЅР° 100 РєРј.\n" +
-                            "\nРўРµРєСѓС‰РёР№ РѕР±С‰РёР№ СЃСЂРµРґРЅРёР№ СЂР°СЃС…РѕРґ С‚РѕРїР»РёРІР°: %.1fР». РЅР° 100РєРј.",
+                            "\nКол-во потраченного топлива: %.1fл." +
+                            "\nПройденное расстояние: %.1fкм." +
+                            "\nСредний расход топлива: %.1fл. на 100 км.\n" +
+                            "\nТекущий общий средний расход топлива: %.1fл. на 100км.",
                     wastedFuelAmount, passedDistance, sessionAverageFuelConsumption,
                     newCarAverageFuelConsumption);
             JOptionPane.showMessageDialog(null, info,
-                    "Р РµР·СѓР»СЊС‚Р°С‚ РѕРїРµСЂР°С†РёРё", JOptionPane.INFORMATION_MESSAGE);
+                    "Результат операции", JOptionPane.INFORMATION_MESSAGE);
 
 
             addOperationCarLog(selectedCar, wastedFuelAmount, mileageFinish, passedDistance);
@@ -347,14 +347,14 @@ public class AverageFuelConsumptionPanel extends JPanel {
                     lblFuelLevelOnStart.setText("");
                 } else {
                     lblFuelLevelOnStart.setText(selectedCar.getFuelTankCapacity() *
-                            sliderFuelAmountOnStart.getValue() / 100f + "Р».");
+                            sliderFuelAmountOnStart.getValue() / 100f + "л.");
                 }
             } else if (e.getSource().equals(sliderFuelAmountOnFinish)) {
                 if (selectedCar == null) {
                     lblFuelLevelOnFinish.setText("");
                 } else {
                     lblFuelLevelOnFinish.setText(selectedCar.getFuelTankCapacity() *
-                            sliderFuelAmountOnFinish.getValue() / 100f + "Р».");
+                            sliderFuelAmountOnFinish.getValue() / 100f + "л.");
                 }
             }
         }

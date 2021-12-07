@@ -127,12 +127,12 @@ public class MainWindow extends JFrame {
         JMenu fileMenu = new JMenu("File");
 
         //add information item to menu
-        JMenuItem itemInfo = new JMenuItem("Рћ РїСЂРѕРіСЂР°РјРјРµ");
+        JMenuItem itemInfo = new JMenuItem("О программе");
         itemInfo.addActionListener(new AboutApplicationButtonListener(this));
         fileMenu.add(itemInfo);
 
         //add exit item to menu
-        JMenuItem itemExit = new JMenuItem("Р’С‹С…РѕРґ");
+        JMenuItem itemExit = new JMenuItem("Выход");
         itemExit.addActionListener(new ExitButtonListener());
         fileMenu.add(itemExit);
 
@@ -151,22 +151,22 @@ public class MainWindow extends JFrame {
         pnlCarsAddRemove.setBackground(Application.MAIN_COLOR);
 
         //add left middle cars info and buttons
-        JLabel lblSelectCar = new JLabel("РђРІС‚РѕРјРѕР±РёР»СЊ:");
+        JLabel lblSelectCar = new JLabel("Автомобиль:");
         lblSelectCar.setFont(new Font("Arial", Font.PLAIN, 14));
         lblSelectCar.setForeground(Color.black);
 
-        comboBoxCars = new JComboBox(new String[]{"РќРµ РІС‹Р±СЂР°РЅ"});
+        comboBoxCars = new JComboBox(new String[]{"Не выбран"});
         comboBoxCars.addActionListener(new ComboBoxSelectCarListener());
         comboBoxCars.setPreferredSize(new Dimension(150, 50));
-        comboBoxCars.setToolTipText("Р’С‹Р±СЂР°С‚СЊ Р°РІС‚РѕРјРѕР±РёР»СЊ.");
+        comboBoxCars.setToolTipText("Выбрать автомобиль.");
 
-        JButton btnAddCar = new JButton("Р”РѕР±Р°РІРёС‚СЊ");
-        btnAddCar.setToolTipText("РћС‚РєСЂС‹С‚СЊ РѕРєРЅРѕ РґРѕР±Р°РІР»РµРЅРёСЏ Р°РІС‚РѕРјРѕР±РёР»СЏ.");
+        JButton btnAddCar = new JButton("Добавить");
+        btnAddCar.setToolTipText("Открыть окно добавления автомобиля.");
         btnAddCar.setPreferredSize(new Dimension(90, 50));
         btnAddCar.addActionListener(new ButtonAddCarListener(this));
 
-        JButton btnAddRemove = new JButton("РЈРґР°Р»РёС‚СЊ");
-        btnAddRemove.setToolTipText("РЈРґР°Р»РёС‚СЊ РІС‹Р±СЂР°РЅРЅС‹Р№ Р°РІС‚РѕРјРѕР±РёР»СЊ.");
+        JButton btnAddRemove = new JButton("Удалить");
+        btnAddRemove.setToolTipText("Удалить выбранный автомобиль.");
         btnAddRemove.setPreferredSize(new Dimension(90, 50));
         btnAddRemove.addActionListener(new ButtonRemoveCarListener());
 
@@ -181,12 +181,12 @@ public class MainWindow extends JFrame {
         JPanel pnlOperationTypes = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         pnlOperationTypes.setBackground(Application.MAIN_COLOR);
 
-        JLabel lblSelectOperation = new JLabel("Р’С‹Р±РµСЂРёС‚Рµ С‚РёРї РѕРїРµСЂР°С†РёРё:", SwingConstants.RIGHT);
+        JLabel lblSelectOperation = new JLabel("Выберите тип операции:", SwingConstants.RIGHT);
         lblSelectOperation.setFont(new Font("Arial", Font.PLAIN, 14));
         lblSelectOperation.setForeground(Color.black);
 
-        comboBoxOperations = new JComboBox(new String[]{"РќРµ РІС‹Р±СЂР°РЅР°"});
-        comboBoxOperations.setToolTipText("Р’С‹Р±СЂР°С‚СЊ РѕРїРµСЂР°С†РёСЋ РЅР°Рґ Р°РІС‚РѕРјРѕР±РёР»РµРј.");
+        comboBoxOperations = new JComboBox(new String[]{"Не выбрана"});
+        comboBoxOperations.setToolTipText("Выбрать операцию над автомобилем.");
         comboBoxOperations.setPreferredSize(new Dimension(225, 50));
 
         pnlOperationTypes.add(lblSelectOperation);
@@ -208,7 +208,7 @@ public class MainWindow extends JFrame {
         //create car report button
         JPanel pnlSeeReport = new JPanel(new FlowLayout(FlowLayout.LEFT));
         pnlSeeReport.setPreferredSize(new Dimension(200, 70));
-        JButton btnSeeCarReport = new JButton("<html>РџРѕРєР°Р·Р°С‚СЊ РѕС‚С‡РµС‚<br>РїРѕ Р°РІС‚РѕРјРѕР±РёР»СЋ<html>");
+        JButton btnSeeCarReport = new JButton("<html>Показать отчет<br>по автомобилю<html>");
         btnSeeCarReport.setPreferredSize(new Dimension(150, 55));
         btnSeeCarReport.addActionListener(new OpenCarReportListener(this));
         pnlSeeReport.add(btnSeeCarReport);
@@ -222,16 +222,16 @@ public class MainWindow extends JFrame {
         JPanel pnlCarInfoFields = new JPanel(new GridLayout(13, 1));
 
         //create necessary labels
-        JLabel lblCarInfo = createCarInfoLabel("РРЅС„РѕСЂРјР°С†РёСЏ РѕР± Р°РІС‚РѕРјРѕР±РёР»Рµ:", Font.BOLD);
-        JPanel pnlCarModel = createCarInfoPanel("РњРѕРґРµР»СЊ:", Font.ITALIC);
-        JPanel pnlCarReleaseYear = createCarInfoPanel("Р“РѕРґ РІС‹РїСѓСЃРєР°:", Font.ITALIC);
-        JPanel pnlCarMileage = createCarInfoPanel("РџСЂРѕР±РµРі:", Font.ITALIC);
+        JLabel lblCarInfo = createCarInfoLabel("Информация об автомобиле:", Font.BOLD);
+        JPanel pnlCarModel = createCarInfoPanel("Модель:", Font.ITALIC);
+        JPanel pnlCarReleaseYear = createCarInfoPanel("Год выпуска:", Font.ITALIC);
+        JPanel pnlCarMileage = createCarInfoPanel("Пробег:", Font.ITALIC);
         JPanel pnlCarTankFuelCapacity = createCarInfoPanel(
-                "РћР±СЉРµРј Р±РµРЅР·РѕР±Р°РєР°:", Font.ITALIC);
+                "Объем бензобака:", Font.ITALIC);
         JPanel pnlCarFactoryAverFuelConsump = createCarInfoPanel(
-                "Р—Р°РІРѕРґСЃРєРѕР№ СЃСЂРµРґРЅРёР№ СЂР°СЃС…РѕРґ С‚РѕРїР»РёРІР°:", Font.ITALIC);
+                "Заводской средний расход топлива:", Font.ITALIC);
         JPanel pnlCarUserAverFuelConsump = createCarInfoPanel(
-                "РўРµРєСѓС‰РёР№ СЃСЂРµРґРЅРёР№ СЂР°СЃС…РѕРґ С‚РѕРїР»РёРІР°:", Font.ITALIC);
+                "Текущий средний расход топлива:", Font.ITALIC);
 
         /*
         init all necessary car fields
@@ -290,13 +290,13 @@ public class MainWindow extends JFrame {
         operationPanelsList = new ArrayList<JPanel>();
 
         pnlFuelFromDistanceOperation = new FuelFromDistancePanel(this);
-        comboBoxOperations.insertItemAt("Р Р°СЃС‡РµС‚ С‚РѕРїР»РёРІР° РѕС‚ РїСЂРѕР±РµРіР°", comboBoxOperations.getItemCount());
+        comboBoxOperations.insertItemAt("Расчет топлива от пробега", comboBoxOperations.getItemCount());
 
         pnlDistanceFromFuelOperation = new DistanceFromFuelPanel(this);
-        comboBoxOperations.insertItemAt("Р Р°СЃС‡РµС‚ РїСЂРѕР±РµРіР° РѕС‚ С‚РѕРїР»РёРІР°", comboBoxOperations.getItemCount());
+        comboBoxOperations.insertItemAt("Расчет пробега от топлива", comboBoxOperations.getItemCount());
 
         pnlAverageConsumptionOperation = new AverageFuelConsumptionPanel(this);
-        comboBoxOperations.insertItemAt("Р Р°СЃС‡РµС‚ СЃСЂРµРґРЅРµРіРѕ СЂР°СЃС…РѕРґР° С‚РѕРїР»РёРІР°", comboBoxOperations.getItemCount());
+        comboBoxOperations.insertItemAt("Расчет среднего расхода топлива", comboBoxOperations.getItemCount());
 
         comboBoxOperations.addActionListener(new ComboBoxSelectOperationListener());
 
@@ -355,7 +355,7 @@ public class MainWindow extends JFrame {
      * @return created JButton instance
      */
     private JButton createAboutAuthorButton() {
-        JButton btn = new JButton("РћР± РђРІС‚РѕСЂРµ");
+        JButton btn = new JButton("Об Авторе");
         btn.addActionListener(new AboutAuthorButtonListener(this));
         btn.setFont(new Font("Arial", Font.BOLD, 12));
         btn.setPreferredSize(new Dimension(120, 50));
@@ -367,7 +367,7 @@ public class MainWindow extends JFrame {
      * @return created JButton instance
      */
     private JButton createExitButton() {
-        JButton btn = new JButton("Р’С‹С…РѕРґ");
+        JButton btn = new JButton("Выход");
         btn.addActionListener(new ExitButtonListener());
         btn.setFont(new Font("Arial", Font.BOLD, 12));
         btn.setPreferredSize(new Dimension(120, 50));
@@ -408,11 +408,11 @@ public class MainWindow extends JFrame {
      */
     private void doActionsAndCloseWindow(){
         //options order should be checked in switch statement below
-        Object[] options = {"РЎРѕС…СЂР°РЅРёС‚СЊ Рё РІС‹Р№С‚Рё", "Р’С‹Р№С‚Рё Р±РµР· СЃРѕС…СЂР°РЅРµРЅРёСЏ", "РћС‚РјРµРЅР°"};
+        Object[] options = {"Сохранить и выйти", "Выйти без сохранения", "Отмена"};
 
         int userInput = JOptionPane.showOptionDialog((Component) null,
-                "Р’С‹ С…РѕС‚РёС‚Рµ СЃРѕС…СЂР°РЅРёС‚СЊ РёР·РјРµРЅРµРЅРёСЏ РїРµСЂРµРґ РІС‹С…РѕРґРѕРј?",
-                "Р’С‹С…РѕРґ РёР· РїСЂРёР»РѕР¶РµРЅРёСЏ",
+                "Вы хотите сохранить изменения перед выходом?",
+                "Выход из приложения",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,
@@ -471,15 +471,15 @@ public class MainWindow extends JFrame {
 
         txtFieldCarModel.setText(selectedCar.getModel() + ".");
         txtFieldCarMileage.setText(
-                String.format("%.1f РєРј.", selectedCar.getTotalPassedDistance()));
-        txtFieldCarReleaseYear.setText(selectedCar.getFactoryReleaseYear() + " Рі.");
+                String.format("%.1f км.", selectedCar.getTotalPassedDistance()));
+        txtFieldCarReleaseYear.setText(selectedCar.getFactoryReleaseYear() + " г.");
         txtFieldCarFactoryAverFuelConsump.setText(
-                String.format("%.1f Р»/100РєРј.",
+                String.format("%.1f л/100км.",
                         selectedCar.getFactoryAverageFuelConsumption()));
-        txtFieldCarUserAverFuelConsump.setText(String.format("%.1f Р»/100РєРј.",
+        txtFieldCarUserAverFuelConsump.setText(String.format("%.1f л/100км.",
                 selectedCar.getUserAverageFuelConsumption()));
         txtFieldCarFuelTankCapacity.setText(
-                selectedCar.getFuelTankCapacity() + " Р».");
+                selectedCar.getFuelTankCapacity() + " л.");
     }
 
     private void refreshCarInfoFieldsToDefault(){
@@ -577,7 +577,7 @@ public class MainWindow extends JFrame {
      */
     class ComboBoxSelectCarListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            //-1 because "РќРёС‡РµРіРѕ" is 0 index always
+            //-1 because "Ничего" is 0 index always
             int selectedCarIndex = comboBoxCars.getSelectedIndex() - 1;
 
             selectedCar = selectedCarIndex == -1 ? null :
@@ -611,8 +611,8 @@ public class MainWindow extends JFrame {
     class ButtonRemoveCarListener implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             if (selectedCar == null) {
-                JOptionPane.showMessageDialog(null, "РЎРЅР°С‡Р°Р»Р° РІС‹Р±РµСЂРёС‚Рµ Р°РІС‚РѕРјРѕР±РёР»СЊ," +
-                        "\nРєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ", "РћС€РёР±РєР° РѕРїРµСЂР°С†РёРё", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Сначала выберите автомобиль," +
+                        "\nкоторую хотите удалить", "Ошибка операции", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -635,8 +635,8 @@ public class MainWindow extends JFrame {
 
         public void actionPerformed(ActionEvent e) {
             if (selectedCar == null) {
-                JOptionPane.showMessageDialog(null, "РЎРЅР°С‡Р°Р»Р° РІС‹Р±РµСЂРёС‚Рµ Р°РІС‚РѕРјРѕР±РёР»СЊ," +
-                        "\nС‡С‚РѕР±С‹ СѓРІРёРґРµС‚СЊ РѕС‚С‡РµС‚", "РћС€РёР±РєР° РѕРїРµСЂР°С†РёРё", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Сначала выберите автомобиль," +
+                        "\nчтобы увидеть отчет", "Ошибка операции", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
