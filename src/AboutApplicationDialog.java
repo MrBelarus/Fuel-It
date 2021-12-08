@@ -25,7 +25,7 @@ public class AboutApplicationDialog extends JDialog {
      * @param mainWindow parent window (class MainWindow)
      */
     public AboutApplicationDialog(MainWindow mainWindow){
-        super(mainWindow, "РћР± РїСЂРёР»РѕР¶РµРЅРёРё");
+        super(mainWindow, "О программе");
 
         pnlMain = new JPanel(new BorderLayout(10, 10));
 
@@ -74,7 +74,7 @@ public class AboutApplicationDialog extends JDialog {
     private JPanel createTopPanel(){
         pnlTop = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JLabel lblProjectName = new JLabel(
-                "РџСЂРёР»РѕР¶РµРЅРёРµ РґР»СЏ СѓС‡РµС‚Р° СЂР°СЃС…РѕРґР° С‚РѕРїР»РёРІР°");
+                "Приложение для учета расхода топлива");
         lblProjectName.setBorder(
                 BorderFactory.createBevelBorder(BevelBorder.RAISED));
         pnlTop.add(lblProjectName);
@@ -113,15 +113,15 @@ public class AboutApplicationDialog extends JDialog {
         txtAreaScroll.getViewport().setOpaque(false);
         txtAreaScroll.setOpaque(false);
 
-        txtAreaProgramInfo.setText("РџСЂРѕРіСЂР°РјРјР° РїРѕР·РІРѕР»СЏРµС‚:\n" +
-                "   -Р’РµСЃС‚Рё СѓС‡РµС‚ РѕР± Р°РІС‚РѕРјРѕР±РёР»СЏС…\n" +
-                "   -Р”РѕР±Р°РІР»СЏС‚СЊ/СѓРґР°Р»СЏС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ РѕР± Р°РІС‚РѕРјРѕР±РёР»Рµ\n" +
-                "   -Р Р°СЃСЃС‡РёС‚С‹РІР°С‚СЊ РєРѕР»-РІРѕ С‚РѕРїР»РёРІР° РѕС‚ РїСЂРѕР±РµРіР°\n" +
-                "СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РµРіРѕ Р°РІС‚РѕРјРѕР±РёР»СЏ\n" +
-                "   -Р Р°СЃСЃС‡РёС‚С‹РІР°С‚СЊ РїСЂРѕР±РµРі РѕС‚ РєРѕР»-РІР° С‚РѕРїР»РёРІР°\n" +
-                "СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РµРіРѕ Р°РІС‚РѕРјРѕР±РёР»СЏ\n" +
-                "   -Р Р°СЃСЃС‡РёС‚С‹РІР°С‚СЊ СЃСЂРµРґРЅРёР№ СЂР°СЃС…РѕРґ С‚РѕРїР»РёРІР°\n" +
-                "СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РµРіРѕ Р°РІС‚РѕРјРѕР±РёР»СЏ");
+        txtAreaProgramInfo.setText("Программа позволяет:\n" +
+                "   -Вести учет об автомобилях\n" +
+                "   -Добавлять/удалять информацию об автомобиле\n" +
+                "   -Рассчитывать кол-во топлива от пробега\n" +
+                "соответствующего автомобиля\n" +
+                "   -Рассчитывать пробег от кол-ва топлива\n" +
+                "соответствующего автомобиля\n" +
+                "   -Рассчитывать средний расход топлива\n" +
+                "соответствующего автомобиля");
 
         pnlProgramInfo.add(txtAreaScroll, BorderLayout.CENTER);
 
@@ -140,13 +140,13 @@ public class AboutApplicationDialog extends JDialog {
 
         JPanel pnlAppVersion = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-        JLabel lblAppVersion = new JLabel("Р’РµСЂСЃРёСЏ " +
+        JLabel lblAppVersion = new JLabel("Версия " +
                 Application.VERSION, SwingConstants.CENTER);
         lblAppVersion.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         pnlAppVersion.add(lblAppVersion);
 
         JPanel pnlExit = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JButton btnExit = new JButton("Р’С‹С…РѕРґ");
+        JButton btnExit = new JButton("Выход");
         btnExit.setFont(new Font("Arial", Font.BOLD, 12));
         btnExit.setBackground(new Color(255, 68, 68));
         btnExit.addActionListener(new ExitDialogListener(this));

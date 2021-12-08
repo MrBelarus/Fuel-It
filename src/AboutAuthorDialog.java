@@ -26,7 +26,7 @@ public class AboutAuthorDialog extends JDialog {
      * @param owner parent window (class MainWindow)
      */
     public AboutAuthorDialog(MainWindow owner){
-        super(owner, "РђРІС‚РѕСЂ", true);
+        super(owner, "Автор", true);
         pnlMain = new JPanel(new BorderLayout());
 
         createCloseSpace();
@@ -35,7 +35,7 @@ public class AboutAuthorDialog extends JDialog {
         pnlMain.add(pnlClose, BorderLayout.SOUTH);
         pnlMain.add(pnlAuthorInfo, BorderLayout.CENTER);
 
-        setupFrame(pnlMain);
+        setupDialog(pnlMain);
     }
 
     /**
@@ -53,9 +53,9 @@ public class AboutAuthorDialog extends JDialog {
 
         JPanel pnlAuthorInfoPanel = new JPanel(new GridBagLayout());
         JPanel pnlAuthorText = new JPanel(new GridLayout(4, 1));
-        pnlAuthorText.add(new JLabel("РђРІС‚РѕСЂ", SwingConstants.CENTER));
-        pnlAuthorText.add(new JLabel("СЃС‚СѓРґРµРЅС‚ РіСЂСѓРїРїС‹ 10702119", SwingConstants.CENTER));
-        pnlAuthorText.add(new JLabel("РљСѓСЂРіРµР№ Р’Р»Р°РґРёСЃР»Р°РІ Р®СЂСЊРµРІРёС‡", SwingConstants.CENTER));
+        pnlAuthorText.add(new JLabel("Автор", SwingConstants.CENTER));
+        pnlAuthorText.add(new JLabel("студент группы 10702119", SwingConstants.CENTER));
+        pnlAuthorText.add(new JLabel("Кургей Владислав Юрьевич", SwingConstants.CENTER));
         pnlAuthorText.add(new JLabel("lakey38015@gmail.com", SwingConstants.CENTER));
 
         //set constraints of GridBagLayout
@@ -80,7 +80,7 @@ public class AboutAuthorDialog extends JDialog {
      * @return created JPanel instance
      */
     private JButton createCloseButton(){
-        JButton btn = new JButton("РќР°Р·Р°Рґ");
+        JButton btn = new JButton("Назад");
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -95,7 +95,7 @@ public class AboutAuthorDialog extends JDialog {
     /**
      * Sets up core setting to dialog about author
      */
-    public void setupFrame(JPanel pnlMain) {
+    public void setupDialog(JPanel pnlMain) {
         setLayout(new BorderLayout());
         setSize(dialogSize);
         add(pnlMain);

@@ -29,7 +29,7 @@ public class SplashScreen extends JFrame {
      * Constructor to create splash screen window
      */
     public SplashScreen() {
-        super("Р”РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ РІ FuelIt!");
+        super("Добро пожаловать в FuelIt!");
 
         pnlMain = new JPanel(new BorderLayout());
         pnlInfo = new JPanel(new BorderLayout());
@@ -75,20 +75,20 @@ public class SplashScreen extends JFrame {
         JPanel pnlUniversityInfo = new JPanel(new GridLayout(5, 1));
         JPanel emptySpace = new JPanel();
 
-        JLabel lblUniversity = new JLabel("Р‘РµР»РѕСЂСѓСЃСЃРєРёР№ РќР°С†РёРѕРЅР°Р»СЊРЅС‹Р№ " +
-                "РўРµС…РЅРёС‡РµСЃРєРёР№ РЈРЅРёРІРµСЂСЃРёС‚РµС‚", SwingConstants.CENTER);
+        JLabel lblUniversity = new JLabel("Белорусский Национальный " +
+                "Технический Университет", SwingConstants.CENTER);
         lblUniversity.setFont(new Font("Arial", Font.BOLD, 14));
         pnlUniversityInfo.add(lblUniversity);
         pnlUniversityInfo.add(emptySpace);
 
-        JLabel lblFaculty = new JLabel("Р¤Р°РєСѓР»СЊС‚РµС‚ РёРЅС„РѕСЂРјР°С†РёРѕРЅРЅС‹С… " +
-                "С‚РµС…РЅРѕР»РѕРіРёР№ Рё СЂРѕР±РѕС‚РѕС‚РµС…РЅРёРєРё ", SwingConstants.CENTER);
+        JLabel lblFaculty = new JLabel("Факультет информационных " +
+                "технологий и робототехники ", SwingConstants.CENTER);
         lblFaculty.setFont(new Font("Arial", Font.BOLD, 14));
         pnlUniversityInfo.add(lblFaculty);
         pnlUniversityInfo.add(emptySpace);
 
-        JLabel lblCathedra = new JLabel("РљР°С„РµРґСЂР° РїСЂРѕРіСЂР°РјРјРЅРѕРіРѕ РѕР±РµСЃРїРµС‡РµРЅРёСЏ " +
-                "РёРЅС„РѕСЂРјР°С†РёРѕРЅРЅС‹С… СЃРёСЃС‚РµРј Рё С‚РµС…РЅРѕР»РѕРіРёР№ ", SwingConstants.CENTER);
+        JLabel lblCathedra = new JLabel("Кафедра программного обеспечения " +
+                "информационных систем и технологий ", SwingConstants.CENTER);
         lblCathedra.setFont(new Font("Arial", Font.BOLD, 14));
         pnlUniversityInfo.add(lblCathedra);
 
@@ -103,16 +103,16 @@ public class SplashScreen extends JFrame {
 
         JPanel pnlText = new JPanel(new GridLayout(3, 1, 5, 5));
 
-        JLabel lblProjectType = new JLabel("РљСѓСЂСЃРѕРІР°СЏ СЂР°Р±РѕС‚Р°", SwingConstants.CENTER);
+        JLabel lblProjectType = new JLabel("Курсовая работа", SwingConstants.CENTER);
         lblProjectType.setFont(new Font("Arial", Font.BOLD, 18));
         pnlText.add(lblProjectType);
 
-        JLabel lblDiscipline = new JLabel("РїРѕ РґРёСЃС†РёРїР»РёРЅРµ " +
-                "\"РџСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёРµ РЅР° СЏР·С‹РєРµ Java\"", SwingConstants.CENTER);
+        JLabel lblDiscipline = new JLabel("по дисциплине " +
+                "\"Программирование на языке Java\"", SwingConstants.CENTER);
         lblDiscipline.setFont(new Font("Arial", Font.BOLD, 14));
         pnlText.add(lblDiscipline);
 
-        JLabel lblProjectName = new JLabel("РџСЂРёР»РѕР¶РµРЅРёРµ \"РЈС‡РµС‚ СЂР°СЃС…РѕРґР° С‚РѕРїР»РёРІР°\"", SwingConstants.CENTER);
+        JLabel lblProjectName = new JLabel("Приложение \"Учет расхода топлива\"", SwingConstants.CENTER);
         lblProjectName.setFont(new Font("Arial", Font.BOLD, 22));
         pnlText.add(lblProjectName);
 
@@ -135,14 +135,14 @@ public class SplashScreen extends JFrame {
         JPanel pnlCreators = new JPanel(new BorderLayout());
 
         //create creator info label
-        JLabel lblCreator = new JLabel("<html>Р’С‹РїРѕР»РЅРёР»: РЎС‚СѓРґРµРЅС‚ РіСЂСѓРїРїС‹ 10702119<br>" +
-                "РљСѓСЂРіРµР№ Р’Р»Р°РґРёСЃР»Р°РІ Р®СЂСЊРµРІРёС‡</html>", SwingConstants.LEFT);
+        JLabel lblCreator = new JLabel("<html>Выполнил: Студент группы 10702119<br>" +
+                "Кургей Владислав Юрьевич</html>", SwingConstants.LEFT);
         lblCreator.setFont(new Font("Arial", Font.BOLD, 16));
         pnlCreators.add(lblCreator, BorderLayout.NORTH);
 
         //create teacher info label
-        JLabel lblTeacher = new JLabel("<html>РџСЂРµРїРѕРґР°РІР°С‚РµР»СЊ: Рє-С„.-Рј.РЅ., РґРѕС†.<br>" +
-                "РЎРёРґРѕСЂРёРє Р’Р°Р»РµСЂРёР№ Р’Р»Р°РґРёРјРёСЂРѕРІРёС‡</html>", SwingConstants.LEFT);
+        JLabel lblTeacher = new JLabel("<html>Преподаватель: к-ф.-м.н., доц.<br>" +
+                "Сидорик Валерий Владимирович</html>", SwingConstants.LEFT);
         lblTeacher.setFont(new Font("Arial", Font.BOLD, 16));
         pnlCreators.add(lblTeacher, BorderLayout.SOUTH);
 
@@ -160,7 +160,7 @@ public class SplashScreen extends JFrame {
         pnlAll.add(pnlIconAndCreators, BorderLayout.CENTER);
 
         //add city & year info
-        JLabel lblCityAndYear = new JLabel("РњРёРЅСЃРє, 2021", SwingConstants.CENTER);
+        JLabel lblCityAndYear = new JLabel("Минск, 2021", SwingConstants.CENTER);
         lblCityAndYear.setFont(new Font("Arial", Font.BOLD, 16));
         pnlAll.add(lblCityAndYear, BorderLayout.SOUTH);
 
@@ -172,10 +172,10 @@ public class SplashScreen extends JFrame {
      * Continue and close buttons
      */
     private void addUserButtons(JPanel holder) {
-        btnContinue = createUserButton("Р”Р°Р»РµРµ", new ContinueButtonListener());
+        btnContinue = createUserButton("Далее", new ContinueButtonListener());
         holder.add(btnContinue);
 
-        btnExit = createUserButton("Р’С‹С…РѕРґ", new ExitButtonListener());
+        btnExit = createUserButton("Выход", new ExitButtonListener());
         holder.add(btnExit);
     }
 

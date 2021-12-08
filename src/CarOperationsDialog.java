@@ -23,7 +23,7 @@ public class CarOperationsDialog extends JDialog{
      * @param mainWindow parent window (class MainWindow)
      */
     public CarOperationsDialog(MainWindow mainWindow){
-        super(mainWindow, "РћС‚С‡РµС‚ РїРѕ Р°РІС‚РѕРјРѕР±РёР»СЋ");
+        super(mainWindow, "Отчет по автомобилю");
         this.mainWindow = mainWindow;
 
         pnlMain = new JPanel(new BorderLayout(10, 10));
@@ -74,18 +74,18 @@ public class CarOperationsDialog extends JDialog{
 
     private void UpdateLogInfo(Car car){
         if (car == null){
-            txtAreaLog.setText("Р’С‹Р±РµСЂРёС‚Рµ РјР°С€РёРЅСѓ С‡С‚РѕР±С‹ СѓРІРёРґРµС‚СЊ СЃРїРёСЃРѕРє РѕРїРµСЂР°С†РёР№!");
+            txtAreaLog.setText("Выберите машину чтобы увидеть список операций!");
         }
 
         StringBuilder logBuilder = new StringBuilder();
         ArrayList<String> operations = car.getOperationsLog();
         if (operations == null || operations.size() == 0){
-            txtAreaLog.setText(String.format("РћС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕРїРµСЂР°С†РёРё РЅР°Рґ Р°РІС‚РѕРјРѕР±РёР»РµРј %s!",
+            txtAreaLog.setText(String.format("Отсутствуют операции над автомобилем %s!",
                     car.getModel()));
             return;
         }
 
-        logBuilder.append("РЎРїРёСЃРѕРє РѕРїРµСЂР°С†РёР№ РЅР°Рґ Р°РІС‚РѕРјРѕР±РёР»РµРј ").append(
+        logBuilder.append("Список операций над автомобилем ").append(
                 car.getModel()).append("\n\n");
         for (String line : operations){
             logBuilder.append(line).append("\n");

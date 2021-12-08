@@ -30,7 +30,7 @@ public class FuelFromDistancePanel extends JPanel {
         JPanel pnlButton = new JPanel();
 
         //create calculate button
-        JButton btnCalculate = new JButton("Р Р°СЃСЃС‡РёС‚Р°С‚СЊ");
+        JButton btnCalculate = new JButton("Рассчитать");
         btnCalculate.setFont(new Font("Arial", Font.BOLD, 16));
         btnCalculate.setPreferredSize(new Dimension(300, 50));
         btnCalculate.addActionListener(new CalculateFuelFromDistanceClickListener());
@@ -38,7 +38,7 @@ public class FuelFromDistancePanel extends JPanel {
 
         //create labels with input fields
         JPanel fieldsPanel = new JPanel(new GridLayout(2, 1));
-        JLabel inputLabel = new JLabel("Р’РІРµРґРёС‚Рµ СЂР°СЃСЃС‚РѕСЏРЅРёРµ (РєРј):");
+        JLabel inputLabel = new JLabel("Введите расстояние (км):");
         inputLabel.setFont(new Font("Arial", Font.ITALIC, 16));
         txtFldDistance = new JTextField("");
         txtFldDistance.setFont(new Font("Arial", Font.BOLD, 16));
@@ -62,24 +62,30 @@ public class FuelFromDistancePanel extends JPanel {
             Car selectedCar = mainWindow.getSelectedCar();
 
             if (selectedCar == null) {
-                JOptionPane.showMessageDialog(null, "Р’С‹Р±РµСЂРёС‚Рµ Р°РІС‚РѕРјРѕР±РёР»СЊ.",
-                        "РћС€РёР±РєР° РѕРїРµСЂР°С†РёРё", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Выберите автомобиль.",
+                        "Ошибка операции", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             else if (Objects.equals(txtFldDistance.getText(), "")) {
                 JOptionPane.showMessageDialog(null,
-                        "Р—Р°РїРѕР»РЅРёС‚Рµ РґР°РЅРЅС‹Рµ!",
-                        "РћС€РёР±РєР° РѕРїРµСЂР°С†РёРё", JOptionPane.ERROR_MESSAGE);
+                        "Заполните данные!",
+                        "Ошибка операции", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             float distanceAmount;
             try {
                 distanceAmount = Float.parseFloat(txtFldDistance.getText());
+                if (distanceAmount < 0){
+                    JOptionPane.showMessageDialog(null,
+                            "Расстояние не должно отрицательным числом!",
+                            "Ошибка операции", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(null,
-                        "РџСЂРѕРІРµСЂСЊС‚Рµ РїСЂР°РІРёР»СЊРЅРѕСЃС‚СЊ РІРІРѕРґР° РґР°РЅРЅС‹С….",
-                        "РћС€РёР±РєР° РѕРїРµСЂР°С†РёРё", JOptionPane.ERROR_MESSAGE);
+                        "Проверьте правильность ввода данных.",
+                        "Ошибка операции", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -88,14 +94,14 @@ public class FuelFromDistancePanel extends JPanel {
             float factoryResult =
                     CarManager.calculateFactoryFuelAmount(distanceAmount, selectedCar);
 
-            String info = String.format("РђРІС‚РѕРјРѕР±РёР»СЊ %s:" +
-                            "\nР РµР·СѓР»СЊС‚Р°С‚ РїСЂРё С‚РµРєСѓС‰РµРј " +
-                            "СЃСЂРµРґРЅРµРј СЂР°СЃС…РѕРґРµ С‚РѕРїР»РёРІР°: %.1fР»" +
-                            "\nР РµР·СѓР»СЊС‚Р°С‚ РїСЂРё Р·Р°РІРѕРґСЃРєРѕРј " +
-                            "СЃСЂРµРґРЅРµРј СЂР°СЃС…РѕРґРµ С‚РѕРїР»РёРІР°: %.1fР»",
+            String info = String.format("Автомобиль %s:" +
+                            "\nРезультат при текущем " +
+                            "среднем расходе топлива: %.1fл" +
+                            "\nРезультат при заводском " +
+                            "среднем расходе топлива: %.1fл",
                     selectedCar.getModel(), userResult, factoryResult);
             JOptionPane.showMessageDialog(null, info,
-                    "Р РµР·СѓР»СЊС‚Р°С‚ РѕРїРµСЂР°С†РёРё", JOptionPane.INFORMATION_MESSAGE);
+                    "Результат операции", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 }

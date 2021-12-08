@@ -39,7 +39,7 @@ public class AddCarDialog extends JDialog {
      * @param mainWindow parent window (class MainWindow)
      */
     public AddCarDialog(MainWindow mainWindow){
-        super(mainWindow, "Р”РѕР±Р°РІРёС‚СЊ Р°РІС‚РѕРјРѕР±РёР»СЊ");
+        super(mainWindow, "Добавить автомобиль");
         this.mainWindow = mainWindow;
 
         pnlMain = new JPanel(new BorderLayout(10, 10));
@@ -92,7 +92,7 @@ public class AddCarDialog extends JDialog {
      */
     private JPanel createTopPanel(){
         pnlTop = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JLabel lblProjectName = new JLabel("Р’РІРµРґРёС‚Рµ РёРЅС„РѕСЂРјР°С†РёСЋ РѕР± Р°РІС‚РѕРјРѕР±РёР»Рµ");
+        JLabel lblProjectName = new JLabel("Введите информацию об автомобиле");
         lblProjectName.setFont(new Font("Arial", Font.BOLD, 16));
         pnlTop.add(lblProjectName);
         return pnlTop;
@@ -107,11 +107,11 @@ public class AddCarDialog extends JDialog {
 
         //create labels with input fields
         String[] labelsText = new String[]{
-                "РќР°Р·РІР°РЅРёРµ РјРѕРґРµР»Рё:",
-                "Р“РѕРґ РІС‹РїСѓСЃРєР°:",
-                "РџСЂРѕР±РµРі(РєРј):",
-                "РЎСЂРµРґРЅРёР№ СЂР°СЃС…РѕРґ С‚РѕРїР»РёРІР° (Р»./100РєРј):",
-                "РћР±СЉРµРј Р±РµРЅР·РѕР±Р°РєР° (Р».):"};
+                "Название модели:",
+                "Год выпуска:",
+                "Пробег(км):",
+                "Средний расход топлива (л./100км):",
+                "Объем бензобака (л.):"};
 
         inputFields = new JTextField[] {
                 txtFieldCarModel,
@@ -148,7 +148,7 @@ public class AddCarDialog extends JDialog {
         Dimension btnPrefferedSize = new Dimension(110, 50);
 
         JPanel pnlAddCar = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JButton btnAddCar = new JButton("Р”РѕР±Р°РІРёС‚СЊ");
+        JButton btnAddCar = new JButton("Добавить");
         btnAddCar.setFont(new Font("Arial", Font.BOLD, 14));
         btnAddCar.setBackground(Application.MAIN_COLOR);
         btnAddCar.setPreferredSize(btnPrefferedSize);
@@ -156,7 +156,7 @@ public class AddCarDialog extends JDialog {
         pnlAddCar.add(btnAddCar);
 
         JPanel pnlExit = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JButton btnExit = new JButton("Р’С‹С…РѕРґ");
+        JButton btnExit = new JButton("Выход");
         btnExit.setFont(new Font("Arial", Font.BOLD, 14));
         btnExit.setBackground(new Color(255, 68, 68));
         btnExit.setPreferredSize(btnPrefferedSize);
@@ -192,8 +192,8 @@ public class AddCarDialog extends JDialog {
             for (JTextField field : inputFields) {
                 if (Objects.equals(field.getText(), "")){
                     JOptionPane.showMessageDialog(null,
-                            "Р—Р°РїРѕР»РЅРёС‚Рµ РґР°РЅРЅС‹Рµ!",
-                            "РћС€РёР±РєР° РѕРїРµСЂР°С†РёРё", JOptionPane.ERROR_MESSAGE);
+                            "Заполните данные!",
+                            "Ошибка операции", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
@@ -212,8 +212,8 @@ public class AddCarDialog extends JDialog {
             }
             catch (Exception exception){
                 JOptionPane.showMessageDialog(null,
-                        "РџСЂРѕРІРµСЂСЊС‚Рµ РїСЂР°РІРёР»СЊРЅРѕСЃС‚СЊ РІРІРѕРґР° РґР°РЅРЅС‹С….",
-                        "РћС€РёР±РєР° РѕРїРµСЂР°С†РёРё", JOptionPane.ERROR_MESSAGE);
+                        "Проверьте правильность ввода данных.",
+                        "Ошибка операции", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -222,8 +222,8 @@ public class AddCarDialog extends JDialog {
 
             mainWindow.addCarToComboBox(newCar);
             JOptionPane.showMessageDialog(null,
-                    "РњР°С€РёРЅР° Р±С‹Р»Р° СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅР°!",
-                    "Р РµР·СѓР»СЊС‚Р°С‚", JOptionPane.INFORMATION_MESSAGE);
+                    "Машина была успешно добавлена!",
+                    "Результат", JOptionPane.INFORMATION_MESSAGE);
 
             setFieldsEmpty();
             dialog.setVisible(false);
